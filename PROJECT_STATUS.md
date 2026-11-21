@@ -4,6 +4,8 @@ Bijgewerkt: 2026-11-21
 ## Doel
 Interactieve, begrijpelijke uitleg van pensioenregelingen. Iteratief ontwikkelen, eerst fictieve regeling, later zeven geparametriseerde regelingen. Gebruiker bepaalt inhoud en creatieve richting.
 
+De [missie en het einddoel](docs/missie-en-einddoel.md) beschrijven hoe een beoordeeld pensioenreglement via regelingparameters, selectieregels en herbruikbare voice-overs leidt tot regelinggerichte uitleg op de website.
+
 ## Huidige stand
 - Homepage v0.1 gepubliceerd op https://pensioen.myaiprojects.nl.
 - Fase 1 (POC) op 2026-11-21 door gebruiker geslaagd verklaard. Script en visuele afwerking nog niet definitief.
