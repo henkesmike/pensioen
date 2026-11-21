@@ -9,7 +9,7 @@ Interactieve, begrijpelijke uitleg van pensioenregelingen. Iteratief ontwikkelen
 - Fase 1 (POC) op 2026-11-21 door gebruiker geslaagd verklaard. Script en visuele afwerking nog niet definitief.
 - v1: eenvoudige SVG-personages; v2: verbeterde illustraties, neutrale gezichtsvariant en landschappelijke achtergrond; v3: ook subtiele lichaamsbeweging, ademhaling en knipperen.
 - Laatste lokale testbestand: partnerpensioen-v3.html, inclusief privé-audio. Bewaar lokaal; niet publiceren of in openbare repository opnemen.
-- Generatoren v1 en v2 staan in poc/; lokale v3 is nog niet als reproduceerbare generator in GitHub opgenomen.
+- Generatoren v1 en v2 staan in `poc/`. De reproduceerbare v3 staat in `poc/v3/` op de [fase 2-branch](https://github.com/henkesmike/pensioen/tree/fase-2-partnerpensioen-v3/poc/v3).
 - Stem Adam uitsluitend technische test; definitieve stemkeuze uitgesteld.
 - Ontwerpprincipes toekomstige personages: docs/ontwerpprincipes-personages.md.
 - Lokale ontwikkeling en tests voorafgaand aan deployment; server niet gewijzigd voor v2/v3 lokale tests.
@@ -22,17 +22,14 @@ Ubuntu VPS, Nginx, HTTPS. Python generator met ElevenLabs timestamps en lokale a
 
 ## Roadmap
 1. Fase 1 — POC afgerond.
-2. Fase 2 — generieke architectuur: scheid script/scenario, pensioenparameters, illustraties, audiobibliotheek en animatie-engine. Begin met bestaande partnerpensioen-POC; geen overengineering.
+2. Fase 2 — afgerond voor de partnerpensioenpilot. Gebruiker heeft de privétestversie op 2026-11-21 akkoord bevonden voor deze fase.
 3. Fase 3 — dynamische regelingen: verschillende waarden zonder codewijziging; gesproken tekst moet overeenkomen met parameters. Onderzoek hergebruik van audiofragmenten en timestamps.
 4. Fase 4 — tweede onderwerp, bijvoorbeeld wezenpensioen, om herbruikbaarheid te toetsen.
 5. Fase 5 — inhoud valideren, script en beeld verfijnen, integreren in website en publiceren.
 
-## Start fase 2
-- Nieuwe chat binnen hetzelfde project; lees dit bestand en relevante broncode.
-- Leg eerst een minimale bestandsstructuur en interfaces voor. Maak v3 reproduceerbaar zonder audio in GitHub op te nemen.
-- Bouw en test lokaal, behoud bestaande POC als referentie. Geen deployment zonder akkoord.
-- Gebruik generieke bewegingen per personage; onderhoudbaarheid en eenvoud boven maximale animatiecomplexiteit.
-- Leg besluiten en voortgang hier vast. Definitieve scripts nog niet goedgekeurd.
+## Vervolg na fase 2
+- Eerstvolgende technische stap volgens de roadmap is fase 3: onderzoeken hoe regelingwaarden en gesproken tekst samen kunnen variëren.
+- De goedkeuring geldt voor de privétestversie van fase 2. Definitief script, stemkeuze en publicatie staan nog open.
 
 ## Publicatie
 Private POC niet openbaar publiceren met gratis ElevenLabs-audio. Generator staat in GitHub; gegenereerde audio/HTML blijft privé. Geen secrets in repo.
