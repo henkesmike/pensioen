@@ -22,7 +22,7 @@ class SpeechFixture(BaseHTTPRequestHandler):
         assert self.headers["xi-api-key"] == "test"
         text = json.loads(self.rfile.read(int(self.headers["Content-Length"])))["text"]
         requests.append(text)
-        duration = len(text) / 20 + 0.4
+        duration = len(text) / 20 + 0.1997
         frames = int(duration * RATE)
         pcm = b"".join(struct.pack("<h", 1800 if index % 120 < 60 else -1800)
                        for index in range(frames))

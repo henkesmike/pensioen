@@ -70,9 +70,13 @@ def speech(lines, cache, endpoint, key):
     for line in lines:
         start = align["character_start_times_seconds"][offset]
         end = align["character_end_times_seconds"][offset + len(line) - 1]
-        if not 0 <= start < end <= len(pcm) / (2 * RATE):
-            raise ValueError("Tijdcodes liggen buiten de opname.")
-        timings.append([start, end])
+        duration = len(pcm) / (2 * RATE)
+        # The API rounds timestamps to milliseconds; PCM ends on a sample boundary.
+        if not 0 <= start < min(end, duration) or end > duration + 0.001:
+            raise ValueError(
+                f"Tijdcodes buiten opname: start={start:.6f}s, eind={end:.6f}s, audio={duration:.6f}s."
+            )
+        timings.append([start, min(end, duration)])
         offset += len(line) + 1
     if not hit:
         temp = file.with_suffix(".tmp")
