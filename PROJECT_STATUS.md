@@ -17,6 +17,13 @@ Interactieve, begrijpelijke uitleg van pensioenregelingen. Iteratief ontwikkelen
 ## Verhaallijn
 Salaris werkgever naar gezinsinkomen; deelnemer overlijdt en vervaagt, geldstroom stopt, werkgever verdwijnt. Pensioenfonds verschijnt, partner krijgt levenslang X% van pensioengevend salaris, geldstroom hervat. Reset naar beiden levend en glimlachend. Uitdiensttreding: werkgever en salaris verdwijnen, tijdelijke risicodekking Y maanden, daarna eindigt die dekking; mogelijkheden voor voortzetting. Verdieping later: partnerdefinitie, pensioengevend salaris, aanvragen, uitdiensttreding en aanvullende voorzieningen. Fictieve waarden X=40, Y=3. Regelingafhankelijke uitzonderingen nog valideren.
 
+## Ontwerp voor herbruikbare fragmenten
+- Splits de uitleg over partnerpensioen in twee zelfstandig afspeelbare fragmenten: **Tijdens dienstverband** en **Na uitdiensttreding**.
+- De pagina Partnerpensioen speelt beide fragmenten in die volgorde. Het event Uitdiensttreding gebruikt hetzelfde tweede fragment als onderdeel van de uitleg. Het tweede fragment krijgt een zelfstandige openingszin en een vaste beginstand met beide personages en de werkgever zichtbaar.
+- Elk fragment heeft een eigen scenario, voice-over en tijdcodes vanaf nul. De animatie-engine en illustraties zijn gedeeld. De voice-over hoort bij de regelingwaarden die in het fragment worden getoond.
+- Laat bij de overgang alleen het animatiebeeld geleidelijk naar zwart gaan. Wissel bij zwart naar de beginstand van het volgende fragment en laat het beeld terugkomen. Plaats de overgang tussen gesproken zinnen. Eerste testwaarde: circa 0,5 seconde per fade. Bij los afspelen kan het tweede fragment vanaf zwart openen.
+- Toets in fase 3 beide afspeelroutes en controleer of beeld, ondertiteling en voice-over vanaf de juiste beginstand lopen, ook bij terugspoelen.
+
 ## Techniek
 Ubuntu VPS, Nginx, HTTPS. Python generator met ElevenLabs timestamps en lokale audiocache, SVG/HTML animatie op audiotijd. API-sleutel uitsluitend buiten webroot/repository op server. Toekomstig: generieke parameterengine, database en backend; nog niet gebouwd. GSAP is kandidaat, huidige POC gebruikt native JS. Geen vertrouwelijke data.
 
