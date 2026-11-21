@@ -44,7 +44,7 @@ Ubuntu VPS, Nginx, HTTPS. Python generator met ElevenLabs timestamps en lokale a
 - De [proef met vier regelingen](https://github.com/henkesmike/pensioen/tree/fase-3-vier-regelingen/poc/v4) combineert A (40%, 3 maanden), B (40%, 6 maanden), C (50%, 3 maanden) en D (50%, 6 maanden).
 - De backend knipt de originele opname op in drie vaste blokken en twee variabele zinnen. De vier combinaties delen twee percentagezinnen en twee duurzinnen. De bestaande audio bevat 40% en 3 maanden.
 - De HTTP-proef verifieerde twee automatische aanroepen, voor 50% en 6 maanden, en nul bij herhaling. Keuzelijst, audiobron, beeldlabels, ondertiteling en herberekende tijdcodes zijn technisch gecontroleerd. De proef gebruikt een lokale test-API met testtonen voor de twee nieuwe zinnen.
-- Open voor deze iteratie: echte ElevenLabs-aanroepen met de bestaande sleutel en beluisteren van de overgangen. Privéproef, zonder wijzigingen aan de live site.
+- De echte ElevenLabs-proef slaagde op de VPS nadat de generator een afrondingsverschil van minder dan één milliseconde in de tijdcodes kon verwerken. De gebruiker opende de uitvoer op zijn Mac en bevestigde dat de POC werkt. Dit was een privéproef buiten de live site. De automatische start na regeling-upload blijft onderdeel van het eindontwerp.
 
 ## Publicatie
 Private POC niet openbaar publiceren met gratis ElevenLabs-audio. Generator staat in GitHub; gegenereerde audio/HTML blijft privé. Geen secrets in repo.
