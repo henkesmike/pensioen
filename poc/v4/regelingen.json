@@ -1,0 +1,6 @@
+{
+  "A": {"percentage": 40, "maanden": 3},
+  "B": {"percentage": 40, "maanden": 6},
+  "C": {"percentage": 50, "maanden": 3},
+  "D": {"percentage": 50, "maanden": 6}
+}
