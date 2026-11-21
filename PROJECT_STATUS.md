@@ -9,7 +9,7 @@ Interactieve, begrijpelijke uitleg van pensioenregelingen. Iteratief ontwikkelen
 - Fase 1 (POC) op 2026-11-21 door gebruiker geslaagd verklaard. Script en visuele afwerking nog niet definitief.
 - v1: eenvoudige SVG-personages; v2: verbeterde illustraties, neutrale gezichtsvariant en landschappelijke achtergrond; v3: ook subtiele lichaamsbeweging, ademhaling en knipperen.
 - Laatste lokale testbestand: partnerpensioen-v3.html, inclusief privé-audio. Bewaar lokaal; niet publiceren of in openbare repository opnemen.
-- Generatoren v1 en v2 staan in poc/; lokale v3 is nog niet als reproduceerbare generator in GitHub opgenomen.
+- Generatoren v1 en v2 staan in poc/; de lokale v3 kan worden opgebouwd met de generator in `poc/v3/`.
 - Stem Adam uitsluitend technische test; definitieve stemkeuze uitgesteld.
 - Ontwerpprincipes toekomstige personages: docs/ontwerpprincipes-personages.md.
 - Lokale ontwikkeling en tests voorafgaand aan deployment; server niet gewijzigd voor v2/v3 lokale tests.
@@ -33,6 +33,11 @@ Ubuntu VPS, Nginx, HTTPS. Python generator met ElevenLabs timestamps en lokale a
 - Bouw en test lokaal, behoud bestaande POC als referentie. Geen deployment zonder akkoord.
 - Gebruik generieke bewegingen per personage; onderhoudbaarheid en eenvoud boven maximale animatiecomplexiteit.
 - Leg besluiten en voortgang hier vast. Definitieve scripts nog niet goedgekeurd.
+
+## Eerste oplevering fase 2
+- `poc/v3/` bevat het scenario, de fictieve regeling, SVG-scène en afspeelcode. Bouwen vereist het oorspronkelijke privébestand `partnerpensioen-v3.html` als bron voor de bestaande MP3, tijdcodes en personageafbeeldingen.
+- De vergelijking van 473 afspeelmomenten leverde dezelfde ondertitels en animatiestaten op. MP3 en drie personageafbeeldingen zijn byte-identiek. MP3-decodering geslaagd. Browsertest kon in de uitvoeromgeving niet starten.
+- Volgende stap: visuele controle in een browser, daarna beoordelen welke onderdelen bruikbaar zijn voor een tweede onderwerp. Script, stem en publicatie blijven open.
 
 ## Publicatie
 Private POC niet openbaar publiceren met gratis ElevenLabs-audio. Generator staat in GitHub; gegenereerde audio/HTML blijft privé. Geen secrets in repo.

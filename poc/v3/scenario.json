@@ -1,0 +1,128 @@
+[
+  {
+    "text": "Je ontvangt salaris van je werkgever.",
+    "changes": {
+      "employer": 1,
+      "participant": 1,
+      "happy": 1,
+      "neutral": 0,
+      "fund": 0,
+      "percent": 0,
+      "coverage": 0,
+      "options": 0,
+      "income": 1,
+      "bar": 1
+    }
+  },
+  {
+    "text": "Daarmee draag je bij aan het inkomen van jullie samen.",
+    "changes": {}
+  },
+  {
+    "text": "Maar als jij overlijdt, valt jouw salaris weg.",
+    "changes": {
+      "employer": [
+        0,
+        1.2
+      ],
+      "participant": [
+        0,
+        1.2
+      ],
+      "happy": [
+        0,
+        1.2
+      ],
+      "neutral": [
+        1,
+        1.2
+      ],
+      "income": 0
+    }
+  },
+  {
+    "text": "Via je pensioenfonds is er een partnerpensioen verzekerd.",
+    "changes": {
+      "fund": [
+        1,
+        1.2
+      ]
+    }
+  },
+  {
+    "text": "Je partner ontvangt dan {percentage} procent van je pensioengevend salaris.",
+    "changes": {
+      "percent": [
+        1,
+        1.2
+      ],
+      "income": "partnerpensioen"
+    }
+  },
+  {
+    "text": "Dat pensioen ontvangt je partner zolang die leeft.",
+    "changes": {}
+  },
+  {
+    "text": "Zo wordt een deel van het inkomensverlies opgevangen.",
+    "changes": {}
+  },
+  {
+    "text": "Maar wat gebeurt er als je uit dienst gaat?",
+    "changes": {
+      "participant": 1,
+      "employer": 1,
+      "happy": 1,
+      "neutral": 0,
+      "fund": 0,
+      "percent": 0,
+      "income": 1
+    }
+  },
+  {
+    "text": "Je ontvangt geen salaris meer van deze werkgever.",
+    "changes": {
+      "employer": [
+        0,
+        1.2
+      ],
+      "income": 0
+    }
+  },
+  {
+    "text": "Je partnerpensioen blijft nog {maanden} maanden verzekerd.",
+    "changes": {
+      "fund": [
+        1,
+        1.2
+      ],
+      "coverage": [
+        1,
+        1.2
+      ],
+      "bar": [
+        0,
+        "next"
+      ]
+    }
+  },
+  {
+    "text": "Daarna stopt deze tijdelijke dekking.",
+    "changes": {
+      "fund": [
+        0,
+        1.2
+      ],
+      "coverage": 0
+    }
+  },
+  {
+    "text": "Gelukkig zijn er mogelijkheden om partnerpensioen verzekerd te houden.",
+    "changes": {
+      "options": [
+        1,
+        1.2
+      ]
+    }
+  }
+]
