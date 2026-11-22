@@ -27,3 +27,5 @@ Gebruik voor alle personages dezelfde rustige ademhaling op 70% (cyclus 3,7 seco
 ## Uitdrukkingen
 
 Elk personage krijgt een glimlachende en een neutrale variant. Geef beide afbeeldingen dezelfde uitsnede, schaal en ankerpunten. Wissel van uitdrukking wanneer het scenario daarom vraagt. Controleer bij de eerste integratie visueel of een wissel zonder verspringing oogt.
+
+De [generatie-instructie](generatie-instructie-personages.md) bevat de herbruikbare prompts, meetpunten en controles per personage.
