@@ -15,6 +15,16 @@ Bouw één keer en gebruik dezelfde bestanden voor acceptatie en productie. Een 
 
 Start met twee opdrachten: één voor bouwen en privé bekijken, één voor publiceren. Houd de publicatiestap expliciet. Als beide stappen betrouwbaar werken, kunnen ze achter een knop of een handmatig gestarte workflow komen. Test en Acceptatie delen in deze eerste opzet dezelfde VPS met gescheiden releasepaden.
 
+## Geautomatiseerde uitrol vanaf GitHub
+
+Gebruik GitHub als bedieningspunt en laat de VPS uitgaand ophalen. De assistent kan via GitHub wijzigingen klaarzetten en na akkoord de opdracht voor een specifieke release vastleggen. Een systemd-timer op de VPS leest die opdracht en voert een vast lokaal publicatiescript uit. Directe SSH-toegang vanuit de assistent of het delen van het rootwachtwoord is hiervoor overbodig.
+
+- Gebruik een aparte servicegebruiker voor Pensioen Ontdekt, met schrijfbevoegdheid voor de eigen releasepaden. De andere websites en de Nginx-configuratie vallen buiten die bevoegdheid. Is de repository privé, gebruik dan een alleen-lezen deploy key voor deze repository. De privésleutel blijft op de VPS.
+- Werk met één aangewezen uitrolbranch en een klein declaratief bestand. De eerste versie accepteert alleen een bestaande kandidaatversie en verwachte checksum, of de afgesproken statische homepage als beperkte test. Het bestand levert geen shellcommando's aan. Een normale commit op main start geen productie-uitrol.
+- Een productieopdracht wijst naar een goedgekeurde kandidaat. De VPS controleert de bron en checksum, zet bestanden eerst klaar buiten de live versie en wisselt daarna de actieve versie in één stap. Dezelfde opdracht kan veilig opnieuw worden gelezen. Log resultaat en versie op de VPS. Gebruik terugzetten naar een eerdere versie als rollback.
+- Begin met de link **Bekijk de demo** op de homepage. Daarmee testen we wijziging, uitrol, publieke controle en terugzetten met een kleine statische wijziging. Sluit daarna de privépreview en generator aan. De publieke en private audio blijven voldoen aan de bestaande publicatieafspraken.
+- Eenmalige inrichting vereist toegang op de VPS. Bundel die in één installatiecommando. Normale publicaties verlopen daarna vanuit GitHub, na akkoord op de release. Directe SSH blijft beschikbaar voor beheer en probleemoplossing.
+
 ## Opslag voor de eerste versie
 
 Voorkeur voor de pilot: SQLite voor de gegevens en koppelingen, met afbeeldingen en audiobestanden op schijf. Houd bewerkbare scenario's en het manifest in versiebeheer voor zover ze geen privémateriaal bevatten. Dezelfde gegevensstructuur kan aanvankelijk ook met een manifest en een map op schijf worden getest.

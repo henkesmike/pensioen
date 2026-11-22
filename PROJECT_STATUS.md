@@ -47,6 +47,8 @@ De [ontwikkelworkflow voor filmpjes](docs/ontwikkelworkflow-filmpjes.md) beschri
 
 Op 22 november werkte de privépreview van fase3-v1 op de VPS via een SSH-tunnel. De gebruiker bevestigde de werking op zijn Mac. De gebruiker bevestigde daarna ook de [publieke demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) met echte audio. Het geteste bestand kreeg voor de niet-commerciële publicatie een ElevenLabs-vermelding in de titel. De link ‘Bekijk de demo’ op de Partnerpensioen-pagina staat in GitHub. Uitrol van die link op de VPS staat nog open. De prototypekeuzelijst op de hoofdpagina bevat andere voorbeeldwaarden dan de A–D-demo.
 
+De volgende processtap is [geautomatiseerde uitrol vanaf GitHub](docs/ontwikkelworkflow-filmpjes.md#geautomatiseerde-uitrol-vanaf-github). We gebruiken de homepage-link als eerste uitroltest. Inrichting op de VPS staat nog open.
+
 ## Eerste proef fase 3
 - De [proef met vier regelingen](https://github.com/henkesmike/pensioen/tree/fase-3-vier-regelingen/poc/v4) combineert A (40%, 3 maanden), B (40%, 6 maanden), C (50%, 3 maanden) en D (50%, 6 maanden).
 - De backend knipt de originele opname op in drie vaste blokken en twee variabele zinnen. De vier combinaties delen twee percentagezinnen en twee duurzinnen. De bestaande audio bevat 40% en 3 maanden.
