@@ -55,6 +55,14 @@ De volgende processtap is [geautomatiseerde uitrol vanaf GitHub](docs/ontwikkelw
 - De HTTP-proef verifieerde twee automatische aanroepen, voor 50% en 6 maanden, en nul bij herhaling. Keuzelijst, audiobron, beeldlabels, ondertiteling en herberekende tijdcodes zijn technisch gecontroleerd. De proef gebruikt een lokale test-API met testtonen voor de twee nieuwe zinnen.
 - De echte ElevenLabs-proef slaagde op de VPS nadat de generator een afrondingsverschil van minder dan één milliseconde in de tijdcodes kon verwerken. De gebruiker opende de uitvoer op zijn Mac en bevestigde dat de POC werkt. Dit was een privéproef buiten de live site. De automatische start na regeling-upload blijft onderdeel van het eindontwerp.
 
+## Overdracht 22 november 2026
+
+- De [publieke Partnerpensioen-demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) is bijgewerkt na gebruikersacceptatie. De homepage verwijst naar deze demo. De gebruiker heeft het bestand op de VPS gepubliceerd met een herstelkopie van de vorige versie. De publieke controle gaf dezelfde SHA-256 als het geaccepteerde bestand: `fa80f185429e26d791e5a720269190465f068876658adabef0e3e3a9c99faca8`.
+- De selectie biedt drie huidtinten en vier koppelcombinaties. Bij twee personen van hetzelfde geslacht verschijnt een andere figuur als partner. Regeling A–D wordt afzonderlijk in het filmpje gekozen.
+- Zes vernieuwde personages gebruiken per figuur gemeten oogleden. Alleen het mondgebied wijzigt bij de wissel naar neutraal. Gedeelde beweging: ademen op 70% en knipperen met sluitduur op 270%, met twee enkele knippers en één dubbele per acht seconden.
+- De programmatest controleerde de twaalf combinaties, vier regelingkeuzes en terugknop. De gebruiker accepteerde de testversie. De publieke nacontrole verifieerde de bestandsinhoud via checksum. De aparte wenkbrauw- en hoofdproef dient als voorbereiding voor later.
+- Volgende inhoudelijke stap: maak **Na uitdiensttreding** herbruikbaar als zelfstandig fragment. De automatische uitrol ondersteunt nu alleen de homepage. Voor uitrol van demo-updates zonder Terminal kan die worden uitgebreid naar het specifieke demobestand.
+
 ## Personages
 De bewegingsproef is goedgekeurd. [De ontwerpprincipes](docs/ontwerpprincipes-personages.md#goedgekeurde-basisbeweging) leggen de gedeelde instellingen vast. De vier aanvullende personages krijgen ieder een glimlachende en neutrale variant.
 
