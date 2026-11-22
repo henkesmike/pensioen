@@ -1,5 +1,5 @@
 # Pensioen ontdekt — projectstatus
-Bijgewerkt: 2026-11-21
+Bijgewerkt: 2026-11-22
 
 ## Doel
 Interactieve, begrijpelijke uitleg van pensioenregelingen. Iteratief ontwikkelen, eerst fictieve regeling, later zeven geparametriseerde regelingen. Gebruiker bepaalt inhoud en creatieve richting.
@@ -41,7 +41,7 @@ Ubuntu VPS, Nginx, HTTPS. Python generator met ElevenLabs timestamps en lokale a
 - De goedkeuring geldt voor de privétestversie van fase 2. Definitief script, stemkeuze en publicatie staan nog open.
 
 ## Eerstvolgende iteratie
-De [ontwikkelworkflow voor filmpjes](docs/ontwikkelworkflow-filmpjes.md) beschrijft hoe we lokaal testen, een versie als pakket importeren en fragmenten en audioblokken hergebruiken. De eerste iteratie gebruikt **Na uitdiensttreding** in de bestaande uitleg en als zelfstandig fragment, gevolgd door een privé-importproef.
+De [ontwikkelworkflow voor filmpjes](docs/ontwikkelworkflow-filmpjes.md) beschrijft OTAP op de bestaande VPS: één release bouwen en testen, afgeschermd accepteren en dezelfde release na akkoord publiceren. De eerstvolgende proef gebruikt het bestaande filmpje met A, B, C en D. Fragmenthergebruik en database volgen na de deploymentproef.
 
 ## Eerste proef fase 3
 - De [proef met vier regelingen](https://github.com/henkesmike/pensioen/tree/fase-3-vier-regelingen/poc/v4) combineert A (40%, 3 maanden), B (40%, 6 maanden), C (50%, 3 maanden) en D (50%, 6 maanden).

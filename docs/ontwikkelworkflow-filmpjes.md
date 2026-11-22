@@ -1,11 +1,19 @@
 # Ontwikkelworkflow voor filmpjes
 
-## Van concept naar publicatie
+## OTAP op één VPS
 
-1. **Lokaal maken en proberen.** Leg de volgorde van de fragmenten, het script, de gebruikte regelingparameters en de momenten voor beeld en ondertiteling vast. Bouw met dezelfde generator als in de proef en open de lokale preview. Controleer de regelingvarianten en speel herbruikbare fragmenten ook los af.
-2. **Een geteste versie uploaden.** Maak een pakket met een manifest, de gewijzigde scenario's en bijbehorende media. Het manifest bevat vaste identificaties en versies, de volgorde van fragmenten en audioblokken, en verwijzingen naar de benodigde bestanden. Het pakket bevat de brononderdelen waarmee de server de uitleg kan opbouwen. Een losse HTML-preview is bedoeld om te bekijken.
-3. **Privé importeren en controleren.** De backend controleert of alle verwijzingen, bestanden en tijdcodes geldig zijn. De import levert een conceptversie op die je op de server kunt bekijken. Bij een fout blijft de eerder beschikbare versie actief. Importeer hetzelfde pakket desgewenst opnieuw zonder dubbele versies of media te maken.
-4. **Een versie activeren.** Na goedkeuring wijst de server de betreffende pagina of gebeurtenis naar de nieuwe versie. Bewaar de vorige versie zodat die weer geactiveerd kan worden. Voor de eerste proef volstaan een importcommando en een privépreview.
+Gebruik GitHub voor scenario's, regelingconfiguratie en code. Gebruik de bestaande VPS om releases te bouwen, privé te bekijken en te publiceren. De Mac is je werkplek en browser. Lokaal bouwen blijft mogelijk voor snelle experimenten. De gebruikelijke route loopt via een build op de VPS.
+
+| Stap | Waar | Wat gebeurt er? |
+|---|---|---|
+| Ontwikkeling | GitHub-branch | Pas scenario's, fragmenten en regelingwaarden aan. Koppel elke bouw aan een concrete Git-commit. |
+| Test | VPS, vóór de preview | Eén opdracht bouwt een release. Controleer het manifest, media, tijdcodes en de vier regelingvarianten. Bij een fout stopt de bouw en blijft de publieke versie beschikbaar. |
+| Acceptatie | Privépreview op dezelfde VPS | Bekijk en beluister de geteste release via een afgeschermde URL. Gebruik in de eerste proef een preview op localhost met SSH-tunnel. De normale acceptatie is het bekijken van de gerenderde release. |
+| Productie | Bestaande website | Na akkoord maakt één publicatieopdracht exact die release beschikbaar. Wijs de publieke route in één stap naar de nieuwe release en bewaar de vorige voor terugzetten. Controleer de publieke URL na publicatie. |
+
+Bouw één keer en gebruik dezelfde bestanden voor acceptatie en productie. Een release krijgt een vaste versie en een checksum. Bewaar kandidaat-releases en bronmedia buiten de publieke webroot. De publicatieopdracht kopieert uitsluitend de geteste, te publiceren webbestanden naar een eigen release-directory. Tag of registreer de versie die actief is. De sleutel voor de spraakservice blijft op de VPS. De generator gebruikt bestaande audioblokken uit de cache en vraagt ontbrekende opnames op als de bouw ze nodig heeft.
+
+Start met twee opdrachten: één voor bouwen en privé bekijken, één voor publiceren. Houd de publicatiestap expliciet. Als beide stappen betrouwbaar werken, kunnen ze achter een knop of een handmatig gestarte workflow komen. Test en Acceptatie delen in deze eerste opzet dezelfde VPS met gescheiden releasepaden.
 
 ## Opslag voor de eerste versie
 
@@ -24,4 +32,6 @@ De upload van een **filmpje** voegt scenario's en media toe. De upload van **reg
 
 ## Eerste iteratie
 
-Gebruik het bestaande partnerpensioenfilmpje. Maak **Na uitdiensttreding** zelfstandig afspeelbaar en verwijs naar dezelfde fragmentversie vanuit de volledige uitleg en vanuit Uitdiensttreding. Maak daarna één importeerbaar pakket en toets de privépreview op de server met dezelfde fragmentversie. Begin met het bestaande beeld en de beschikbare audio. Stel een beheerinterface en de definitieve opslagkeuze uit tot de werkwijze met dit ene filmpje klopt.
+Gebruik het bestaande partnerpensioenfilmpje met A, B, C en D. De HTML met echte audio is al op de VPS gebouwd. Registreer die als eerste kandidaat-release met een klein manifest en checksum, open hem via de privépreview en controleer alle vier varianten. Publiceer daarna dezelfde release onder een eigen URL, zodra de audio voor publiek gebruik is vrijgegeven. Controleer de URL en leg vast hoe de vorige versie kan worden teruggezet of hoe de route bij de eerste publicatie weer kan worden uitgezet.
+
+Daarna doorlopen we de route opnieuw met een kleine wijziging vanuit Git. Dan toetsen we ook de automatische bouw en testen. Het opsplitsen van het filmpje en de database volgen na deze eerste deploymentproef.
