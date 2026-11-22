@@ -25,6 +25,14 @@ Gebruik GitHub als bedieningspunt en laat de VPS uitgaand ophalen. De assistent 
 - Begin met de link **Bekijk de demo** op de homepage. Daarmee testen we wijziging, uitrol, publieke controle en terugzetten met een kleine statische wijziging. Sluit daarna de privépreview en generator aan. De publieke en private audio blijven voldoen aan de bestaande publicatieafspraken.
 - Eenmalige inrichting vereist toegang op de VPS. Bundel die in één installatiecommando. Normale publicaties verlopen daarna vanuit GitHub, na akkoord op de release. Directe SSH blijft beschikbaar voor beheer en probleemoplossing.
 
+### Voortgang tijdens elke uitrol
+
+Geef vooraf aan welke stappen deze uitrol heeft en hoeveel het er zijn. Meld na elke stap het nummer, het resultaat, wat nog openstaat en de eerstvolgende stap. Bijvoorbeeld: “Stap 3 van 5 afgerond. De privépreview is akkoord. Volgende stap: de goedgekeurde versie publiceren.” Meld een blokkade bij de betreffende stap. Zet een stap pas op afgerond nadat het resultaat is gecontroleerd.
+
+Gebruik als standaard: 1. wijziging klaarzetten, 2. bouwen en testen, 3. acceptatie, 4. publiceren, 5. publiek controleren. Vermeld per stap of de assistent die uitvoert of dat de gebruiker iets moet doen en waar. Kleine wijzigingen kunnen dezelfde stappen kort doorlopen.
+
+Voor de huidige demo is de zichtbare kop **Partnerpensioen**. De vermelding voor de bestaande ElevenLabs-opname blijft in de browsertitel.
+
 ## Opslag voor de eerste versie
 
 Voorkeur voor de pilot: SQLite voor de gegevens en koppelingen, met afbeeldingen en audiobestanden op schijf. Houd bewerkbare scenario's en het manifest in versiebeheer voor zover ze geen privémateriaal bevatten. Dezelfde gegevensstructuur kan aanvankelijk ook met een manifest en een map op schijf worden getest.
