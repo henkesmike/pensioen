@@ -1,7 +1,7 @@
 # Ontwerpprincipes – personages en personalisatie
 
 Datum: 21 november 2026
-Status: akkoord; uitbreiding uitgesteld tot na de pilot.
+Status: bewegingsproef goedgekeurd op 22 november 2026.
 
 ## Doel
 Animaties laten aansluiten bij verschillende doelgroepen zonder afzonderlijke films of programmacode per doelgroep te onderhouden.
@@ -20,5 +20,10 @@ Animaties laten aansluiten bij verschillende doelgroepen zonder afzonderlijke fi
 - Combineer personages en bewegingen dynamisch; voorkom aparte animaties per combinatie.
 - Laat eventuele toekomstige personalisatie berusten op vrijwillige keuze van de bezoeker; leid etniciteit of relatievorm niet af uit persoonsgegevens.
 
-## Pilot
-Gebruik uitsluitend de twee reeds goedgekeurde personageontwerpen. Houd bij de technische opbouw rekening met bovenstaande principes. Bouw nog geen aanvullende personages, selectie-interface of doelgroepfunctionaliteit. De exacte categorieën, uiterlijkvarianten en technische rig-uitwerking volgen iteratief.
+## Goedgekeurde basisbeweging
+
+Gebruik voor alle personages dezelfde rustige ademhaling op 70% (cyclus 3,7 seconden) en hetzelfde knipperpatroon met de sluitduur op 270%. De cyclus van 8 seconden bevat twee enkele knippers en één dubbele. Gebruik bij twee personages een faseverschil zodat ze niet synchroon knipperen. De positie en tint van de oogleden worden per illustratie ingesteld. De standaardbeweging bestaat uit ademhalen en knipperen.
+
+## Uitdrukkingen
+
+Elk personage krijgt een glimlachende en een neutrale variant. Geef beide afbeeldingen dezelfde uitsnede, schaal en ankerpunten. Wissel van uitdrukking wanneer het scenario daarom vraagt. Controleer bij de eerste integratie visueel of een wissel zonder verspringing oogt.
