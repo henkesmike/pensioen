@@ -45,7 +45,7 @@ De OTAP-opzet op één VPS is op 22 november door de gebruiker goedgekeurd.
 
 De [ontwikkelworkflow voor filmpjes](docs/ontwikkelworkflow-filmpjes.md) beschrijft OTAP op de bestaande VPS: één release bouwen en testen, afgeschermd accepteren en dezelfde release na akkoord publiceren. De eerstvolgende proef gebruikt het bestaande filmpje met A, B, C en D. Fragmenthergebruik en database volgen na de deploymentproef.
 
-Op 22 november werkte de privépreview van fase3-v1 op de VPS via een SSH-tunnel. De gebruiker bevestigde de werking op zijn Mac. De publieke stap staat nog open.
+Op 22 november werkte de privépreview van fase3-v1 op de VPS via een SSH-tunnel. De gebruiker bevestigde de werking op zijn Mac. De gebruiker bevestigde daarna ook de [publieke demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) met echte audio. Het geteste bestand kreeg voor de niet-commerciële publicatie een ElevenLabs-vermelding in de titel. De koppeling vanaf de hoofdpagina staat nog open. De prototypekeuzelijst op de hoofdpagina bevat andere voorbeeldwaarden dan de A–D-demo.
 
 ## Eerste proef fase 3
 - De [proef met vier regelingen](https://github.com/henkesmike/pensioen/tree/fase-3-vier-regelingen/poc/v4) combineert A (40%, 3 maanden), B (40%, 6 maanden), C (50%, 3 maanden) en D (50%, 6 maanden).
@@ -54,4 +54,4 @@ Op 22 november werkte de privépreview van fase3-v1 op de VPS via een SSH-tunnel
 - De echte ElevenLabs-proef slaagde op de VPS nadat de generator een afrondingsverschil van minder dan één milliseconde in de tijdcodes kon verwerken. De gebruiker opende de uitvoer op zijn Mac en bevestigde dat de POC werkt. Dit was een privéproef buiten de live site. De automatische start na regeling-upload blijft onderdeel van het eindontwerp.
 
 ## Publicatie
-Private POC niet openbaar publiceren met gratis ElevenLabs-audio. Generator staat in GitHub; gegenereerde audio/HTML blijft privé. Geen secrets in repo.
+De oorspronkelijke privé-POC en bronopnames blijven privé. De A–D-demo is als afzonderlijke niet-commerciële publicatie beschikbaar met de ElevenLabs-vermelding in de titel. De generator staat in GitHub. Sleutels blijven buiten de repository en de webroot.
