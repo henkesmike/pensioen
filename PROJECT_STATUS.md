@@ -37,8 +37,11 @@ Ubuntu VPS, Nginx, HTTPS. Python generator met ElevenLabs timestamps en lokale a
 5. Fase 5 — inhoud valideren, script en beeld verfijnen, integreren in website en publiceren.
 
 ## Vervolg na fase 2
-- Eerstvolgende technische stap volgens de roadmap is fase 3: onderzoeken hoe regelingwaarden en gesproken tekst samen kunnen variëren.
+- De proef voor variërende regelingwaarden en gesproken tekst in fase 3 is geslaagd. Zie de eerste proef hieronder.
 - De goedkeuring geldt voor de privétestversie van fase 2. Definitief script, stemkeuze en publicatie staan nog open.
+
+## Eerstvolgende iteratie
+De [ontwikkelworkflow voor filmpjes](docs/ontwikkelworkflow-filmpjes.md) beschrijft hoe we lokaal testen, een versie als pakket importeren en fragmenten en audioblokken hergebruiken. De eerste iteratie gebruikt **Na uitdiensttreding** in de bestaande uitleg en als zelfstandig fragment, gevolgd door een privé-importproef.
 
 ## Eerste proef fase 3
 - De [proef met vier regelingen](https://github.com/henkesmike/pensioen/tree/fase-3-vier-regelingen/poc/v4) combineert A (40%, 3 maanden), B (40%, 6 maanden), C (50%, 3 maanden) en D (50%, 6 maanden).
