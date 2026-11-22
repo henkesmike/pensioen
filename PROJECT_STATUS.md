@@ -41,6 +41,8 @@ Ubuntu VPS, Nginx, HTTPS. Python generator met ElevenLabs timestamps en lokale a
 - De goedkeuring geldt voor de privétestversie van fase 2. Definitief script, stemkeuze en publicatie staan nog open.
 
 ## Eerstvolgende iteratie
+De OTAP-opzet op één VPS is op 22 november door de gebruiker goedgekeurd.
+
 De [ontwikkelworkflow voor filmpjes](docs/ontwikkelworkflow-filmpjes.md) beschrijft OTAP op de bestaande VPS: één release bouwen en testen, afgeschermd accepteren en dezelfde release na akkoord publiceren. De eerstvolgende proef gebruikt het bestaande filmpje met A, B, C en D. Fragmenthergebruik en database volgen na de deploymentproef.
 
 ## Eerste proef fase 3
