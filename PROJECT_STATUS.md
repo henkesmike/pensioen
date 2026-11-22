@@ -56,4 +56,4 @@ De volgende processtap is [geautomatiseerde uitrol vanaf GitHub](docs/ontwikkelw
 - De echte ElevenLabs-proef slaagde op de VPS nadat de generator een afrondingsverschil van minder dan één milliseconde in de tijdcodes kon verwerken. De gebruiker opende de uitvoer op zijn Mac en bevestigde dat de POC werkt. Dit was een privéproef buiten de live site. De automatische start na regeling-upload blijft onderdeel van het eindontwerp.
 
 ## Publicatie
-De oorspronkelijke privé-POC en bronopnames blijven privé. De A–D-demo is als afzonderlijke niet-commerciële publicatie beschikbaar met de ElevenLabs-vermelding in de titel. De generator staat in GitHub. Sleutels blijven buiten de repository en de webroot.
+De oorspronkelijke privé-POC en bronopnames blijven privé. De A–D-demo is als afzonderlijke niet-commerciële publicatie beschikbaar met de ElevenLabs-vermelding in de browsertitel. De zichtbare kop is **Partnerpensioen**. De gebruiker heeft deze correctie op de live demo gecontroleerd. De generator staat in GitHub. Sleutels blijven buiten de repository en de webroot.
