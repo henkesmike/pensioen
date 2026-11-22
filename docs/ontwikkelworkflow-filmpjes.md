@@ -33,6 +33,12 @@ Gebruik als standaard: 1. wijziging klaarzetten, 2. bouwen en testen, 3. accepta
 
 Voor de huidige demo is de zichtbare kop **Partnerpensioen**. De vermelding voor de bestaande ElevenLabs-opname blijft in de browsertitel.
 
+### Smoke test vóór acceptatie
+
+Bij stap 2 controleert de maker het exacte bestand of de URL die de gebruiker krijgt. Open de versie in een echte browser via dezelfde route als de gebruiker. Probeer de belangrijkste knoppen en selecties en controleer steeds het zichtbare resultaat. Bij de partnerpensioendemo omvat dit persoonlijke keuzes wijzigen, **Naar het filmpje**, een andere regeling kiezen, afspelen starten en teruggaan met **Wijzig situatie**. Controleer ook op JavaScript-fouten. Herhaal de getroffen route na elke reparatie.
+
+Noteer in de oplevering wat is gecontroleerd. Als de browserproef blokkeert, meld dan expliciet welke browsercontrole openstaat en presenteer een programmatest als zodanig. De inhoudelijke en functionele acceptatie doet de gebruiker zelf.
+
 ## Opslag voor de eerste versie
 
 Voorkeur voor de pilot: SQLite voor de gegevens en koppelingen, met afbeeldingen en audiobestanden op schijf. Houd bewerkbare scenario's en het manifest in versiebeheer voor zover ze geen privémateriaal bevatten. Dezelfde gegevensstructuur kan aanvankelijk ook met een manifest en een map op schijf worden getest.
