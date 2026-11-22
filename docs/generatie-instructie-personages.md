@@ -21,6 +21,14 @@ Plaats in de afspeelproef alleen het neutrale mondgebied over het basisbeeld, me
 - Controleer beide mondstanden met open en gesloten ogen. Kijk of het oogwit volledig bedekt is en of de mondwissel geen lijn of verspringing geeft. Bekijk het figuur vergroot en op de gebruikelijke grootte in het filmpje.
 - De gedeelde bewegingsinstellingen blijven zoals vastgelegd in de [ontwerpprincipes](ontwerpprincipes-personages.md#goedgekeurde-basisbeweging).
 
+## Voorwaarden voor latere beweging van wenkbrauwen en hoofd
+
+- **Ogen en wenkbrauwen.** Beide ogen zijn volledig zichtbaar en vrij van haar en harde slagschaduw. De wenkbrauwen zijn compact en eenvoudig, met vrije huid erboven. Meet per oog de volledige contour, inclusief de ooghoeken. Leg per wenkbrauw het middelpunt en de boven-, onder- en zijgrenzen vast. Meet na export.
+- **Hoofd en nek.** Recht van voren, zonder kanteling in het basisbeeld. Kies een natuurlijk iets langere, duidelijk zichtbare nek en een open of lage kraag. Houd haar, sieraden en kleding zo veel mogelijk vrij van de overgang tussen kaak en nek. Leg het draaipunt in de nek en de zone waarin de beweging naar de kraag vloeiend afneemt vast.
+- **Uitdrukkingen en uitlijning.** Gebruik de glimlachende basis als bron voor de neutrale mond. Houd het canvas, de voeten, de hoofdstand en de ankers gelijk. Meng alleen het mondgebied met een zachte rand als de generator elders pixels heeft veranderd.
+- **Acceptatie per figuur.** Test open en gesloten ogen, beide mondstanden, maximale subtiele wenkbrauwlift, hoofdkanteling naar links en rechts en de combinatie van beide. Controleer op volledig bedekt oogwit, witte of transparante randen en verspringing, zowel ingezoomd als op speelgrootte. Voor de beweging benutten we vloeiende vervorming van het beeld rond de wenkbrauwen en nek. Een generatieresultaat is pas gevalideerd als de gemeten ankers en visuele proef kloppen.
+- Begin voor de technische proef rond ±4 graden hoofdkanteling en circa 1% van de hoofdhoogte aan wenkbrauwlift. Dit zijn instelbare testgrenzen. De twee bewegingen zijn voorbereid voor later gebruik.
+
 ## Gemeten proefwaarden voor de man met het blauwe overshirt
 
 Deze waarden horen bij het proefbeeld van 725 × 2170 px en vormen een voorbeeld voor het registreren van een nieuw figuur.
