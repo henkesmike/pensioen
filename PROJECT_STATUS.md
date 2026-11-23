@@ -1,5 +1,5 @@
 # Pensioen ontdekt — projectstatus
-Bijgewerkt: 2026-11-22
+Bijgewerkt: 2026-11-23
 
 ## Doel
 Interactieve, begrijpelijke uitleg van pensioenregelingen. Iteratief ontwikkelen, eerst fictieve regeling, later zeven geparametriseerde regelingen. Gebruiker bepaalt inhoud en creatieve richting.
@@ -69,7 +69,17 @@ De [technische opzet van animaties en afbeeldingen](docs/technische-opzet-animat
 
 ## Architectuurafspraak JSON (23 november 2026)
 
-Besloten om regelingparameters, personagegegevens en animatie-instellingen in gestructureerde JSON te beheren, met generieke code, stabiele ID's, validatie en een centrale inleeslaag. Een database is voorlopig niet nodig; de gegevensstructuur moet latere migratie mogelijk maken. Zie [architectuur JSON-configuratie](docs/architectuur-json-configuratie.md). Dit is nog niet in de demo geïmplementeerd; de omzetting volgt bij een volgende technische iteratie.
+Besloten om regelingparameters, personagegegevens en animatie-instellingen in gestructureerde JSON te beheren, met generieke code, stabiele ID's, validatie en een centrale inleeslaag. Een database is voorlopig niet nodig; de gegevensstructuur moet latere migratie mogelijk maken. Zie [architectuur JSON-configuratie](docs/architectuur-json-configuratie.md).
+
+Een eerste implementatie voor de privéproef met vier regelingen staat op [branch implement-json-config](https://github.com/henkesmike/pensioen/tree/implement-json-config/poc/v4). De technische proef is in de assistentomgeving geslaagd met lokale testaudio. De generator en JSON-configuratie zijn nog niet op de VPS geïnstalleerd en de live demo is niet gewijzigd.
+
+## Werkwijze van idee tot deployment (23 november 2026)
+
+De gebruiker wil vanuit idee naar een complete deployment met zo min mogelijk eigen handelingen en zonder herhaald code- of commandokopiëren. Eerst wordt de volledige, veilige route ontworpen en vastgelegd; daarna volgt de implementatie. Zie [ontwikkelworkflow voor filmpjes](docs/ontwikkelworkflow-filmpjes.md#doel-van-idee-naar-deployment-met-zo-min-mogelijk-handwerk).
+
+De beoogde normale route is: wijziging via chat op een aparte GitHub-branch, automatische build en controles op de VPS, een afgeschermde preview-link, akkoord in de chat, daarna publicatie van exact dezelfde kandidaat met checksum en herstelmogelijkheid. Terminalhandelingen horen alleen nodig te zijn bij de eenmalige inrichting of bij storing/beheer.
+
+De huidige automatische uitrol ondersteunt alleen `index.html`; de generator en Partnerpensioen-demo hebben nog geen volledige build-preview-publicatieroute. Tijdens het uitwerken van die werkwijze zijn geen server- of live wijzigingen uitgevoerd.
 
 ## Personages
 De bewegingsproef is goedgekeurd. [De ontwerpprincipes](docs/ontwerpprincipes-personages.md#goedgekeurde-basisbeweging) leggen de gedeelde instellingen vast. De vier aanvullende personages krijgen ieder een glimlachende en neutrale variant.
