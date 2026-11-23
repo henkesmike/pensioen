@@ -86,3 +86,20 @@ De bewegingsproef is goedgekeurd. [De ontwerpprincipes](docs/ontwerpprincipes-pe
 
 ## Publicatie
 De oorspronkelijke privé-POC en bronopnames blijven privé. De A–D-demo is als afzonderlijke niet-commerciële publicatie beschikbaar met de ElevenLabs-vermelding in de browsertitel. De zichtbare kop is **Partnerpensioen**. De gebruiker heeft deze correctie op de live demo gecontroleerd. De generator staat in GitHub. Sleutels blijven buiten de repository en de webroot.
+
+
+## Beheerrechten deployment (23 november 2026)
+
+Afgesproken is dat de deploymentvoorziening volledige beheerrechten krijgt voor de
+projectomgeving van `pensioen.myaiprojects.nl`: de volledige websiteboom (pagina's,
+mappen en assets), projectbronnen, gegenereerde previews en releases, publicatie en
+rollback. De rechten gelden ook voor nieuwe bestanden en submappen, niet alleen voor
+`index.html`.
+
+De bevoegdheid blijft beperkt tot de afgebakende projectpaden. Andere subdomeinen en
+serverbrede instellingen zoals Nginx, DNS, TLS, firewall en besturingssysteem vallen
+buiten de normale projectservice. De service krijgt hiervoor geen algemene rootrechten.
+Na eenmalige inrichting volgt het normale proces via chat/GitHub, automatische build
+en controles, privépreview, expliciet akkoord en publicatie van exact dezelfde release.
+De bestaande timer ondersteunt dit nog niet en moet worden uitgebreid. De server is
+voor deze inrichting nog niet aangepast; dit is de eerstvolgende stap.
