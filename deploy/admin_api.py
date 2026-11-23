@@ -203,7 +203,6 @@ def file_lock(path):
 
 
 def create_candidate(job_id, rule, all_additions):
-    source_version = source_commit()
     if not REFERENCE.is_file() or not CACHE.is_dir():
         raise RuntimeError("De privébron of audiocache ontbreekt op de server.")
     JOBS.mkdir(parents=True, exist_ok=True)
@@ -227,12 +226,13 @@ def create_candidate(job_id, rule, all_additions):
         if not environment["ELEVENLABS_API_KEY"]:
             raise RuntimeError("De server heeft geen ElevenLabs-sleutel voor deze beheerfunctie.")
         with file_lock(BUILD_LOCK):
+            source_version = source_commit()
             subprocess.run(command, check=True, timeout=BUILD_TIMEOUT, env=environment,
                            stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
             if not output_path.is_file() or output_path.stat().st_size > MAX_HTML:
                 raise RuntimeError("De gegenereerde preview ontbreekt of is te groot.")
             digest = hashlib.sha256(output_path.read_bytes()).hexdigest()
-            candidate_id = hashlib.sha1(f"{job_id}:{digest}".encode()).hexdigest()
+            candidate_id = hashlib.sha256(f"{job_id}:{digest}".encode()).hexdigest()[:40]
             final_dir = PREVIEWS / candidate_id
             staging_dir = PREVIEWS / f".{candidate_id}.{job_id}"
             if staging_dir.exists():

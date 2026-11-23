@@ -32,9 +32,12 @@ tmp=$(mktemp -d)
 success=0
 rollback() {
   if [[ "$success" -eq 0 ]]; then
+    systemctl disable --now pensioen-regelingen-api.service 2>/dev/null || true
     cp -a "$backup_dir/pensioen.nginx" "$nginx_conf" 2>/dev/null || true
     if [[ -f "$backup_dir/pensioen-regelingen-api.service" ]]; then
       cp -a "$backup_dir/pensioen-regelingen-api.service" "$api_unit" 2>/dev/null || true
+    else
+      rm -f "$api_unit"
     fi
     systemctl daemon-reload 2>/dev/null || true
     nginx -t 2>/dev/null && systemctl reload nginx 2>/dev/null || true

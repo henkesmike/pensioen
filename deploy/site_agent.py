@@ -127,9 +127,13 @@ def source_for(commit):
         if b'parser.add_argument("--offline"' not in build.read_bytes():
             raise ValueError("The selected source commit does not support offline builds.")
         (stage / ".source-commit").write_text(commit + "\n", encoding="ascii")
-        if SOURCE.exists():
-            shutil.rmtree(SOURCE)
-        os.replace(stage, SOURCE)
+        with acquire_build_lock():
+            marker = SOURCE / ".source-commit"
+            if marker.is_file() and marker.read_text().strip() == commit:
+                return
+            if SOURCE.exists():
+                shutil.rmtree(SOURCE)
+            os.replace(stage, SOURCE)
     finally:
         if stage.exists():
             shutil.rmtree(stage)
