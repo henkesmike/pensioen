@@ -101,11 +101,13 @@ serverbrede instellingen zoals Nginx, DNS, TLS, firewall en besturingssysteem va
 buiten de normale projectservice. De service krijgt hiervoor geen algemene rootrechten.
 Na eenmalige inrichting volgt het normale proces via chat/GitHub, automatische build
 en controles, privépreview, expliciet akkoord en publicatie van exact dezelfde release.
-Op 23 november is de eerste eenmalige serverinrichting uitgevoerd. De bestaande servicegebruiker `pensioen-deploy` mag schrijven in `/var/www/pensioen` en de eigen projectmappen onder `/var/lib/pensioen-deploy`; de timer is actief. De publieke homepage gaf HTTP 200. De projectgebruiker kan de Pensioen-site schrijven, terwijl `/var/www/puzzle` buiten bereik blijft. Deze stap wijzigde geen website-inhoud of Nginx. De implementatie staat in voorbereiding op branch
-[`deployment-json-config`](https://github.com/henkesmike/pensioen/tree/deployment-json-config):
-een offline build zonder ElevenLabs-aanroepen, een preview-agent en publicatie na
-checksumcontrole. De eenmalige installer is nog niet op de VPS uitgevoerd. Die
-voegt uitsluitend een Basic Auth-previewlocatie toe aan de Pensioen-vhost; de
-projectservice krijgt geen Nginx-beheer. De eerste versie publiceert de gegenereerde
+Op 23 november is de eerste eenmalige serverinrichting uitgevoerd. De bestaande servicegebruiker `pensioen-deploy` mag schrijven in `/var/www/pensioen` en de eigen projectmappen onder `/var/lib/pensioen-deploy`; de timer is actief. De publieke homepage gaf HTTP 200. De projectgebruiker kan de Pensioen-site schrijven, terwijl `/var/www/puzzle` buiten bereik blijft. Deze stap wijzigde geen website-inhoud of Nginx. De site-agent is op 23 november geïnstalleerd vanaf branch
+[`deployment-json-config`](https://github.com/henkesmike/pensioen/tree/deployment-json-config).
+De eenmalige root-installatie voegde een Basic Auth-previewlocatie toe aan alleen de
+Pensioen-vhost; de projectservice heeft geen Nginx-beheer. De timer kan nu de JSON-
+generator offline bouwen en een kandidaat beveiligen. De eerste kandidaat is gereed
+voor browsercontrole: broncommit `003cc3c374b5b71fd75490a74615cfea4549c1b6`,
+SHA-256 `529a752a80b8df06e945eaaaa8fd6fc07ab4e26a6b9fe5d928f656e9e815d591`.
+Deze kandidaat is nog niet live gepubliceerd. De eerste versie publiceert alleen de
 Partnerpensioen-demo; bredere releasebestemmingen kunnen daarna worden toegevoegd.
-De bestaande timer publiceert nog alleen `index.html`; de geautomatiseerde build-preview-publicatie van releases moeten nog worden aangesloten.
+De oude homepage-uitrol voor `index.html` blijft daarnaast actief.
