@@ -1,4 +1,5 @@
 """Build, privately preview, and publish approved Pensioen releases."""
+import fcntl
 import hashlib
 import json
 import os
@@ -21,6 +22,9 @@ SOURCE = BASE / "source" / "repo"
 PRIVATE = BASE / "private"
 REFERENCE = PRIVATE / "partnerpensioen-v3.html"
 CACHE = PRIVATE / "fase3"
+SUPPLEMENT = PRIVATE / "aanvullende-regelingen.json"
+BUILD_LOCK = BASE / "admin" / "candidate-build.lock"
+ACTIVE_CANDIDATE = BASE / "admin" / "active-candidate.json"
 PREVIEWS = BASE / "previews"
 CANDIDATES = BASE / "candidates"
 STATE = BASE / "state"
@@ -131,6 +135,13 @@ def source_for(commit):
             shutil.rmtree(stage)
 
 
+def acquire_build_lock():
+    BUILD_LOCK.parent.mkdir(parents=True, exist_ok=True)
+    handle = BUILD_LOCK.open("a+")
+    fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+    return handle
+
+
 def candidate_path(commit):
     return PREVIEWS / commit / "partnerpensioen-demo.html"
 
@@ -183,8 +194,11 @@ def build_preview():
                 sys.executable, str(SOURCE / "poc/v4/build.py"),
                 str(REFERENCE), str(output), "--cache", str(CACHE), "--offline",
             ]
+            if SUPPLEMENT.is_file():
+                command += ["--additional-regulations", str(SUPPLEMENT)]
             env = {"PATH": "/usr/bin:/bin", "HOME": str(BASE), "LANG": "C.UTF-8"}
-            subprocess.run(command, check=True, timeout=840, env=env)
+            with acquire_build_lock():
+                subprocess.run(command, check=True, timeout=840, env=env)
             if not output.is_file() or output.stat().st_size > HTML_LIMIT:
                 raise ValueError("The generated preview is missing or too large.")
             digest = hashlib.sha256(output.read_bytes()).hexdigest()
@@ -273,6 +287,10 @@ def publish_candidate():
         if os.path.exists(name):
             os.unlink(name)
     report(state, commit, expected)
+    if action == "publish" and ACTIVE_CANDIDATE.is_file():
+        active_request = json.loads(ACTIVE_CANDIDATE.read_text(encoding="utf-8"))
+        if active_request.get("commit") == commit:
+            ACTIVE_CANDIDATE.unlink(missing_ok=True)
     print(f"{state}: {target_name} ({commit}, {expected})")
 
 

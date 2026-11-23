@@ -2,12 +2,15 @@
 """Prepare the four private phase 3 previews and their voice-over."""
 import argparse
 import base64
+import fcntl
 import hashlib
 import json
 import os
 from pathlib import Path
 import re
 import subprocess
+import tempfile
+from datetime import datetime, timezone
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
@@ -50,7 +53,43 @@ def original_blocks(html, texts):
     }
 
 
-def speech(lines, cache, endpoint, key, offline=False):
+def reserve_daily_tts_call(usage_file, daily_limit):
+    """Reserve one API call atomically; failed requests still use the quota."""
+    if daily_limit < 1:
+        raise ValueError("De dagelijkse ElevenLabs-limiet moet minimaal 1 zijn.")
+    path = Path(usage_file)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lock_path = path.with_suffix(path.suffix + ".lock")
+    with lock_path.open("a+") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        today = datetime.now(timezone.utc).date().isoformat()
+        try:
+            usage = json.loads(path.read_text(encoding="utf-8"))
+        except FileNotFoundError:
+            usage = {"date": today, "calls": 0}
+        if usage.get("date") != today:
+            usage = {"date": today, "calls": 0}
+        calls = usage.get("calls")
+        if type(calls) is not int or calls < 0:
+            raise ValueError("Ongeldige ElevenLabs-gebruiksadministratie.")
+        if calls >= daily_limit:
+            raise ValueError("Daglimiet voor nieuwe ElevenLabs-aanroepen bereikt.")
+        usage["calls"] = calls + 1
+        fd, temp_name = tempfile.mkstemp(prefix=".tts-usage-", dir=path.parent)
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as stream:
+                json.dump(usage, stream)
+                stream.write("\n")
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.chmod(temp_name, 0o600)
+            os.replace(temp_name, path)
+        finally:
+            if os.path.exists(temp_name):
+                os.unlink(temp_name)
+
+
+def speech(lines, cache, endpoint, key, before_api_call=None, allow_api=True):
     text = " ".join(lines)
     fingerprint = hashlib.sha256(json.dumps([endpoint, VOICE, MODEL, text]).encode()).hexdigest()
     file = cache / (fingerprint + ".json")
@@ -58,8 +97,10 @@ def speech(lines, cache, endpoint, key, offline=False):
     if hit:
         response = json.loads(file.read_text(encoding="utf-8"))
     else:
-        if offline:
-            raise ValueError(f"Audio ontbreekt in de lokale cache; er is niets bij ElevenLabs aangevraagd: {text}")
+        if not allow_api:
+            raise ValueError(f"Offline bouw gestopt: audio ontbreekt voor: {text}")
+        if before_api_call is not None:
+            before_api_call()
         url = f"{endpoint.rstrip('/')}/{quote(VOICE, safe='')}/with-timestamps?output_format=pcm_24000"
         request = Request(url, data=json.dumps({"text": text, "model_id": MODEL}).encode(),
                           headers={"xi-api-key": key, "Content-Type": "application/json"})
@@ -94,9 +135,10 @@ def render(template, values):
     return re.sub(r"\{\{([\w-]+)\}\}", lambda match: str(values[match[1]]), template)
 
 
-def prepare(original, cache, endpoint, key, offline=False):
+def prepare(original, cache, endpoint, key, additional_regulations_path=None,
+            before_api_call=None, allow_api=True):
     reference = original.read_text(encoding="utf-8")
-    configuration = load_configuration()
+    configuration = load_configuration(additional_regulations_path)
     rules = {
         rule["code"]: {
             "percentage": rule["partnerpensioen"]["percentage_pensioengevend_salaris"],
@@ -120,7 +162,9 @@ def prepare(original, cache, endpoint, key, offline=False):
         for first, last in BLOCKS:
             phrase = tuple(lines[first:last])
             if phrase not in recordings:
-                recordings[phrase] = speech(phrase, cache, endpoint, key, offline=offline)
+                recordings[phrase] = speech(
+                    phrase, cache, endpoint, key, before_api_call, allow_api
+                )
             pcm, local = recordings[phrase]
             timing.extend((start + samples / RATE, end + samples / RATE) for start, end in local)
             chunks.append(pcm)
@@ -166,22 +210,36 @@ def main():
     parser.add_argument("output", type=Path)
     parser.add_argument("--cache", required=True, type=Path)
     parser.add_argument("--test-api", help="HTTP fixture op localhost voor de technische proef")
-    parser.add_argument("--offline", action="store_true", help="gebruik alleen cache; doe geen API-aanroepen")
+    parser.add_argument("--additional-regulations", type=Path,
+                        help="Privé JSON-bestand met aanvullende regelingen")
+    parser.add_argument("--tts-usage-file", type=Path,
+                        help="Privé dagteller voor echte TTS-aanroepen")
+    parser.add_argument("--tts-daily-limit", type=int, default=0,
+                        help="Maximum aantal echte TTS-aanroepen per UTC-dag")
+    parser.add_argument("--offline", action="store_true",
+                        help="Gebruik alleen al gecachete audio; doe geen API-aanroepen")
     args = parser.parse_args()
     if args.output.resolve().is_relative_to(ROOT.parents[1]) or args.cache.resolve().is_relative_to(ROOT.parents[1]):
         parser.error("Kies een uitvoer- en cachepad buiten de repository.")
     key = os.environ.get("ELEVENLABS_API_KEY", "")
-    if args.test_api and args.offline:
-        parser.error("--test-api en --offline kunnen niet tegelijk worden gebruikt.")
     if args.test_api and not re.fullmatch(r"http://127\.0\.0\.1:\d+", args.test_api):
         parser.error("Gebruik voor de test-API uitsluitend http://127.0.0.1:<poort>.")
     if not args.test_api and not args.offline and not key:
         parser.error("ELEVENLABS_API_KEY ontbreekt.")
+    if args.tts_usage_file and (args.offline or args.test_api or args.tts_daily_limit < 1):
+        parser.error("De TTS-dagteller vereist een echte online bouw en een limiet van minimaal 1.")
+    if args.tts_daily_limit and not args.tts_usage_file:
+        parser.error("Gebruik --tts-daily-limit alleen samen met --tts-usage-file.")
     os.umask(0o077)
     args.cache.mkdir(parents=True, exist_ok=True)
+    before_api_call = None
+    if args.tts_usage_file:
+        before_api_call = lambda: reserve_daily_tts_call(args.tts_usage_file, args.tts_daily_limit)
     variants, scene, runtime_config = prepare(args.reference, args.cache,
                                               args.test_api or "https://api.elevenlabs.io/v1/text-to-speech",
-                                              "test" if args.test_api else key, offline=args.offline)
+                                              "test" if args.test_api else key,
+                                              args.additional_regulations, before_api_call,
+                                              allow_api=not args.offline)
     template = (V3 / "template.html").read_text().replace("POC v3", "POC fase 3").replace("PROTOTYPE · V3", "PROTOTYPE · FASE 3")
     options = "".join(f"<option>{code}</option>" for code in runtime_config["planCodes"])
     template = re.sub(r"<h1>Partnerpensioen</h1><p>[^<]+</p>",

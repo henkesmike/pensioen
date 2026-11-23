@@ -34,12 +34,28 @@ def _unique_ids(items, label):
     return set(ids)
 
 
-def load_configuration():
+def load_configuration(additional_regulations_path=None):
     """Return validated regulations, character definitions and animation settings."""
     regulation_data = _read_json("regelingen.json")
     character_data = _read_json("personages.json")
     animation_data = _read_json("animaties.json")
     regulations = regulation_data.get("regelingen")
+    if additional_regulations_path is not None:
+        additional_path = Path(additional_regulations_path)
+        if additional_path.exists():
+            try:
+                additional_data = json.loads(additional_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as error:
+                raise ValueError(f"Kan aanvullende regelingen niet lezen: {error}") from error
+            if (not isinstance(additional_data, dict)
+                    or type(additional_data.get("schema_version")) is not int
+                    or additional_data["schema_version"] != 1
+                    or not isinstance(additional_data.get("regelingen"), list)):
+                raise ValueError("Aanvullende regelingen: verwacht schema_version 1 en een lijst.")
+            for rule in additional_data["regelingen"]:
+                if not isinstance(rule, dict) or "bron_audio" in rule:
+                    raise ValueError("Aanvullende regelingen mogen geen bron_audio instellen.")
+            regulations = list(regulations or []) + additional_data["regelingen"]
     characters = character_data.get("personages")
     settings = animation_data.get("animaties")
     if not isinstance(regulations, list) or not regulations:
