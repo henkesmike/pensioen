@@ -47,11 +47,18 @@ De agent publiceert alleen technische status, commit en SHA-256 in
 
 ## Publiceren na akkoord
 
+Voor terugzetten naar de voorafgaande demo gebruikt dezelfde bestandsnaam
+`deploy/site-release.json` de actie `rollback`. `candidate_commit` verwijst dan
+naar de release waarvan de backup moet worden teruggezet en `sha256` bevat de
+checksum van die opgeslagen backup. Ook terugzetten is daarmee expliciet en
+controleerbaar.
+
 Na akkoord op de preview kan een expliciete opdracht op branch
 `uitrol-productie` dezelfde kandidaat publiceren:
 
 ```json
 {
+  "action": "publish",
   "candidate_commit": "<dezelfde 40-teken Git-commit-id>",
   "sha256": "<SHA-256 uit deployment-status.json>",
   "target": "partnerpensioen-demo.html"
