@@ -148,3 +148,14 @@ De upload van een **filmpje** voegt scenario's en media toe. De upload van **reg
 Gebruik het bestaande partnerpensioenfilmpje met A, B, C en D. De HTML met echte audio is al op de VPS gebouwd. Registreer die als eerste kandidaat-release met een klein manifest en checksum, open hem via de privépreview en controleer alle vier varianten. Publiceer daarna dezelfde release onder een eigen URL, zodra de audio voor publiek gebruik is vrijgegeven. Controleer de URL en leg vast hoe de vorige versie kan worden teruggezet of hoe de route bij de eerste publicatie weer kan worden uitgezet.
 
 Daarna doorlopen we de route opnieuw met een kleine wijziging vanuit Git. Dan toetsen we ook de automatische bouw en testen. Het opsplitsen van het filmpje en de database volgen na deze eerste deploymentproef.
+
+
+## Publieke invoer voor een testregeling
+
+De homepage biedt een ingeklapt formulier met precies twee numerieke velden: voorlopige dekking in maanden (1–120) en dekkingspercentage partnerpensioen (1–100%). Er is geen vrije tekstinvoer. Iedere bezoeker kan een aanvraag indienen. De server maakt automatisch de regelingcode en fictieve naam, bouwt het script en de video opnieuw en doet alleen de ontbrekende ElevenLabs-aanroepen. De regeling wordt pas opgeslagen als de build slaagt.
+
+De publieke route is begrensd tot maximaal twee nieuwe regelingen per dag, twee per IP-adres per uur en vier nieuwe ElevenLabs-zinsopnamen per dag. Mislukte verzoeken tellen mee voor de aanvraag/API-limiet; een duplicaat wordt vóór de limiet geweigerd. Kandidaten zijn te bekijken via een unieke, niet-geïndexeerde URL en verlopen na 30 dagen. De regelinggegevens blijven opgeslagen.
+
+Een inzending is een concept, geen automatische productiepublicatie. Mike bekijkt de video en keurt de exacte checksum in de bestaande releaseflow goed voordat de demo live wijzigt. De API-sleutel staat alleen in een root-beheerd systemd environment-bestand; de service luistert uitsluitend op localhost. De eenmalige serverinstallatie beperkt Nginx-aanpassingen tot de Pensioen-vhost.
+
+De implementatie staat op branch `publieke-regelingbeheer` en is live. De root-installatie voegde de lokale API-service en routes toe aan uitsluitend de Pensioen-vhost; de API-sleutel staat root-beheerd op de server. De homepage is via de bestaande uitrolbranch gepubliceerd vanaf commit `0f12d31b23ea7a9b35b659c7efd06ed886535261` met checksum `680397f371908bc30c4687c0e8ee6c295af3eeeb202d943d05efd7ed813b657e`. De browsercontrole bevestigde het formulier, de twee numerieke invoervelden en hun grenzen. Een echte aanvraag en ElevenLabs-build zijn nog niet uitgevoerd.
