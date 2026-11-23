@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "animaties": {
+    "ademhalen": {
+      "cyclus_seconden": 3.7,
+      "amplitude": 0.008,
+      "verticale_factor": 0.25
+    },
+    "zwaaien": {
+      "cyclus_seconden": 5.8,
+      "amplitude": 0.48
+    },
+    "knipperen": {
+      "duur_seconden": 0.13,
+      "drempel": 0.45,
+      "fase_offset_seconden": 1.7
+    }
+  }
+}
