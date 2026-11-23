@@ -101,4 +101,11 @@ serverbrede instellingen zoals Nginx, DNS, TLS, firewall en besturingssysteem va
 buiten de normale projectservice. De service krijgt hiervoor geen algemene rootrechten.
 Na eenmalige inrichting volgt het normale proces via chat/GitHub, automatische build
 en controles, privépreview, expliciet akkoord en publicatie van exact dezelfde release.
-Op 23 november is de eerste eenmalige serverinrichting uitgevoerd. De bestaande servicegebruiker `pensioen-deploy` mag schrijven in `/var/www/pensioen` en de eigen projectmappen onder `/var/lib/pensioen-deploy`; de timer is actief. De publieke homepage gaf HTTP 200. De projectgebruiker kan de Pensioen-site schrijven, terwijl `/var/www/puzzle` buiten bereik blijft. Deze stap wijzigde geen website-inhoud of Nginx. De bestaande timer publiceert nog alleen `index.html`; build, afgeschermde preview en publicatie van volledige website-releases moeten nog worden aangesloten.
+Op 23 november is de eerste eenmalige serverinrichting uitgevoerd. De bestaande servicegebruiker `pensioen-deploy` mag schrijven in `/var/www/pensioen` en de eigen projectmappen onder `/var/lib/pensioen-deploy`; de timer is actief. De publieke homepage gaf HTTP 200. De projectgebruiker kan de Pensioen-site schrijven, terwijl `/var/www/puzzle` buiten bereik blijft. Deze stap wijzigde geen website-inhoud of Nginx. De implementatie staat in voorbereiding op branch
+[`deployment-json-config`](https://github.com/henkesmike/pensioen/tree/deployment-json-config):
+een offline build zonder ElevenLabs-aanroepen, een preview-agent en publicatie na
+checksumcontrole. De eenmalige installer is nog niet op de VPS uitgevoerd. Die
+voegt uitsluitend een Basic Auth-previewlocatie toe aan de Pensioen-vhost; de
+projectservice krijgt geen Nginx-beheer. De eerste versie publiceert de gegenereerde
+Partnerpensioen-demo; bredere releasebestemmingen kunnen daarna worden toegevoegd.
+De bestaande timer publiceert nog alleen `index.html`; de geautomatiseerde build-preview-publicatie van releases moeten nog worden aangesloten.
