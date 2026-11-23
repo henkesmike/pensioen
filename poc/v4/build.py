@@ -11,6 +11,8 @@ import subprocess
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
+from config import load_configuration
+
 ROOT = Path(__file__).resolve().parent
 V3 = ROOT.parent / "v3"
 RATE = 24000
@@ -92,10 +94,17 @@ def render(template, values):
 
 def prepare(original, cache, endpoint, key):
     reference = original.read_text(encoding="utf-8")
-    rules = json.loads((ROOT / "regelingen.json").read_text())
+    configuration = load_configuration()
+    rules = {
+        rule["code"]: {
+            "percentage": rule["partnerpensioen"]["percentage_pensioengevend_salaris"],
+            "maanden": rule["partnerpensioen"]["uitloop_maanden"],
+        }
+        for rule in configuration["regelingen"]
+    }
     scenario = json.loads((V3 / "scenario.json").read_text())
     assets = re.findall(r'data:image/webp;base64,[A-Za-z0-9+/=]+', reference)
-    asset_names = ("deelnemer", "partner-glimlach", "partner-neutraal")
+    asset_names = tuple(personage["asset_key"] for personage in configuration["personages"])
     if len(assets) != len(asset_names):
         raise ValueError("De oorspronkelijke personageafbeeldingen ontbreken.")
     scene_source = (V3 / "assets/scene.svg").read_text()
@@ -131,7 +140,19 @@ def prepare(original, cache, endpoint, key):
             "audio": "data:audio/mpeg;base64," + base64.b64encode(mp3).decode(),
             **rule,
         }
-    return variants, render(scene_source, {**rules["A"], **dict(zip(asset_names, assets))})
+    runtime_config = {
+        "personages": [
+            {
+                "id": personage["runtime_id"],
+                "x": personage["x"],
+                "phase": personage["fase_seconden"],
+                "period": personage["knippercyclus_seconden"],
+            }
+            for personage in configuration["personages"]
+        ],
+        "animaties": configuration["animaties"],
+    }
+    return variants, render(scene_source, {**rules["A"], **dict(zip(asset_names, assets))}), runtime_config
 
 
 def main():
@@ -150,15 +171,15 @@ def main():
         parser.error("ELEVENLABS_API_KEY ontbreekt.")
     os.umask(0o077)
     args.cache.mkdir(parents=True, exist_ok=True)
-    variants, scene = prepare(args.reference, args.cache,
-                              args.test_api or "https://api.elevenlabs.io/v1/text-to-speech",
-                              "test" if args.test_api else key)
+    variants, scene, runtime_config = prepare(args.reference, args.cache,
+                                              args.test_api or "https://api.elevenlabs.io/v1/text-to-speech",
+                                              "test" if args.test_api else key)
     template = (V3 / "template.html").read_text().replace("POC v3", "POC fase 3").replace("PROTOTYPE · V3", "PROTOTYPE · FASE 3")
     template = re.sub(r"<h1>Partnerpensioen</h1><p>[^<]+</p>",
                       '<h1>Partnerpensioen</h1><label>Fictieve regeling <select id="plan"><option>A</option><option>B</option><option>C</option><option>D</option></select></label><p id="summary"></p>', template)
     if args.test_api:
         template = template.replace("Audio: ElevenLabs.", "Technische proef: bij 50% en 6 maanden staat een korte testtoon in plaats van de nieuwe gesproken zin.")
-    template = template.replace("const timeline = {{timeline}};", "const variants = {{variants}};\nlet timeline = variants.A.timeline;")
+    template = template.replace("const timeline = {{timeline}};", "const runtimeConfig = {{runtimeConfig}};\nconst variants = {{variants}};\nlet timeline = variants.A.timeline;")
     engine = (V3 / "engine.js").read_text()
     start = engine.index("for (const { start, changes } of timeline)")
     end = engine.index("\n\nfunction draw()", start)
@@ -183,6 +204,7 @@ draw();
 """
     output = render(template, {"scene": scene, "audio": variants["A"]["audio"],
                                "variants": json.dumps(variants, ensure_ascii=False).replace("<", r"\u003c"),
+                               "runtimeConfig": json.dumps(runtime_config, ensure_ascii=False).replace("<", r"\u003c"),
                                "engine": engine})
     with args.output.open("x", encoding="utf-8") as preview:
         preview.write(output)
