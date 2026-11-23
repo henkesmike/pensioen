@@ -215,30 +215,52 @@ def build_preview():
 
 
 def publish_candidate():
-    request = fetch_request(RELEASE_REQUEST, {"candidate_commit", "sha256", "target"})
+    request = fetch_request(
+        RELEASE_REQUEST, {"action", "candidate_commit", "sha256", "target"}
+    )
     if request is None:
         return
+    action = request["action"]
     commit = validate_commit(request["candidate_commit"])
     expected = request["sha256"]
     target_name = request["target"]
+    if action not in {"publish", "rollback"}:
+        raise ValueError("Unknown release action.")
     if not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected):
-        raise ValueError("Invalid candidate checksum.")
+        raise ValueError("Invalid release checksum.")
     if target_name not in ALLOWED_TARGETS:
         raise ValueError("The requested publication target is not allowed.")
-    candidate, meta = load_candidate(commit)
-    if meta["sha256"] != expected:
-        raise ValueError("Approved checksum does not match the built candidate.")
     active = SITE / target_name
-    data = candidate.read_bytes()
-    if hashlib.sha256(data).hexdigest() != expected:
-        raise ValueError("Candidate changed after approval.")
-    if active.is_file() and hashlib.sha256(active.read_bytes()).hexdigest() == expected:
-        report("published", commit, expected)
-        return
-    backup = BASE / "backups" / f"{target_name}.{commit}.previous"
-    backup.parent.mkdir(parents=True, exist_ok=True)
-    if active.is_file() and not backup.exists():
-        shutil.copy2(active, backup)
+    if active.is_symlink():
+        raise ValueError("Refusing to replace a symlink publication target.")
+
+    if action == "publish":
+        candidate, meta = load_candidate(commit)
+        if meta["sha256"] != expected:
+            raise ValueError("Approved checksum does not match the built candidate.")
+        data = candidate.read_bytes()
+        if hashlib.sha256(data).hexdigest() != expected:
+            raise ValueError("Candidate changed after approval.")
+        if active.is_file() and hashlib.sha256(active.read_bytes()).hexdigest() == expected:
+            report("published", commit, expected)
+            return
+        backup = BASE / "backups" / f"{target_name}.{commit}.previous"
+        backup.parent.mkdir(parents=True, exist_ok=True)
+        if active.is_file() and not backup.exists():
+            shutil.copy2(active, backup)
+        state = "published"
+    else:
+        backup = BASE / "backups" / f"{target_name}.{commit}.previous"
+        if not backup.is_file() or backup.is_symlink():
+            raise ValueError("No prior release is available for this rollback.")
+        data = backup.read_bytes()
+        if hashlib.sha256(data).hexdigest() != expected:
+            raise ValueError("Rollback checksum does not match the saved previous release.")
+        if active.is_file() and hashlib.sha256(active.read_bytes()).hexdigest() == expected:
+            report("rolled-back", commit, expected)
+            return
+        state = "rolled-back"
+
     fd, name = tempfile.mkstemp(prefix=".release-", dir=SITE)
     try:
         with os.fdopen(fd, "wb") as stream:
@@ -250,8 +272,8 @@ def publish_candidate():
     finally:
         if os.path.exists(name):
             os.unlink(name)
-    report("published", commit, expected)
-    print(f"Published {target_name}: {commit} ({expected})")
+    report(state, commit, expected)
+    print(f"{state}: {target_name} ({commit}, {expected})")
 
 
 def main():
