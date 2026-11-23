@@ -65,6 +65,10 @@ Na akkoord op de preview kan een expliciete opdracht op branch
 }
 ```
 
+Voor een rollback vervangt de productieopdracht `action` door `rollback`,
+verwijst `candidate_commit` naar de release waarvan de backup nodig is en
+gebruikt de SHA-256 van die backup. Dezelfde opdracht blijft idempotent.
+
 Bestand: `deploy/site-release.json`.
 
 De server controleert kandidaat, checksum en toegestane bestemming, bewaart de
