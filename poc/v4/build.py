@@ -105,7 +105,7 @@ def prepare(original, cache, endpoint, key):
     base_code = configuration["basis_regeling"]
     scenario = json.loads((V3 / "scenario.json").read_text())
     assets = re.findall(r'data:image/webp;base64,[A-Za-z0-9+/=]+', reference)
-    asset_names = tuple(personage["asset_key"] for personage in configuration["personages"])
+    asset_names = ("deelnemer", "partner-glimlach", "partner-neutraal")
     if len(assets) != len(asset_names):
         raise ValueError("De oorspronkelijke personageafbeeldingen ontbreken.")
     scene_source = (V3 / "assets/scene.svg").read_text()
