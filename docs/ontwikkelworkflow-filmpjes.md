@@ -1,5 +1,53 @@
 # Ontwikkelworkflow voor filmpjes
 
+## Doel: van idee naar deployment met zo min mogelijk handwerk
+
+De normale bediening loopt via ChatGPT en GitHub. Mike beschrijft het gewenste
+resultaat in de chat; de assistent werkt op een GitHub-branch en voert de
+beschikbare controles uit. Na eenmalige inrichting hoeft Mike geen code of
+herhaalde Terminal-commando's te kopiëren.
+
+1. **Idee en wijziging:** de assistent maakt of wijzigt code, JSON en documentatie
+   op een aparte branch. Privé-audio, API-sleutels en andere geheimen blijven
+   buiten de repository.
+2. **Automatische controle:** de server bouwt vanaf de exacte commit, hergebruikt
+   de audiocache en controleert de preview. Bij ontbrekende betaalde audio stopt
+   de bouw voordat nieuwe API-kosten ontstaan; Mike beslist dan of die opname
+   gemaakt mag worden.
+3. **Privépreview:** een geslaagde build wordt een kandidaat-release met commit,
+   versie en SHA-256. De server biedt die afgeschermd aan via een HTTPS-link.
+   Mike hoeft de preview alleen in de browser te bekijken.
+4. **Publicatie:** na akkoord in de chat publiceert de server precies die
+   kandidaat. Publicatie gebruikt een beperkte, declaratieve opdracht met een
+   toegestane bestemming en checksum; er worden geen shellcommando's uit GitHub
+   uitgevoerd.
+5. **Controle en herstel:** de server controleert de publieke URL en bewaart de
+   vorige release voor terugzetten.
+
+De eenmalige serverinrichting mag één gebundelde handeling vereisen. Daarna
+zijn Terminal, handmatig installeren van hulpmiddelen en herhaald kopiëren van
+commando's uitzonderingen voor storingen of beheer.
+
+### Twee soorten deployment
+
+- **Generator en configuratie:** Python-code en JSON worden op de server gezet
+  in een privé werkmap. Dit wijzigt op zichzelf de publieke website niet.
+- **Gegenereerde demo:** de server bouwt een statisch HTML-bestand met audio en
+  animaties. Dat bestand krijgt een privépreview en wordt na akkoord als
+  afzonderlijke release gepubliceerd.
+
+De preview en productie gebruiken hetzelfde gebouwde bestand. De bron-HTML,
+cache en API-sleutel blijven op de server en buiten de publieke webroot.
+
+### Huidige beperking
+
+De bestaande GitHub-timer leest een declaratief verzoek en publiceert uitsluitend
+`index.html`. Hij bouwt nog geen filmpjes en ondersteunt geen
+`partnerpensioen-demo.html`-release. De volgende infrastructuurstap is daarom
+een aparte, afgebakende route voor generatorbuilds, beveiligde previews en de
+toegestane demo-bestemming. De bestaande homepage-uitrol blijft ongewijzigd.
+
+
 ## OTAP op één VPS
 
 Gebruik GitHub voor scenario's, regelingconfiguratie en code. Gebruik de bestaande VPS om releases te bouwen, privé te bekijken en te publiceren. De Mac is je werkplek en browser. Lokaal bouwen blijft mogelijk voor snelle experimenten. De gebruikelijke route loopt via een build op de VPS.
