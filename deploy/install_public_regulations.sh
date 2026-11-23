@@ -58,6 +58,9 @@ install -d -m 0755 -o root -g root "$lib"
 install -m 0644 -o root -g root "$tmp/admin_api.py" "$lib/admin_api.py"
 install -m 0644 -o root -g root "$tmp/site_agent.py" "$lib/site_agent.py"
 
+# The service user must be able to create the shared build lock before source_for runs.
+install -d -m 0750 -o "$service_user" -g "$service_user" "$base/admin" "$base/admin/jobs"
+
 # Fetch and install the exact build source used by the feature branch.
 runuser -u "$service_user" -- env PYTHONPATH="$lib" /usr/bin/python3 -c \
   'import sys, site_agent; site_agent.source_for(sys.argv[1])' "$commit"
@@ -78,7 +81,6 @@ fi
 chown root:root "$key_file"
 chmod 0600 "$key_file"
 
-install -d -m 0750 -o "$service_user" -g "$service_user" "$base/admin" "$base/admin/jobs"
 install -d -m 2750 -o "$service_user" -g www-data "$base/previews"
 install -d -m 0750 -o "$service_user" -g "$service_user" "$base/candidates"
 install -d -m 0700 -o "$service_user" -g "$service_user" "$base/private"
