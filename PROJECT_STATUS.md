@@ -101,5 +101,4 @@ serverbrede instellingen zoals Nginx, DNS, TLS, firewall en besturingssysteem va
 buiten de normale projectservice. De service krijgt hiervoor geen algemene rootrechten.
 Na eenmalige inrichting volgt het normale proces via chat/GitHub, automatische build
 en controles, privépreview, expliciet akkoord en publicatie van exact dezelfde release.
-De bestaande timer ondersteunt dit nog niet en moet worden uitgebreid. De server is
-voor deze inrichting nog niet aangepast; dit is de eerstvolgende stap.
+Op 23 november is de eerste eenmalige serverinrichting uitgevoerd. De bestaande servicegebruiker `pensioen-deploy` mag schrijven in `/var/www/pensioen` en de eigen projectmappen onder `/var/lib/pensioen-deploy`; de timer is actief. De publieke homepage gaf HTTP 200. De projectgebruiker kan de Pensioen-site schrijven, terwijl `/var/www/puzzle` buiten bereik blijft. Deze stap wijzigde geen website-inhoud of Nginx. De bestaande timer publiceert nog alleen `index.html`; build, afgeschermde preview en publicatie van volledige website-releases moeten nog worden aangesloten.
