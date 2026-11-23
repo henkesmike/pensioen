@@ -104,10 +104,11 @@ en controles, privépreview, expliciet akkoord en publicatie van exact dezelfde 
 Op 23 november is de eerste eenmalige serverinrichting uitgevoerd. De bestaande servicegebruiker `pensioen-deploy` mag schrijven in `/var/www/pensioen` en de eigen projectmappen onder `/var/lib/pensioen-deploy`; de timer is actief. De publieke homepage gaf HTTP 200. De projectgebruiker kan de Pensioen-site schrijven, terwijl `/var/www/puzzle` buiten bereik blijft. Deze stap wijzigde geen website-inhoud of Nginx. De site-agent is op 23 november geïnstalleerd vanaf branch
 [`deployment-json-config`](https://github.com/henkesmike/pensioen/tree/deployment-json-config).
 De eenmalige root-installatie voegde een Basic Auth-previewlocatie toe aan alleen de
-Pensioen-vhost; de projectservice heeft geen Nginx-beheer. De timer kan nu de JSON-
-generator offline bouwen en een kandidaat beveiligen. De eerste kandidaat is gereed
-voor browsercontrole: broncommit `003cc3c374b5b71fd75490a74615cfea4549c1b6`,
-SHA-256 `529a752a80b8df06e945eaaaa8fd6fc07ab4e26a6b9fe5d928f656e9e815d591`.
-Deze kandidaat is nog niet live gepubliceerd. De eerste versie publiceert alleen de
+Pensioen-vhost; de projectservice heeft geen Nginx-beheer. De timer bouwde de JSON-generator offline en bood de kandidaat beveiligd aan.
+Na expliciet akkoord van Mike is exact die kandidaat gepubliceerd als
+`partnerpensioen-demo.html`. Het publieke statusbestand meldt `published` met
+dezelfde checksum als de goedgekeurde preview:
+`529a752a80b8df06e945eaaaa8fd6fc07ab4e26a6b9fe5d928f656e9e815d591`.
+De vorige demo is als herstelkopie bewaard. De eerste versie publiceert alleen de
 Partnerpensioen-demo; bredere releasebestemmingen kunnen daarna worden toegevoegd.
 De oude homepage-uitrol voor `index.html` blijft daarnaast actief.
