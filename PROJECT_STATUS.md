@@ -63,6 +63,10 @@ De volgende processtap is [geautomatiseerde uitrol vanaf GitHub](docs/ontwikkelw
 - De programmatest controleerde de twaalf combinaties, vier regelingkeuzes en terugknop. De gebruiker accepteerde de testversie. De publieke nacontrole verifieerde de bestandsinhoud via checksum. De aparte wenkbrauw- en hoofdproef dient als voorbereiding voor later.
 - Volgende inhoudelijke stap: maak **Na uitdiensttreding** herbruikbaar als zelfstandig fragment. De automatische uitrol ondersteunt nu alleen de homepage. Voor uitrol van demo-updates zonder Terminal kan die worden uitgebreid naar het specifieke demobestand.
 
+## Documentatie animatietechniek (23 november 2026)
+
+De [technische opzet van animaties en afbeeldingen](docs/technische-opzet-animaties.md) beschrijft per beweging en attribuut welke extra afbeelding of grafische laag nodig is, hoe de beweging werkt, de huidige implementatiestatus en de grenzen van de 2D-opzet. Alleen documentatie toegevoegd; geen code of publieke demo gewijzigd.
+
 ## Personages
 De bewegingsproef is goedgekeurd. [De ontwerpprincipes](docs/ontwerpprincipes-personages.md#goedgekeurde-basisbeweging) leggen de gedeelde instellingen vast. De vier aanvullende personages krijgen ieder een glimlachende en neutrale variant.
 
