@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "personages": [
+    {
+      "id": "deelnemer",
+      "asset_key": "deelnemer",
+      "x": 575,
+      "fase_seconden": 0,
+      "knippercyclus_seconden": 4.7
+    },
+    {
+      "id": "partner-glimlach",
+      "asset_key": "partner-glimlach",
+      "x": 700,
+      "fase_seconden": 1.4,
+      "knippercyclus_seconden": 5.3
+    },
+    {
+      "id": "partner-neutraal",
+      "asset_key": "partner-neutraal",
+      "x": 700,
+      "fase_seconden": 1.4,
+      "knippercyclus_seconden": 5.3
+    }
+  ]
+}
