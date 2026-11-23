@@ -1,34 +1,4 @@
-<!doctype html>
-<html lang="nl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pensioen ontdekt</title>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;background:#fcfbf8;color:#254b43;font:17px/1.55 system-ui,sans-serif}
-    header,main,footer{max-width:1000px;margin:auto;padding:24px}
-    header strong{font-size:23px}
-    main{min-height:75vh;display:flex;align-items:center}
-    .hero{width:100%;background:#e7eee7;border-radius:24px;padding:clamp(28px,7vw,64px)}
-    h1{font-size:clamp(36px,6vw,58px);line-height:1.1;margin:0 0 18px}
-    p{max-width:680px;margin:0 0 26px}
-    .button{display:inline-block;background:#28695d;color:white;text-decoration:none;border-radius:10px;padding:14px 22px;font-weight:650}
-    .button:hover{background:#1e554b}
-    a:focus-visible{outline:3px solid #a56b35;outline-offset:3px}
-    footer{border-top:1px solid #d8e1da;font-size:14px}
-    @media(max-width:600px){header,main,footer{padding:16px}}
-  </style>
-</head>
-<body>
-  <header><strong>◈ Pensioen ontdekt</strong></header>
-  <main>
-    <section class="hero">
-      <h1>Begrijp jouw pensioen.</h1>
-      <p>Ontdek in het filmpje hoe partnerpensioen werkt en wat er voor je partner geregeld kan zijn.</p>
-      <a class="button" href="/partnerpensioen-demo.html">Bekijk het filmpje over partnerpensioen</a>
-    </section>
-  </main>
-  <footer>Pensioen ontdekt · Prototype v0.1 · Fictieve regeling</footer>
-</body>
-</html>
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pensioen ontdekt</title><style>
+*{box-sizing:border-box}body{margin:0;background:#fcfbf8;color:#254b43;font:17px/1.55 system-ui,sans-serif}main,header,footer{max-width:1120px;margin:auto;padding:24px}header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}header strong{font-size:23px}button{font:inherit}h1{font-size:clamp(32px,5vw,52px);line-height:1.12;margin:0 0 16px}h2{line-height:1.2}p{margin:10px 0}.hero{background:#e7eee7;border-radius:24px;padding:40px;display:flex;align-items:center;gap:24px}.hero>div{flex:1}.hero svg{width:35%;max-height:220px}.columns{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.column{padding:22px;border-radius:18px;background:#e9efe8}.column:nth-child(2){background:#e7edf1}.column:nth-child(3){background:#f2ebdf}.column h3{margin:8px 0 0;font-size:22px}.column p{font-size:14px;min-height:44px}.item{font:inherit;text-decoration:none;width:100%;display:flex;align-items:center;gap:10px;text-align:left;background:white;color:#254b43;border:0;border-radius:10px;margin:9px 0;padding:15px;min-height:60px}.item:not(:disabled){cursor:pointer}.item:not(:disabled):hover{outline:2px solid #39776d}.item:disabled{opacity:.8}.item span:last-child{margin-left:auto}.item svg{width:20px;flex:none}button:focus-visible,a:focus-visible{outline:3px solid #a56b35;outline-offset:3px}.muted{font-size:14px;color:#52635b}footer{border-top:1px solid #d8e1da;font-size:14px}a{color:#28695d} @media(max-width:760px){.columns{grid-template-columns:1fr}.hero{padding:24px}.hero svg{width:28%}.column p{min-height:0}main,header,footer{padding:16px}}
+</style></head><body><header><strong>◈ Pensioen ontdekt</strong></header><main><section id="home"><div class="hero"><div><h1>Begrijp jouw pensioen.</h1><p>Ontdek wat er geregeld is voor jou en de mensen om je heen.</p></div><svg viewBox="0 0 200 150" aria-hidden="true"><circle cx="100" cy="75" r="69" fill="#d5e4d8"/><g fill="#39776d"><circle cx="90" cy="37" r="14"/><rect x="74" y="54" width="32" height="76" rx="16"/></g><g fill="#c18b58"><circle cx="45" cy="64" r="12"/><rect x="31" y="79" width="28" height="51" rx="13"/></g><g fill="#6e8da4"><circle cx="145" cy="49" r="13"/><rect x="130" y="65" width="30" height="65" rx="15"/></g></svg></div><h2>Waar wil je meer over weten?</h2><div class="columns" id="columns"></div><p class="muted">Prototype · Partnerpensioen is beschikbaar. Andere onderwerpen volgen later.</p></section></main><footer>Pensioen ontdekt · Prototype v0.1 · Fictieve regelingen</footer><script>
+const columns=[['Gebeurtenissen','Wat verandert er in mijn leven?',[['Overlijden',true],['Arbeidsongeschikt worden'],['Uit dienst gaan'],['Met pensioen gaan'],['Uit elkaar gaan']]],['Soorten pensioen','Wat is er geregeld?',[['Ouderdomspensioen'],['Partnerpensioen',true],['Wezenpensioen'],['Arbeidsongeschiktheidsvoorzieningen']]],['Pensioen voor','Voor wie is er iets geregeld?',[['Mijzelf'],['Mijn partner',true],['Mijn kinderen'],['Mijn ex-partner']]]];const $=id=>document.getElementById(id);for(const [title,sub,items] of columns){const col=document.createElement('section');col.className='column';const h=document.createElement('h3');h.textContent=title;col.append(h);const p=document.createElement('p');p.textContent=sub;col.append(p);for(const [label,active] of items){const b=document.createElement(active?'a':'button');b.className='item';if(active)b.href='/partnerpensioen-demo.html';else b.disabled=true;b.textContent=label;const s=document.createElement('span');s.textContent=active?'›':'·';b.append(s);col.append(b)}$('columns').append(col)}</script></body></html>
