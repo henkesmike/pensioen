@@ -5,6 +5,7 @@
       "id": "regeling-a",
       "code": "A",
       "naam": "Fictieve regeling A",
+      "bron_audio": true,
       "partnerpensioen": {
         "percentage_pensioengevend_salaris": 40,
         "uitloop_maanden": 3
