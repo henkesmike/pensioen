@@ -43,12 +43,12 @@ beveiligde preview mag de eenmalige root-installatie alleen een previewlocatie
 toevoegen aan de bestaande Nginx-vhost voor `pensioen.myaiprojects.nl`; die
 wijziging geeft de projectservice zelf geen beheer over Nginx.
 
-Na de eenmalige inrichting loopt het normale proces via chat, GitHub, automatische
-build en controles, een privépreview, akkoord van Mike en publicatie van exact dezelfde
-release. Productie wordt dus pas aangepast na expliciet akkoord. De bestaande timer,
-die alleen `index.html` ondersteunt, moet voor deze volledige sitestructuur en
-generatorroute worden uitgebreid. De inrichting is nog niet uitgevoerd; dit is de
-volgende infrastructuurstap.
+Na de eenmalige inrichting loopt het normale proces via chat en GitHub. De
+site-agent haalt een expliciet previewverzoek op, bouwt offline op de VPS en biedt
+de kandidaat beveiligd aan. Pas na akkoord publiceert de agent exact die kandidaat.
+De eerste beveiligde preview is op 23 november klaar voor browsercontrole. De
+bestaande homepage-uitrol voor `index.html` blijft actief; de nieuwe route publiceert
+in deze eerste versie alleen de Partnerpensioen-demo.
 
 ### Eerste VPS-inrichting uitgevoerd (23 november 2026)
 
@@ -60,11 +60,11 @@ De systemd-timer is actief. De publieke homepage gaf HTTP 200; de gebruiker
 buiten bereik. De websitebestanden en Nginx-configuratie zijn bij deze stap niet
 gewijzigd.
 
-Dit is alleen de projectgebonden rechtenbasis. De bestaande publicatieservice
-ondersteunt nog uitsluitend `index.html`. De volgende implementatiestap is de
-geautomatiseerde route voor build, afgeschermde preview, volledige website-release,
-expliciet akkoord en rollback. Totdat die route is aangesloten, blijft de
-bestaande homepage-uitrol de enige automatische publicatiefunctie.
+De eerste previewbuild is via de nieuwe agent uitgevoerd zonder ElevenLabs-
+aanroepen. De kandidaat staat buiten de webroot en is bereikbaar via de
+Basic Auth-previewlocatie. De productieversie is niet gewijzigd. Publicatie na akkoord
+en automatische rollback zijn onderdeel van de agent; de eerste versie ondersteunt
+als releasebestemming alleen `partnerpensioen-demo.html`.
 
 ### Twee soorten deployment
 
