@@ -11,6 +11,7 @@ base=/var/lib/pensioen-deploy
 unit=/etc/systemd/system/pensioen-deploy.service
 nginx_conf=/etc/nginx/sites-available/pensioen
 auth_file=/etc/nginx/pensioen-preview.htpasswd
+publish_file=/usr/local/lib/pensioen-deploy/publish.py
 reference=/root/pensioen-poc/partnerpensioen-v3.html
 source_cache=/root/pensioen-poc/fase3
 nginx_user=$(awk '$1=="user"{gsub(/;/,"",$2); print $2; exit}' /etc/nginx/nginx.conf)
@@ -27,7 +28,9 @@ stamp=$(date -u +%Y%m%dT%H%M%SZ)
 unit_backup="/root/pensioen-deploy.service.$stamp.bak"
 nginx_backup="/root/pensioen-nginx.$stamp.bak"
 auth_backup="/root/pensioen-preview-auth.$stamp.bak"
+publish_backup="/root/pensioen-publish.$stamp.bak"
 cp -a "$unit" "$unit_backup"
+cp -a "$publish_file" "$publish_backup"
 cp -a "$nginx_conf" "$nginx_backup"
 if [[ -f "$auth_file" ]]; then cp -a "$auth_file" "$auth_backup"; fi
 
@@ -35,6 +38,7 @@ success=0
 rollback() {
   if [[ "$success" -eq 0 ]]; then
     cp -a "$unit_backup" "$unit" 2>/dev/null || true
+    cp -a "$publish_backup" "$publish_file" 2>/dev/null || true
     cp -a "$nginx_backup" "$nginx_conf" 2>/dev/null || true
     if [[ -f "$auth_backup" ]]; then
       cp -a "$auth_backup" "$auth_file" 2>/dev/null || true
@@ -55,8 +59,10 @@ trap 'rm -rf -- "$tmp"; rollback' EXIT
 curl --proto '=https' --fail --silent --show-error --max-time 30 \
   "https://raw.githubusercontent.com/henkesmike/pensioen/$commit/deploy/site_agent.py" \
   -o "$tmp/site_agent.py"
-/usr/bin/python3 -m py_compile "$tmp/site_agent.py"
+curl --fail --silent --show-error --max-time 30 "https://raw.githubusercontent.com/henkesmike/pensioen/$commit/deploy/publish.py" -o "$tmp/publish.py"
+/usr/bin/python3 -m py_compile "$tmp/site_agent.py" "$tmp/publish.py"
 install -m 0644 "$tmp/site_agent.py" /usr/local/lib/pensioen-deploy/site_agent.py
+install -m 0644 "$tmp/publish.py" "$publish_file"
 
 install -d -m 0700 -o "$service_user" -g "$service_user" "$base/private" "$base/private/fase3"
 install -m 0600 -o "$service_user" -g "$service_user" \
@@ -145,4 +151,4 @@ if [[ -n "$preview_password" ]]; then
 else
   printf '\nPreview-account bestaat al; bestaand wachtwoord is behouden.\n'
 fi
-printf 'Backups: %s en %s\n' "$unit_backup" "$nginx_backup"
+printf 'Backups: %s, %s en %s\n' "$unit_backup" "$nginx_backup" "$publish_backup"
