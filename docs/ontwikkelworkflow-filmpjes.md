@@ -46,9 +46,11 @@ wijziging geeft de projectservice zelf geen beheer over Nginx.
 Na de eenmalige inrichting loopt het normale proces via chat en GitHub. De
 site-agent haalt een expliciet previewverzoek op, bouwt offline op de VPS en biedt
 de kandidaat beveiligd aan. Pas na akkoord publiceert de agent exact die kandidaat.
-De eerste beveiligde preview is op 23 november klaar voor browsercontrole. De
-bestaande homepage-uitrol voor `index.html` blijft actief; de nieuwe route publiceert
-in deze eerste versie alleen de Partnerpensioen-demo.
+De eerste beveiligde preview is op 23 november aan Mike getoond en na zijn
+expliciete akkoord gepubliceerd. Het publieke statusbestand bevestigde dat de
+gepubliceerde checksum gelijk is aan die van de goedgekeurde preview. De vorige demo
+is bewaard voor herstel. De bestaande homepage-uitrol voor `index.html` blijft actief;
+de nieuwe route publiceert in deze eerste versie alleen de Partnerpensioen-demo.
 
 ### Eerste VPS-inrichting uitgevoerd (23 november 2026)
 
