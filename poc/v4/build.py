@@ -180,7 +180,7 @@ def main():
     if args.test_api:
         template = template.replace("Audio: ElevenLabs.", "Technische proef: bij 50% en 6 maanden staat een korte testtoon in plaats van de nieuwe gesproken zin.")
     template = template.replace("const timeline = {{timeline}};", "const runtimeConfig = {{runtimeConfig}};\nconst variants = {{variants}};\nlet timeline = variants.A.timeline;")
-    engine = (V3 / "engine.js").read_text()
+    engine = (ROOT / "engine.js").read_text()
     start = engine.index("for (const { start, changes } of timeline)")
     end = engine.index("\n\nfunction draw()", start)
     build_tracks = engine[start:end]
