@@ -67,6 +67,10 @@ De volgende processtap is [geautomatiseerde uitrol vanaf GitHub](docs/ontwikkelw
 
 De [technische opzet van animaties en afbeeldingen](docs/technische-opzet-animaties.md) beschrijft per beweging en attribuut welke extra afbeelding of grafische laag nodig is, hoe de beweging werkt, de huidige implementatiestatus en de grenzen van de 2D-opzet. Alleen documentatie toegevoegd; geen code of publieke demo gewijzigd.
 
+## Architectuurafspraak JSON (23 november 2026)
+
+Besloten om regelingparameters, personagegegevens en animatie-instellingen in gestructureerde JSON te beheren, met generieke code, stabiele ID's, validatie en een centrale inleeslaag. Een database is voorlopig niet nodig; de gegevensstructuur moet latere migratie mogelijk maken. Zie [architectuur JSON-configuratie](docs/architectuur-json-configuratie.md). Dit is nog niet in de demo geïmplementeerd; de omzetting volgt bij een volgende technische iteratie.
+
 ## Personages
 De bewegingsproef is goedgekeurd. [De ontwerpprincipes](docs/ontwerpprincipes-personages.md#goedgekeurde-basisbeweging) leggen de gedeelde instellingen vast. De vier aanvullende personages krijgen ieder een glimlachende en neutrale variant.
 
