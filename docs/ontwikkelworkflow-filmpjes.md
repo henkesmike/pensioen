@@ -49,6 +49,22 @@ die alleen `index.html` ondersteunt, moet voor deze volledige sitestructuur en
 generatorroute worden uitgebreid. De inrichting is nog niet uitgevoerd; dit is de
 volgende infrastructuurstap.
 
+### Eerste VPS-inrichting uitgevoerd (23 november 2026)
+
+De bestaande servicegebruiker `pensioen-deploy` heeft schrijfrechten op
+`/var/www/pensioen` en op de projectmappen onder
+`/var/lib/pensioen-deploy` voor broncode, builds, previews, releases en backups.
+De systemd-timer is actief. De publieke homepage gaf HTTP 200; de gebruiker
+`pensioen-deploy` kan de Pensioen-site schrijven en `/var/www/puzzle` blijft
+buiten bereik. De websitebestanden en Nginx-configuratie zijn bij deze stap niet
+gewijzigd.
+
+Dit is alleen de projectgebonden rechtenbasis. De bestaande publicatieservice
+ondersteunt nog uitsluitend `index.html`. De volgende implementatiestap is de
+geautomatiseerde route voor build, afgeschermde preview, volledige website-release,
+expliciet akkoord en rollback. Totdat die route is aangesloten, blijft de
+bestaande homepage-uitrol de enige automatische publicatiefunctie.
+
 ### Twee soorten deployment
 
 - **Generator en configuratie:** Python-code en JSON worden op de server gezet
