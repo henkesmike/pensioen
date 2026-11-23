@@ -36,11 +36,12 @@ assets, plus de bijbehorende bronbestanden, gegenereerde previews, releasebestan
 publicatie en rollback. De rechten moeten dus ook werken voor nieuwe bestanden en
 submappen; ze zijn niet beperkt tot `index.html`.
 
-De bevoegdheid blijft beperkt tot de directory's en processen van dit project. Andere
-subdomeinen en serverbrede instellingen vallen erbuiten, waaronder Nginx, DNS, TLS,
-firewall, besturingssysteem en algemene gebruikers- of pakketinstellingen. De
-projectservice krijgt de benodigde volledige schrijfrechten binnen haar afgebakende
-projectpaden, zonder rootrechten voor de VPS.
+De projectservice krijgt volledige schrijfrechten binnen haar afgebakende
+projectpaden, zonder rootrechten voor de VPS. Ze krijgt geen toegang om Nginx,
+DNS, TLS, firewall, besturingssysteem of andere subdomeinen te beheren. Voor een
+beveiligde preview mag de eenmalige root-installatie alleen een previewlocatie
+toevoegen aan de bestaande Nginx-vhost voor `pensioen.myaiprojects.nl`; die
+wijziging geeft de projectservice zelf geen beheer over Nginx.
 
 Na de eenmalige inrichting loopt het normale proces via chat, GitHub, automatische
 build en controles, een privépreview, akkoord van Mike en publicatie van exact dezelfde
