@@ -171,10 +171,24 @@ systemd-analyze verify "$api_unit"
 systemctl daemon-reload
 systemctl enable --now pensioen-regelingen-api.service
 systemctl restart pensioen-deploy.timer
-systemctl is-active pensioen-regelingen-api.service
-api_status=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' \
-  --max-time 5 http://127.0.0.1:8765/api/regelingen/jobs/invalid || true)
-[[ "$api_status" == 404 ]]
+if ! systemctl is-active --quiet pensioen-regelingen-api.service; then
+  systemctl status pensioen-regelingen-api.service --no-pager -l >&2 || true
+  journalctl -u pensioen-regelingen-api.service -n 30 --no-pager >&2 || true
+  exit 1
+fi
+echo active
+api_status=""
+for attempt in {1..30}; do
+  api_status=$(curl --silent --output /dev/null --write-out '%{http_code}' \
+    --max-time 2 http://127.0.0.1:8765/api/regelingen/jobs/invalid || true)
+  [[ "$api_status" == 404 ]] && break
+  sleep 1
+done
+if [[ "$api_status" != 404 ]]; then
+  echo "De API antwoordde niet op localhost (HTTP-status: ${api_status:-geen})." >&2
+  journalctl -u pensioen-regelingen-api.service -n 30 --no-pager >&2 || true
+  exit 1
+fi
 systemctl reload nginx
 curl --fail --silent --show-error --output /dev/null \
   --write-out 'Pensioen-homepage: HTTP %{http_code}\n' https://pensioen.myaiprojects.nl/
