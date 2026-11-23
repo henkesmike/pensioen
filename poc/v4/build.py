@@ -102,13 +102,14 @@ def prepare(original, cache, endpoint, key):
         }
         for rule in configuration["regelingen"]
     }
+    base_code = configuration["basis_regeling"]
     scenario = json.loads((V3 / "scenario.json").read_text())
     assets = re.findall(r'data:image/webp;base64,[A-Za-z0-9+/=]+', reference)
     asset_names = tuple(personage["asset_key"] for personage in configuration["personages"])
     if len(assets) != len(asset_names):
         raise ValueError("De oorspronkelijke personageafbeeldingen ontbreken.")
     scene_source = (V3 / "assets/scene.svg").read_text()
-    recordings = original_blocks(reference, [cue["text"].format_map(rules["A"]) for cue in scenario])
+    recordings = original_blocks(reference, [cue["text"].format_map(rules[base_code]) for cue in scenario])
     variants = {}
     for name, rule in rules.items():
         lines = [cue["text"].format_map(rule) for cue in scenario]
@@ -141,6 +142,8 @@ def prepare(original, cache, endpoint, key):
             **rule,
         }
     runtime_config = {
+        "basisRegeling": base_code,
+        "planCodes": list(rules),
         "personages": [
             {
                 "id": personage["runtime_id"],
@@ -152,7 +155,7 @@ def prepare(original, cache, endpoint, key):
         ],
         "animaties": configuration["animaties"],
     }
-    return variants, render(scene_source, {**rules["A"], **dict(zip(asset_names, assets))}), runtime_config
+    return variants, render(scene_source, {**rules[base_code], **dict(zip(asset_names, assets))}), runtime_config
 
 
 def main():
@@ -175,11 +178,12 @@ def main():
                                               args.test_api or "https://api.elevenlabs.io/v1/text-to-speech",
                                               "test" if args.test_api else key)
     template = (V3 / "template.html").read_text().replace("POC v3", "POC fase 3").replace("PROTOTYPE · V3", "PROTOTYPE · FASE 3")
+    options = "".join(f"<option>{code}</option>" for code in runtime_config["planCodes"])
     template = re.sub(r"<h1>Partnerpensioen</h1><p>[^<]+</p>",
-                      '<h1>Partnerpensioen</h1><label>Fictieve regeling <select id="plan"><option>A</option><option>B</option><option>C</option><option>D</option></select></label><p id="summary"></p>', template)
+                      f'<h1>Partnerpensioen</h1><label>Fictieve regeling <select id="plan">{options}</select></label><p id="summary"></p>', template)
     if args.test_api:
         template = template.replace("Audio: ElevenLabs.", "Technische proef: bij 50% en 6 maanden staat een korte testtoon in plaats van de nieuwe gesproken zin.")
-    template = template.replace("const timeline = {{timeline}};", "const runtimeConfig = {{runtimeConfig}};\nconst variants = {{variants}};\nlet timeline = variants.A.timeline;")
+    template = template.replace("const timeline = {{timeline}};", "const runtimeConfig = {{runtimeConfig}};\nconst variants = {{variants}};\nlet timeline = variants[{{basisRegeling}}].timeline;")
     engine = (ROOT / "engine.js").read_text()
     start = engine.index("for (const { start, changes } of timeline)")
     end = engine.index("\n\nfunction draw()", start)
@@ -199,12 +203,14 @@ function selectPlan(name) {
 """ + "\n".join("    " + line for line in build_tracks.splitlines()) + """
 }
 element('plan').addEventListener('change', event => selectPlan(event.target.value));
-selectPlan('A');
+selectPlan(runtimeConfig.basisRegeling);
 draw();
 """
-    output = render(template, {"scene": scene, "audio": variants["A"]["audio"],
+    base_code = runtime_config["basisRegeling"]
+    output = render(template, {"scene": scene, "audio": variants[base_code]["audio"],
                                "variants": json.dumps(variants, ensure_ascii=False).replace("<", r"\u003c"),
                                "runtimeConfig": json.dumps(runtime_config, ensure_ascii=False).replace("<", r"\u003c"),
+                               "basisRegeling": json.dumps(base_code),
                                "engine": engine})
     with args.output.open("x", encoding="utf-8") as preview:
         preview.write(output)
