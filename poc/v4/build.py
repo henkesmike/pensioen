@@ -50,7 +50,7 @@ def original_blocks(html, texts):
     }
 
 
-def speech(lines, cache, endpoint, key):
+def speech(lines, cache, endpoint, key, offline=False):
     text = " ".join(lines)
     fingerprint = hashlib.sha256(json.dumps([endpoint, VOICE, MODEL, text]).encode()).hexdigest()
     file = cache / (fingerprint + ".json")
@@ -58,6 +58,8 @@ def speech(lines, cache, endpoint, key):
     if hit:
         response = json.loads(file.read_text(encoding="utf-8"))
     else:
+        if offline:
+            raise ValueError(f"Audio ontbreekt in de lokale cache; er is niets bij ElevenLabs aangevraagd: {text}")
         url = f"{endpoint.rstrip('/')}/{quote(VOICE, safe='')}/with-timestamps?output_format=pcm_24000"
         request = Request(url, data=json.dumps({"text": text, "model_id": MODEL}).encode(),
                           headers={"xi-api-key": key, "Content-Type": "application/json"})
@@ -92,7 +94,7 @@ def render(template, values):
     return re.sub(r"\{\{([\w-]+)\}\}", lambda match: str(values[match[1]]), template)
 
 
-def prepare(original, cache, endpoint, key):
+def prepare(original, cache, endpoint, key, offline=False):
     reference = original.read_text(encoding="utf-8")
     configuration = load_configuration()
     rules = {
@@ -118,7 +120,7 @@ def prepare(original, cache, endpoint, key):
         for first, last in BLOCKS:
             phrase = tuple(lines[first:last])
             if phrase not in recordings:
-                recordings[phrase] = speech(phrase, cache, endpoint, key)
+                recordings[phrase] = speech(phrase, cache, endpoint, key, offline=offline)
             pcm, local = recordings[phrase]
             timing.extend((start + samples / RATE, end + samples / RATE) for start, end in local)
             chunks.append(pcm)
@@ -164,19 +166,22 @@ def main():
     parser.add_argument("output", type=Path)
     parser.add_argument("--cache", required=True, type=Path)
     parser.add_argument("--test-api", help="HTTP fixture op localhost voor de technische proef")
+    parser.add_argument("--offline", action="store_true", help="gebruik alleen cache; doe geen API-aanroepen")
     args = parser.parse_args()
     if args.output.resolve().is_relative_to(ROOT.parents[1]) or args.cache.resolve().is_relative_to(ROOT.parents[1]):
         parser.error("Kies een uitvoer- en cachepad buiten de repository.")
     key = os.environ.get("ELEVENLABS_API_KEY", "")
+    if args.test_api and args.offline:
+        parser.error("--test-api en --offline kunnen niet tegelijk worden gebruikt.")
     if args.test_api and not re.fullmatch(r"http://127\.0\.0\.1:\d+", args.test_api):
         parser.error("Gebruik voor de test-API uitsluitend http://127.0.0.1:<poort>.")
-    if not args.test_api and not key:
+    if not args.test_api and not args.offline and not key:
         parser.error("ELEVENLABS_API_KEY ontbreekt.")
     os.umask(0o077)
     args.cache.mkdir(parents=True, exist_ok=True)
     variants, scene, runtime_config = prepare(args.reference, args.cache,
                                               args.test_api or "https://api.elevenlabs.io/v1/text-to-speech",
-                                              "test" if args.test_api else key)
+                                              "test" if args.test_api else key, offline=args.offline)
     template = (V3 / "template.html").read_text().replace("POC v3", "POC fase 3").replace("PROTOTYPE · V3", "PROTOTYPE · FASE 3")
     options = "".join(f"<option>{code}</option>" for code in runtime_config["planCodes"])
     template = re.sub(r"<h1>Partnerpensioen</h1><p>[^<]+</p>",
