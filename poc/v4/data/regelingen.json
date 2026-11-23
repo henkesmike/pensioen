@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "regelingen": [
+    {
+      "id": "regeling-a",
+      "code": "A",
+      "naam": "Fictieve regeling A",
+      "partnerpensioen": {
+        "percentage_pensioengevend_salaris": 40,
+        "uitloop_maanden": 3
+      }
+    },
+    {
+      "id": "regeling-b",
+      "code": "B",
+      "naam": "Fictieve regeling B",
+      "partnerpensioen": {
+        "percentage_pensioengevend_salaris": 40,
+        "uitloop_maanden": 6
+      }
+    },
+    {
+      "id": "regeling-c",
+      "code": "C",
+      "naam": "Fictieve regeling C",
+      "partnerpensioen": {
+        "percentage_pensioengevend_salaris": 50,
+        "uitloop_maanden": 3
+      }
+    },
+    {
+      "id": "regeling-d",
+      "code": "D",
+      "naam": "Fictieve regeling D",
+      "partnerpensioen": {
+        "percentage_pensioengevend_salaris": 50,
+        "uitloop_maanden": 6
+      }
+    }
+  ]
+}
