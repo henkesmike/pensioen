@@ -63,6 +63,8 @@ def load_configuration():
     if character_ids != {"deelnemer", "partner-glimlach", "partner-neutraal"}:
         raise ValueError("De bekende personage-id's moeten alle drie aanwezig zijn.")
     for character in characters:
+        if character.get("runtime_id") not in {"man", "happy", "neutral"}:
+            raise ValueError(f"{character['id']}: runtime_id moet man, happy of neutral zijn.")
         if character.get("asset_key") not in character_ids:
             raise ValueError(f"{character['id']}: onbekende asset_key.")
         _number(character.get("x"), f"{character['id']}.x")
