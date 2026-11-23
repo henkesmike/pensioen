@@ -49,6 +49,10 @@ Op 22 november werkte de privépreview van fase3-v1 op de VPS via een SSH-tunnel
 
 De volgende processtap is [geautomatiseerde uitrol vanaf GitHub](docs/ontwikkelworkflow-filmpjes.md#geautomatiseerde-uitrol-vanaf-github). We gebruiken de homepage-link als eerste uitroltest. De eenmalige installatie en de beperkte homepage-uitrol staan in `deploy/`. De lokale controles voor checksum, herhaling en herstelkopie zijn geslaagd. De timer is op de VPS geïnstalleerd. De eerste automatische homepage-uitrol is geslaagd via branch `uitrol-productie`: checksum, link en bereikbaarheid van de demo zijn publiek gecontroleerd. Deze eerste automatisering ondersteunt `index.html`.
 
+## Uitrolproef: homepage rechtstreeks naar het filmpje (23 november 2026)
+
+De homepagekeuze en de losse animatiepagina zijn verwijderd. De homepage toont nu één knop die rechtstreeks opent naar de bestaande Partnerpensioen-demo. De productie-uitrol via branch `uitrol-productie` is automatisch uitgevoerd vanaf commit `d998eb5b8a3494fba69baebffe63d415c1539ddd`; de server controleerde checksum `4af84d694cc6afbdda31c429085dd1bd7e5dedcf63eb96063e90652b8feb0628`. De live controle in Chromium bevestigde de nieuwe homepage en de bereikbaarheid van het filmpje via de directe link. Voor deze proef waren geen Terminal-handelingen nodig. De bestaande A–D-selectie en animatie blijven op de filmpagina zelf staan.
+
 ## Eerste proef fase 3
 - De [proef met vier regelingen](https://github.com/henkesmike/pensioen/tree/fase-3-vier-regelingen/poc/v4) combineert A (40%, 3 maanden), B (40%, 6 maanden), C (50%, 3 maanden) en D (50%, 6 maanden).
 - De backend knipt de originele opname op in drie vaste blokken en twee variabele zinnen. De vier combinaties delen twee percentagezinnen en twee duurzinnen. De bestaande audio bevat 40% en 3 maanden.
