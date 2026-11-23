@@ -28,6 +28,27 @@ De eenmalige serverinrichting mag één gebundelde handeling vereisen. Daarna
 zijn Terminal, handmatig installeren van hulpmiddelen en herhaald kopiëren van
 commando's uitzonderingen voor storingen of beheer.
 
+### Afgesproken beheergrens voor de deployment
+
+De deploymentvoorziening krijgt volledige beheerrechten binnen de projectomgeving van
+`pensioen.myaiprojects.nl`. Dat omvat de volledige websiteboom met pagina's, mappen en
+assets, plus de bijbehorende bronbestanden, gegenereerde previews, releasebestanden,
+publicatie en rollback. De rechten moeten dus ook werken voor nieuwe bestanden en
+submappen; ze zijn niet beperkt tot `index.html`.
+
+De bevoegdheid blijft beperkt tot de directory's en processen van dit project. Andere
+subdomeinen en serverbrede instellingen vallen erbuiten, waaronder Nginx, DNS, TLS,
+firewall, besturingssysteem en algemene gebruikers- of pakketinstellingen. De
+projectservice krijgt de benodigde volledige schrijfrechten binnen haar afgebakende
+projectpaden, zonder rootrechten voor de VPS.
+
+Na de eenmalige inrichting loopt het normale proces via chat, GitHub, automatische
+build en controles, een privépreview, akkoord van Mike en publicatie van exact dezelfde
+release. Productie wordt dus pas aangepast na expliciet akkoord. De bestaande timer,
+die alleen `index.html` ondersteunt, moet voor deze volledige sitestructuur en
+generatorroute worden uitgebreid. De inrichting is nog niet uitgevoerd; dit is de
+volgende infrastructuurstap.
+
 ### Twee soorten deployment
 
 - **Generator en configuratie:** Python-code en JSON worden op de server gezet
