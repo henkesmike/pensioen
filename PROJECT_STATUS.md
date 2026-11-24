@@ -1,5 +1,5 @@
 # Pensioen ontdekt — projectstatus
-Bijgewerkt: 2026-11-23
+Bijgewerkt: 2026-11-24
 
 ## Doel
 Interactieve, begrijpelijke uitleg van pensioenregelingen. Iteratief ontwikkelen, eerst fictieve regeling, later zeven geparametriseerde regelingen. Gebruiker bepaalt inhoud en creatieve richting.
@@ -127,3 +127,9 @@ De publieke beheerfunctie is voorbereid op branch `publieke-regelingbeheer`. Ied
 De invoer is begrensd op maximaal twee nieuwe regelingen per dag, maximaal twee aanvragen per IP-adres per uur en vier nieuwe ElevenLabs-zinsopnamen per dag. Een kandidaatvideo krijgt een unieke link. De aanvraag publiceert niets automatisch; productie blijft achter expliciet akkoord van Mike. API-sleutel, bronopname en audiocache blijven op de server.
 
 De eenmalige VPS-installatie is op 23 november uitgevoerd. De beheer-API draait lokaal achter Nginx en de publieke API-route antwoordt. De homepage is daarna uitgerold via `uitrol-productie` vanaf commit `0f12d31b23ea7a9b35b659c7efd06ed886535261`, checksum `680397f371908bc30c4687c0e8ee6c295af3eeeb202d943d05efd7ed813b657e`. De live browsercontrole toont de twee velden met grenzen 1–120 maanden en 1–100%; de bestaande homepagekaarten en videolinks zijn behouden. De eerste live proefaanvraag met 60% en 3 maanden is succesvol verwerkt als fictieve regeling F; de gegenereerde kandidaat toont de juiste waarde en bevat afspeelbare audio. In de aanvullende servergegevens stond regeling E (45%, 1 maand) al vóór die proef; de herkomst daarvan is niet vast te stellen via de site. Kandidaat F blijft een concept en is niet live gepubliceerd.
+
+## Herstel figuurselectie (24 november 2026)
+
+De eerder goedgekeurde selectie is in de JSON-generator hersteld op [branch `herstel-figuurselectie`](https://github.com/henkesmike/pensioen/tree/herstel-figuurselectie). De bezoeker kiest uit drie huidtinten en vier koppels. Bij man–man en vrouw–vrouw toont de animatie twee verschillende figuren. Via **Wijzig situatie** kan de bezoeker terug naar de keuze en blijft de regeling geselecteerd. De zes bestaande illustraties, oogleden en neutrale mondvarianten zitten in `personages.json`.
+
+De technische bouwproef A–D en de JavaScript-controle van alle twaalf combinaties zijn geslaagd. Via `uitrol-preview` is een afgeschermde VPS-build aangevraagd voor commit `2f524c1be4a07b694d5ac0c99748b56c8ee42325`. De previewroute vraagt om inloggen. De build en weergave op de VPS zijn nog niet bevestigd. De publieke demo geeft dezelfde checksum als de vorige gepubliceerde versie. Er is geen publicatieopdracht gegeven.
