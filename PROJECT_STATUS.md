@@ -145,3 +145,7 @@ De implementatie staat op [branch `titelkaarten-uitdienst`](https://github.com/h
 Op verzoek van Mike zijn de twee titelkaarten zonder nieuwe voice-over gepubliceerd in de [Partnerpensioen-demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html). De eerste titel staat circa drie seconden in beeld, de tweede circa twee seconden, met de afgesproken fades. De bestaande uitleg blijft hoorbaar. De oorspronkelijke overgangszin met ‘Maar’ is uit deze versie geknipt. Uitdiensttreding kan ook afzonderlijk worden gekozen in de demo. Mike beoordeelt eerst het beeld. Daarna volgt de nieuwe gesproken tekst.
 
 De offline build van commit `ff52b0379e4dd7bafb1cfe8ee6103a3ff81cf6e7` is via de reguliere publicatieroute gepubliceerd. De publieke download had SHA-256 `41333ba6ad5f0efee17b27166ee43445f63da07c1b41d5d0c922a380ea9d6b64`. Beide titelkaarten, de onderwerpkeuze en de figuurselectie zijn in de publieke HTML gecontroleerd.
+
+### POC goedgekeurd (24 november 2026)
+
+Mike heeft de publieke POC van Partnerpensioen geslaagd verklaard. Het doel voor de volgende iteratie is om met meerdere korte filmpjes te onderzoeken welke onderdelen herbruikbaar zijn en welke opbouw voor kijkers herkenbaar blijft.
