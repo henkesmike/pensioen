@@ -175,3 +175,7 @@ De [vierde proefanimatie Scheiden](https://chatgpt.com/library?file_id=libfile_2
 De [zesde proefanimatie Scheiden](https://chatgpt.com/library?file_id=libfile_31643d18fdc48191a729058eabd40644&account_id=personal) laat het partnerblok rechtstreeks diagonaal naar zijn eindpositie bewegen. Beide opbouwblokken schalen evenredig in hoogte en breedte en eindigen met hun onderranden op dezelfde hoogte.
 
 In [versie 9 van Scheiden](https://chatgpt.com/library?file_id=libfile_9ebe595c44b88191b46de205d05fc141&account_id=personal) stuurt de vertraagde voorleesstem de scèneovergangen. Het uit elkaar schuiven van de pensioenblokken begint bij de zin over de uitbetaling door het pensioenfonds.
+
+### Scheiden gepubliceerd (24 november 2026)
+
+Mike heeft versie 9 goedgekeurd voor publicatie. De [publieke animatie Scheiden](https://pensioen.myaiprojects.nl/?onderwerp=scheiden) is bereikbaar via **Uit elkaar gaan** op de homepage. De goedgekeurde zelfstandige HTML is ongewijzigd ingebed via de bestaande homepage-uitrol. De publieke checksum `0b7f6dc18541e1569b1669cafdee5db2893efd5f425aca287817ec556179dcae` komt overeen met de websitebuild vanaf commit `176e17456656d0c042f6c3a71a28a477bca3dbc2`. Het starten van de animatie is in de browser gecontroleerd.
