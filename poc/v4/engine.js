@@ -2,7 +2,7 @@ const element = id => document.getElementById(id);
 const audio = element('audio');
 const caption = element('caption');
 const path = element('flowpath');
-const pathLength = path.getTotalLength();
+let pathLength = 0;
 const clamp = value => Math.max(0, Math.min(1, value));
 const opacity = (id, value) => element(id).setAttribute('opacity', value);
 
@@ -18,20 +18,88 @@ const coins = Array.from({ length: 7 }, () => {
 const actors = runtimeConfig.personages;
 const animation = runtimeConfig.animaties;
 
+const blinkStarts = [1.2, 3.28, 5.2, 5.68];
+const blinkDurations = [.159, .106, .106, .106].map(duration => duration * 2.7);
+
+function chooseCharacters(tone, combination) {
+    const [person, partner] = combination;
+    const tones = 'ABC';
+    const partnerTone = person === partner ? tones[(tones.indexOf(tone) + 1) % tones.length] : tone;
+    return [person + tone, partner + partnerTone];
+}
+
+function setActor({id, x}, sprite) {
+    const img = element('sprite-' + id);
+    const left = x - sprite.width / 2;
+    img.setAttribute('x', left);
+    img.setAttribute('width', sprite.width);
+    img.setAttribute('href', sprite.image);
+    element('blink-' + id).innerHTML = sprite.eyes.map(([x, y, rx, ry]) => {
+        const cx = left + x;
+        const cy = 62 + y;
+        const line = rx * .76;
+        return `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${sprite.tone}"/>
+                <path d="M${cx-line} ${cy} q${line} ${ry*.42} ${line*2} 0" fill="none" stroke="#51372a" stroke-width=".8"/>`;
+    }).join('');
+    if (id === 'neutral') {
+        const { image, left: mouthLeft, top, width, height } = sprite.mouth;
+        const x = left + mouthLeft;
+        const y = 62 + top;
+        for (const [key, value] of Object.entries({href:image,x,y,width,height})) {
+            element('mond-neutraal').setAttribute(key,value);
+        }
+        for (const [key, value] of Object.entries({cx:x+width/2,cy:y+height/2,rx:width/2,ry:height/2})) {
+            element('mond-ellips').setAttribute(key,value);
+        }
+    }
+}
+
+function selectSituation(tone, combination) {
+    const [person, partner] = chooseCharacters(tone, combination);
+    for (const actor of actors) {
+        const figure = actor.id === 'man' ? person : partner;
+        setActor(actor, runtimeConfig.figuren[figure]);
+    }
+}
+
 function animateActor({ id, x, phase, period }, time) {
-    const breath = 1 + animation.ademhalen.amplitude *
-        Math.sin(time * 2 * Math.PI / animation.ademhalen.cyclus_seconden + phase);
-    const sway = animation.zwaaien.amplitude *
-        Math.sin(time * 2 * Math.PI / animation.zwaaien.cyclus_seconden + phase);
-    element('motion-' + id).setAttribute(
-        'transform',
-        `translate(${x} 342) rotate(${sway}) scale(${1 + (breath - 1) * animation.ademhalen.verticale_factor} ${breath}) translate(${-x} -342)`
-    );
-    const cycle = (time + phase + animation.knipperen.fase_offset_seconden) % period;
-    const duration = animation.knipperen.duur_seconden;
-    const blink = cycle < duration && Math.sin(Math.PI * cycle / duration) > animation.knipperen.drempel;
+    const amount = (1 - Math.cos((time + phase) * 2 * Math.PI / animation.ademhalen.cyclus_seconden)) / 2;
+    element('motion-' + id).setAttribute('transform',
+        `translate(${x} 342) scale(${1 + .009 * .7 * amount} ${1 + .014 * .7 * amount}) translate(${-x} -342)`);
+    const cycle = (time + phase) % period;
+    const blink = blinkStarts.some((start, i) => cycle >= start && cycle < start + blinkDurations[i]);
     opacity('blink-' + id, Number(blink));
 }
+
+element('situation').addEventListener('submit', event => {
+    event.preventDefault();
+    const selection = element('selection');
+    const film = element('film');
+    const error = element('preview-error');
+    error.hidden = true;
+    film.hidden = false;
+    try {
+        pathLength = path.getTotalLength();
+        selectSituation(element('tone').value, element('couple').value);
+        selectPlan(element('plan').value);
+        draw();
+        selection.hidden = true;
+        element('edit-situation').focus();
+    } catch (problem) {
+        film.hidden = true;
+        selection.hidden = false;
+        error.hidden = false;
+        console.error(problem);
+    }
+});
+
+element('edit-situation').addEventListener('click', () => {
+    audio.pause();
+    cancelAnimationFrame(nextFrame);
+    element('film').hidden = true;
+    element('selection').hidden = false;
+    element('tone').focus();
+});
 
 function valueAt({ start, from, to, duration }, time) {
     return duration ? from + (to - from) * clamp((time - start) / duration) : to;
@@ -47,7 +115,9 @@ for (const { start, changes } of timeline) {
     }
 }
 
+let nextFrame = 0;
 function draw() {
+    if (element('film').hidden) return;
     const time = audio.currentTime;
     const cue = timeline.findLast(({ start }) => start <= time) ?? timeline[0];
     if (caption.textContent !== cue.text) caption.textContent = cue.text;
@@ -57,7 +127,7 @@ function draw() {
         valueAt(track.findLast(({ start }) => start <= time) ?? track[0], time),
     ]));
     for (const [id, value] of Object.entries(frame)) {
-        if (id !== 'income' && id !== 'bar') opacity(id, value);
+        if (id !== 'income' && id !== 'bar' && id !== 'happy') opacity(id, value);
     }
     element('bar').setAttribute('width', 247 * frame.bar);
 
@@ -70,7 +140,7 @@ function draw() {
         coin.setAttribute('opacity', Number(index < Math.round(coins.length * frame.income)));
     });
     actors.forEach(actor => animateActor(actor, time));
-    requestAnimationFrame(draw);
+    nextFrame = requestAnimationFrame(draw);
 }
 
 draw();

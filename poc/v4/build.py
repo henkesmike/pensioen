@@ -135,6 +135,33 @@ def render(template, values):
     return re.sub(r"\{\{([\w-]+)\}\}", lambda match: str(values[match[1]]), template)
 
 
+FIGURE_SCENE = """<g id="participant"><ellipse cx="575" cy="345" rx="35" ry="8" fill="#6d8071" opacity=".19"/><g id="motion-man"><image id="sprite-man" y="62" height="280"/><g id="blink-man" opacity="0"></g></g></g><g id="partner"><ellipse cx="700" cy="345" rx="32" ry="8" fill="#6d8071" opacity=".19"/><g id="happy"><g id="motion-happy"><image id="sprite-happy" y="62" height="280"/><g id="blink-happy" opacity="0"></g></g></g><g id="neutral" opacity="0"><defs><radialGradient id="mond-verloop"><stop offset=".72" stop-color="white"/><stop offset="1" stop-color="black"/></radialGradient>
+<mask id="mond-masker"><ellipse id="mond-ellips" fill="url(#mond-verloop)"/></mask></defs>
+<g id="motion-neutral"><image id="sprite-neutral" y="62" height="280" display="none"/><image id="mond-neutraal" mask="url(#mond-masker)"/><g id="blink-neutral" opacity="0" display="none"></g></g></g></g>"""
+
+SELECTION = """<section id="selection">
+  <small>PENSIOEN ONTDEKT</small>
+  <h1>Welke situatie past het beste bij jou?</h1>
+  <form id="situation">
+    <label>Huidskleur
+      <select id="tone"><option value="A">licht</option><option value="B">midden</option><option value="C">donker</option></select>
+    </label>
+    <label>Jij en je partner
+      <select id="couple"><option value="mm">Man–man</option><option value="mv" selected>Man–vrouw</option><option value="vm">Vrouw–man</option><option value="vv">Vrouw–vrouw</option></select>
+    </label>
+    <button id="show-film" type="submit">Naar het filmpje</button>
+    <p id="preview-error" role="alert" hidden>Het filmpje kon niet worden geopend. Probeer het opnieuw.</p>
+    <noscript><p>Schakel JavaScript in om het filmpje te bekijken.</p></noscript>
+  </form>
+</section>
+<section id="film" hidden>
+<button type="button" id="edit-situation">Wijzig situatie</button>"""
+
+SELECTION_STYLE = """#situation{display:grid;gap:16px;max-width:360px}#situation label{display:grid;gap:6px}
+select,button{font:inherit;border-radius:8px;padding:8px 12px;border:1px solid #abbab4}
+button{background:#27574d;color:white;cursor:pointer}#edit-situation{margin-bottom:16px;display:block}"""
+
+
 def prepare(original, cache, endpoint, key, additional_regulations_path=None,
             before_api_call=None, allow_api=True):
     reference = original.read_text(encoding="utf-8")
@@ -148,11 +175,10 @@ def prepare(original, cache, endpoint, key, additional_regulations_path=None,
     }
     base_code = configuration["basis_regeling"]
     scenario = json.loads((V3 / "scenario.json").read_text())
-    assets = re.findall(r'data:image/webp;base64,[A-Za-z0-9+/=]+', reference)
-    asset_names = ("deelnemer", "partner-glimlach", "partner-neutraal")
-    if len(assets) != len(asset_names):
-        raise ValueError("De oorspronkelijke personageafbeeldingen ontbreken.")
     scene_source = (V3 / "assets/scene.svg").read_text()
+    start = scene_source.index('<g id="participant">')
+    end = scene_source.index('<g id="percent" ', start)
+    scene_source = scene_source[:start] + FIGURE_SCENE + "\n" + scene_source[end:]
     recordings = original_blocks(reference, [cue["text"].format_map(rules[base_code]) for cue in scenario])
     variants = {}
     for name, rule in rules.items():
@@ -200,8 +226,9 @@ def prepare(original, cache, endpoint, key, additional_regulations_path=None,
             for personage in configuration["personages"]
         ],
         "animaties": configuration["animaties"],
+        "figuren": configuration["figuren"],
     }
-    return variants, render(scene_source, {**rules[base_code], **dict(zip(asset_names, assets))}), runtime_config
+    return variants, render(scene_source, rules[base_code]), runtime_config
 
 
 def main():
@@ -241,6 +268,10 @@ def main():
                                               args.additional_regulations, before_api_call,
                                               allow_api=not args.offline)
     template = (V3 / "template.html").read_text().replace("POC v3", "POC fase 3").replace("PROTOTYPE · V3", "PROTOTYPE · FASE 3")
+    template = (template.replace("</style>", SELECTION_STYLE + "</style>")
+                .replace("<main>", "<main>" + SELECTION)
+                .replace("</main>", "</section></main>")
+                .replace(' src="{{audio}}"', ""))
     options = "".join(f"<option>{code}</option>" for code in runtime_config["planCodes"])
     template = re.sub(r"<h1>Partnerpensioen</h1><p>[^<]+</p>",
                       f'<h1>Partnerpensioen</h1><label>Fictieve regeling <select id="plan">{options}</select></label><p id="summary"></p>', template)
@@ -249,7 +280,7 @@ def main():
     template = template.replace("const timeline = {{timeline}};", "const runtimeConfig = {{runtimeConfig}};\nconst variants = {{variants}};\nlet timeline = variants[{{basisRegeling}}].timeline;")
     engine = (ROOT / "engine.js").read_text()
     start = engine.index("for (const { start, changes } of timeline)")
-    end = engine.index("\n\nfunction draw()", start)
+    end = engine.index("\n\nlet nextFrame = 0;", start)
     build_tracks = engine[start:end]
     engine = engine[:start] + engine[end:]
     engine = engine.removesuffix("draw();\n")
@@ -266,11 +297,9 @@ function selectPlan(name) {
 """ + "\n".join("    " + line for line in build_tracks.splitlines()) + """
 }
 element('plan').addEventListener('change', event => selectPlan(event.target.value));
-selectPlan(runtimeConfig.basisRegeling);
-draw();
 """
     base_code = runtime_config["basisRegeling"]
-    output = render(template, {"scene": scene, "audio": variants[base_code]["audio"],
+    output = render(template, {"scene": scene,
                                "variants": json.dumps(variants, ensure_ascii=False).replace("<", r"\u003c"),
                                "runtimeConfig": json.dumps(runtime_config, ensure_ascii=False).replace("<", r"\u003c"),
                                "basisRegeling": json.dumps(base_code),

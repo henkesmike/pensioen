@@ -57,6 +57,9 @@ def load_configuration(additional_regulations_path=None):
                     raise ValueError("Aanvullende regelingen mogen geen bron_audio instellen.")
             regulations = list(regulations or []) + additional_data["regelingen"]
     characters = character_data.get("personages")
+    figures = character_data.get("figuren")
+    if not isinstance(figures, dict) or set(figures) != {gender + tone for gender in "mv" for tone in "ABC"}:
+        raise ValueError("personages.json: verwacht zes figuren voor de drie huidtinten.")
     settings = animation_data.get("animaties")
     if not isinstance(regulations, list) or not regulations:
         raise ValueError("regelingen.json: regelingen moet een niet-lege lijst zijn.")
@@ -112,4 +115,5 @@ def load_configuration(additional_regulations_path=None):
         "basis_regeling": base_rules[0]["code"],
         "personages": characters,
         "animaties": settings,
+        "figuren": figures,
     }
