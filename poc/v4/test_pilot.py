@@ -58,15 +58,13 @@ def main():
         try:
             subprocess.run(command, check=True)
             assert requests == [
-                OPENING_TITLE,
-                EXIT_TITLE,
                 "Je partnerpensioen blijft nog 6 maanden verzekerd.",
                 "Je partner ontvangt dan 50 procent van je pensioengevend salaris.",
             ], requests
             with tempfile.TemporaryDirectory() as repeat:
                 command[3] = str(Path(repeat) / "repeat.html")
                 subprocess.run(command, check=True)
-            assert len(requests) == 4
+            assert len(requests) == 2
         finally:
             server.shutdown()
             thread.join()
@@ -90,7 +88,7 @@ def main():
         assert exit_cues[0]["changes"]["employer"]["to"] == 1
         assert [cue["text"] for cue in exit_cues] == [cue["text"] for cue in cues[8:]]
     assert len({plan["timeline"][i]["text"] for plan in variants.values() for i in (5, 10)}) == 4
-    print("A–D: 4 variabele zinnen, 4 nieuwe HTTP-aanroepen, 0 bij herhaling.")
+    print("A–D: 4 variabele zinnen, 2 nieuwe HTTP-aanroepen, 0 bij herhaling.")
     script = re.search(r"<script>([\s\S]*?)</script>", html)[1]
     subprocess.run(["node", "--check", "-"], input=script, text=True, check=True)
 

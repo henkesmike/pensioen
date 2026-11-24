@@ -22,6 +22,7 @@ RATE = 24000
 # Original v3 starts at 40% and 3 months. Cut between spoken sentences.
 BLOCKS = [(0, 4), (4, 5), (5, 9), (9, 10), (10, 12)]
 TITLE_FADE = 0.5
+NARRATE_TITLES = False
 OPENING_TITLE = "Wat gebeurt er als je overlijdt terwijl je in dienst bent?"
 EXIT_TITLE = "Wat gebeurt er als je uit dienst gaat?"
 VOICE = "pNInz6obpgDQGcFmaJgB"
@@ -189,13 +190,17 @@ def prepare(original, cache, endpoint, key, additional_regulations_path=None,
     end = scene_source.index('<g id="percent" ', start)
     scene_source = scene_source[:start] + FIGURE_SCENE + "\n" + scene_source[end:]
     recordings = original_blocks(reference, [cue["text"].format_map(rules[base_code]) for cue in scenario])
-    def title_audio(text):
-        pcm, [(start, end)] = speech((text,), cache, endpoint, key, before_api_call, allow_api)
+    def title_audio(text, hold_seconds):
+        if NARRATE_TITLES:
+            pcm, [(start, end)] = speech((text,), cache, endpoint, key, before_api_call, allow_api)
+        else:
+            pcm = bytes(round(hold_seconds * RATE) * 2)
+            start, end = 0, hold_seconds
         padding = bytes(round(TITLE_FADE * RATE) * 2)
         return padding + pcm + padding, (start + TITLE_FADE, end + TITLE_FADE)
 
-    opening_audio, opening_times = title_audio(OPENING_TITLE)
-    exit_audio, exit_times = title_audio(EXIT_TITLE)
+    opening_audio, opening_times = title_audio(OPENING_TITLE, 3)
+    exit_audio, exit_times = title_audio(EXIT_TITLE, 2)
     variants = {}
     for name, rule in rules.items():
         lines = [cue["text"].format_map(rule) for cue in scenario]
@@ -328,6 +333,10 @@ font-size:clamp(18px,4vw,38px);font-weight:650;pointer-events:none}
     options = "".join(f"<option>{code}</option>" for code in runtime_config["planCodes"])
     template = re.sub(r"<h1>Partnerpensioen</h1><p>[^<]+</p>",
                       f'<h1>Partnerpensioen</h1><label>Fictieve regeling <select id="plan">{options}</select></label><label>Onderwerp <select id="playback"><option value="full">Partnerpensioen</option><option value="exit">Uitdiensttreding</option></select></label><p id="summary"></p>', template)
+    if not args.test_api:
+        template = (template.replace("privé POC fase 3", "demo · Audio: ElevenLabs")
+                    .replace("PRIVÉ PROTOTYPE · FASE 3", "DEMO")
+                    .replace(" Alleen privé testen.", ""))
     if args.test_api:
         template = template.replace("Audio: ElevenLabs.", "Technische proef: nieuwe voice-overfragmenten bevatten testtonen.")
     template = template.replace("const timeline = {{timeline}};", "const runtimeConfig = {{runtimeConfig}};\nconst variants = {{variants}};\nlet timeline = variants[{{basisRegeling}}].timeline;")
