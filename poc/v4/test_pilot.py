@@ -11,7 +11,7 @@ import sys
 import tempfile
 from threading import Thread
 
-from build import RATE, ROOT
+from build import EXIT_TITLE, OPENING_TITLE, RATE, ROOT
 
 requests = []
 
@@ -58,13 +58,15 @@ def main():
         try:
             subprocess.run(command, check=True)
             assert requests == [
+                OPENING_TITLE,
+                EXIT_TITLE,
                 "Je partnerpensioen blijft nog 6 maanden verzekerd.",
                 "Je partner ontvangt dan 50 procent van je pensioengevend salaris.",
             ], requests
             with tempfile.TemporaryDirectory() as repeat:
                 command[3] = str(Path(repeat) / "repeat.html")
                 subprocess.run(command, check=True)
-            assert len(requests) == 2
+            assert len(requests) == 4
         finally:
             server.shutdown()
             thread.join()
@@ -75,13 +77,20 @@ def main():
         plan = variants[name]
         assert (plan["percentage"], plan["maanden"]) == (percentage, months)
         cues = plan["timeline"]
-        assert f"{percentage} procent" in cues[4]["text"]
-        assert f"{months} maanden" in cues[9]["text"]
-        assert cues[4]["changes"]["income"]["to"] == percentage / 100
+        assert f"{percentage} procent" in cues[5]["text"]
+        assert f"{months} maanden" in cues[10]["text"]
+        assert cues[5]["changes"]["income"]["to"] == percentage / 100
         assert all(a["start"] < a["end"] <= b["start"] for a, b in zip(cues, cues[1:]))
         assert f"<option>{name}</option>" in html
-    assert len({plan["timeline"][i]["text"] for plan in variants.values() for i in (4, 9)}) == 4
-    print("A–D: 4 variabele zinnen, 2 nieuwe HTTP-aanroepen, 0 bij herhaling.")
+        assert [cue["text"] for cue in cues if "card" in cue] == [OPENING_TITLE, EXIT_TITLE]
+        exit_cues = plan["uitdienst"]["timeline"]
+        assert exit_cues[0]["text"] == EXIT_TITLE
+        assert exit_cues[0]["card"]["from"] == 0
+        assert exit_cues[0]["changes"]["participant"]["to"] == 1
+        assert exit_cues[0]["changes"]["employer"]["to"] == 1
+        assert [cue["text"] for cue in exit_cues] == [cue["text"] for cue in cues[8:]]
+    assert len({plan["timeline"][i]["text"] for plan in variants.values() for i in (5, 10)}) == 4
+    print("A–D: 4 variabele zinnen, 4 nieuwe HTTP-aanroepen, 0 bij herhaling.")
     script = re.search(r"<script>([\s\S]*?)</script>", html)[1]
     subprocess.run(["node", "--check", "-"], input=script, text=True, check=True)
 

@@ -119,8 +119,19 @@ let nextFrame = 0;
 function draw() {
     if (element('film').hidden) return;
     const time = audio.currentTime;
+    const card = timeline.find(cue => cue.card && time >= cue.card.from && time < cue.card.until);
+    const title = element('title-card');
+    if (card) {
+        title.textContent = card.text;
+        const fadeIn = card.card.from === 0 ? 1 : clamp((time - card.card.from) / runtimeConfig.titleFade);
+        const fadeOut = clamp((card.card.until - time) / runtimeConfig.titleFade);
+        title.style.opacity = Math.min(fadeIn, fadeOut);
+    } else {
+        title.style.opacity = 0;
+    }
     const cue = timeline.findLast(({ start }) => start <= time) ?? timeline[0];
-    if (caption.textContent !== cue.text) caption.textContent = cue.text;
+    const subtitle = card ? card.text : time <= cue.end ? cue.text : '';
+    if (caption.textContent !== subtitle) caption.textContent = subtitle;
 
     const frame = Object.fromEntries(Array.from(tracks, ([id, track]) => [
         id,

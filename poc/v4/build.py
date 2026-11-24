@@ -21,6 +21,9 @@ V3 = ROOT.parent / "v3"
 RATE = 24000
 # Original v3 starts at 40% and 3 months. Cut between spoken sentences.
 BLOCKS = [(0, 4), (4, 5), (5, 9), (9, 10), (10, 12)]
+TITLE_FADE = 0.5
+OPENING_TITLE = "Wat gebeurt er als je overlijdt terwijl je in dienst bent?"
+EXIT_TITLE = "Wat gebeurt er als je uit dienst gaat?"
 VOICE = "pNInz6obpgDQGcFmaJgB"
 MODEL = "eleven_multilingual_v2"
 
@@ -162,6 +165,12 @@ select,button{font:inherit;border-radius:8px;padding:8px 12px;border:1px solid #
 button{background:#27574d;color:white;cursor:pointer}#edit-situation{margin-bottom:16px;display:block}"""
 
 
+def encode_audio(pcm):
+    mp3 = ffmpeg(pcm, "-f", "s16le", "-ar", str(RATE), "-ac", "1",
+                 "-i", "pipe:0", "-f", "mp3", "pipe:1")
+    return "data:audio/mpeg;base64," + base64.b64encode(mp3).decode()
+
+
 def prepare(original, cache, endpoint, key, additional_regulations_path=None,
             before_api_call=None, allow_api=True):
     reference = original.read_text(encoding="utf-8")
@@ -180,11 +189,18 @@ def prepare(original, cache, endpoint, key, additional_regulations_path=None,
     end = scene_source.index('<g id="percent" ', start)
     scene_source = scene_source[:start] + FIGURE_SCENE + "\n" + scene_source[end:]
     recordings = original_blocks(reference, [cue["text"].format_map(rules[base_code]) for cue in scenario])
+    def title_audio(text):
+        pcm, [(start, end)] = speech((text,), cache, endpoint, key, before_api_call, allow_api)
+        padding = bytes(round(TITLE_FADE * RATE) * 2)
+        return padding + pcm + padding, (start + TITLE_FADE, end + TITLE_FADE)
+
+    opening_audio, opening_times = title_audio(OPENING_TITLE)
+    exit_audio, exit_times = title_audio(EXIT_TITLE)
     variants = {}
     for name, rule in rules.items():
         lines = [cue["text"].format_map(rule) for cue in scenario]
-        chunks, timing = [], []
-        samples = 0
+        chunks, timing = [opening_audio], []
+        samples = len(opening_audio) // 2
         for first, last in BLOCKS:
             phrase = tuple(lines[first:last])
             if phrase not in recordings:
@@ -192,9 +208,24 @@ def prepare(original, cache, endpoint, key, additional_regulations_path=None,
                     phrase, cache, endpoint, key, before_api_call, allow_api
                 )
             pcm, local = recordings[phrase]
-            timing.extend((start + samples / RATE, end + samples / RATE) for start, end in local)
+            for index, (start, end) in enumerate(local, first):
+                if index == 7:
+                    # Replace only the old question in the original multi-sentence recording.
+                    before = round((local[index - first - 1][1] + start) / 2 * RATE)
+                    after = round((end + local[index - first + 1][0]) / 2 * RATE)
+                    exit_sample = samples + before
+                    exit_start = exit_sample / RATE
+                    timing.append(tuple(exit_start + value for value in exit_times))
+                    pcm = pcm[:before * 2] + exit_audio + pcm[after * 2:]
+                    shift = (before + len(exit_audio) // 2 - after) / RATE
+                else:
+                    if index == 8:
+                        start += shift
+                        end += shift
+                    timing.append((start + samples / RATE, end + samples / RATE))
             chunks.append(pcm)
             samples += len(pcm) // 2
+        lines[7] = EXIT_TITLE
         timeline = []
         for i, (cue, text, (start, end)) in enumerate(zip(scenario, lines, timing)):
             changes = {}
@@ -206,11 +237,25 @@ def prepare(original, cache, endpoint, key, additional_regulations_path=None,
                     duration = timing[i + 1][0] - start
                 changes[target] = {"to": to, "duration": duration}
             timeline.append({"text": text, "start": start, "end": end, "changes": changes})
-        mp3 = ffmpeg(b"".join(chunks), "-f", "s16le", "-ar", str(RATE), "-ac", "1",
-                     "-i", "pipe:0", "-f", "mp3", "pipe:1")
+        timeline[7]["changes"].update({
+            target: {"to": change, "duration": 0}
+            for target, change in scenario[0]["changes"].items()
+        })
+        timeline[7]["card"] = {"from": exit_start, "until": exit_start + len(exit_audio) / (2 * RATE)}
+        timeline.insert(0, {"text": OPENING_TITLE, "start": opening_times[0],
+                            "end": opening_times[1], "changes": {},
+                            "card": {"from": 0, "until": len(opening_audio) / (2 * RATE)}})
+        exit_timeline = []
+        for cue in timeline[8:]:
+            rebased = {**cue, "start": cue["start"] - exit_start, "end": cue["end"] - exit_start}
+            if "card" in cue:
+                rebased["card"] = {"from": 0, "until": len(exit_audio) / (2 * RATE)}
+            exit_timeline.append(rebased)
+        pcm = b"".join(chunks)
         variants[name] = {
             "timeline": timeline,
-            "audio": "data:audio/mpeg;base64," + base64.b64encode(mp3).decode(),
+            "audio": encode_audio(pcm),
+            "uitdienst": {"timeline": exit_timeline, "audio": encode_audio(pcm[exit_sample * 2:])},
             **rule,
         }
     runtime_config = {
@@ -227,6 +272,7 @@ def prepare(original, cache, endpoint, key, additional_regulations_path=None,
         ],
         "animaties": configuration["animaties"],
         "figuren": configuration["figuren"],
+        "titleFade": TITLE_FADE,
     }
     return variants, render(scene_source, rules[base_code]), runtime_config
 
@@ -268,15 +314,22 @@ def main():
                                               args.additional_regulations, before_api_call,
                                               allow_api=not args.offline)
     template = (V3 / "template.html").read_text().replace("POC v3", "POC fase 3").replace("PROTOTYPE · V3", "PROTOTYPE · FASE 3")
-    template = (template.replace("</style>", SELECTION_STYLE + "</style>")
+    template = (template.replace("</style>", SELECTION_STYLE + """
+#animation-stage{position:relative}
+#animation-stage svg{display:block}
+#title-card{position:absolute;inset:0;display:grid;place-items:center;padding:10%;
+border-radius:24px;background:#172822;color:#fff;text-align:center;
+font-size:clamp(18px,4vw,38px);font-weight:650;pointer-events:none}
+</style>""")
                 .replace("<main>", "<main>" + SELECTION)
                 .replace("</main>", "</section></main>")
+                .replace("{{scene}}", '<div id="animation-stage">{{scene}}<div id="title-card" aria-hidden="true"></div></div>')
                 .replace(' src="{{audio}}"', ""))
     options = "".join(f"<option>{code}</option>" for code in runtime_config["planCodes"])
     template = re.sub(r"<h1>Partnerpensioen</h1><p>[^<]+</p>",
-                      f'<h1>Partnerpensioen</h1><label>Fictieve regeling <select id="plan">{options}</select></label><p id="summary"></p>', template)
+                      f'<h1>Partnerpensioen</h1><label>Fictieve regeling <select id="plan">{options}</select></label><label>Onderwerp <select id="playback"><option value="full">Partnerpensioen</option><option value="exit">Uitdiensttreding</option></select></label><p id="summary"></p>', template)
     if args.test_api:
-        template = template.replace("Audio: ElevenLabs.", "Technische proef: bij 50% en 6 maanden staat een korte testtoon in plaats van de nieuwe gesproken zin.")
+        template = template.replace("Audio: ElevenLabs.", "Technische proef: nieuwe voice-overfragmenten bevatten testtonen.")
     template = template.replace("const timeline = {{timeline}};", "const runtimeConfig = {{runtimeConfig}};\nconst variants = {{variants}};\nlet timeline = variants[{{basisRegeling}}].timeline;")
     engine = (ROOT / "engine.js").read_text()
     start = engine.index("for (const { start, changes } of timeline)")
@@ -288,8 +341,9 @@ def main():
 function selectPlan(name) {
     const plan = variants[name];
     audio.pause();
-    audio.src = plan.audio;
-    timeline = plan.timeline;
+    const playback = element('playback').value === 'exit' ? plan.uitdienst : plan;
+    audio.src = playback.audio;
+    timeline = playback.timeline;
     element('summary').textContent = `${plan.percentage}% van pensioengevend salaris · ${plan.maanden} maanden tijdelijke dekking`;
     element('percent').querySelector('text').textContent = plan.percentage + '%';
     element('coverage').querySelector('text').textContent = plan.maanden + ' maanden verzekerd';
@@ -297,6 +351,8 @@ function selectPlan(name) {
 """ + "\n".join("    " + line for line in build_tracks.splitlines()) + """
 }
 element('plan').addEventListener('change', event => selectPlan(event.target.value));
+element('playback').value = new URLSearchParams(location.search).get('onderwerp') === 'uitdiensttreding' ? 'exit' : 'full';
+element('playback').addEventListener('change', () => selectPlan(element('plan').value));
 """
     base_code = runtime_config["basisRegeling"]
     output = render(template, {"scene": scene,
