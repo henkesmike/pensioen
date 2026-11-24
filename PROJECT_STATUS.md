@@ -149,3 +149,15 @@ De offline build van commit `ff52b0379e4dd7bafb1cfe8ee6103a3ff81cf6e7` is via de
 ### POC goedgekeurd (24 november 2026)
 
 Mike heeft de publieke POC van Partnerpensioen geslaagd verklaard. Het doel voor de volgende iteratie is om met meerdere korte filmpjes te onderzoeken welke onderdelen herbruikbaar zijn en welke opbouw voor kijkers herkenbaar blijft.
+
+### Nog op te pakken — dynamische pensioeninformatie
+
+Onderzoek hoe de website bepaalt welke onderwerpen, filmpjes of fragmenten relevant zijn op basis van de pensioenregeling en de persoonlijke situatie.
+
+1. **Pensioensoorten in de regeling.** Bepaal welke pensioensoorten de regeling wel en niet bevat en stem het getoonde aanbod daarop af.
+2. **Partner.** Geef de gebruiker een plek om aan te geven of die een partner heeft. Onderzoek welke uitleg per situatie relevant is.
+3. **Kinderen.** Onderzoek hoe de gebruiker kan aangeven of die kinderen heeft en hoe dat de getoonde uitleg beïnvloedt.
+4. **Afstand tot de pensioenleeftijd.** Onderzoek wanneer iemand dicht bij de pensioenleeftijd is en welke informatie dan relevant wordt.
+5. **Andere factoren.** Onderzoek samen welke aanvullende kenmerken van de regeling of persoonlijke situatie de uitleg relevanter maken.
+
+Deze punten staan open voor een latere uitwerking.
