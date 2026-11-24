@@ -161,3 +161,7 @@ Onderzoek hoe de website bepaalt welke onderwerpen, filmpjes of fragmenten relev
 5. **Andere factoren.** Onderzoek samen welke aanvullende kenmerken van de regeling of persoonlijke situatie de uitleg relevanter maken.
 
 Deze punten staan open voor een latere uitwerking.
+
+### Eerste proefanimatie Scheiden (24 november 2026)
+
+De [proefanimatie Scheiden](https://chatgpt.com/library?file_id=libfile_709922d7e9448191bf739283158f31a7&account_id=personal) hergebruikt het openingsbeeld van Partnerpensioen. De deelnemer begint alleen en zoomt uit. Een tijdsbalk vult zich en verandert van kleur vanaf het moment van trouwen of geregistreerd partnerschap. De animatie stopt tijdens de verdere pensioenopbouw. De proef gebruikt ondertiteling en, indien beschikbaar, een Nederlandse voorleesstem van de browser. Wacht op beoordeling van deze opzet voordat het vervolg over de scheiding wordt uitgewerkt.
