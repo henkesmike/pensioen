@@ -159,3 +159,14 @@ De publieke route is begrensd tot maximaal twee nieuwe regelingen per dag, twee 
 Een inzending is een concept, geen automatische productiepublicatie. Mike bekijkt de video en keurt de exacte checksum in de bestaande releaseflow goed voordat de demo live wijzigt. De API-sleutel staat alleen in een root-beheerd systemd environment-bestand; de service luistert uitsluitend op localhost. De eenmalige serverinstallatie beperkt Nginx-aanpassingen tot de Pensioen-vhost.
 
 De implementatie staat op branch `publieke-regelingbeheer` en is live. De root-installatie voegde de lokale API-service en routes toe aan uitsluitend de Pensioen-vhost; de API-sleutel staat root-beheerd op de server. De homepage is via de bestaande uitrolbranch gepubliceerd vanaf commit `0f12d31b23ea7a9b35b659c7efd06ed886535261` met checksum `680397f371908bc30c4687c0e8ee6c295af3eeeb202d943d05efd7ed813b657e`. De browsercontrole bevestigde het formulier, de twee numerieke invoervelden en hun grenzen. De eerste live proefaanvraag (60%, 3 maanden) is geslaagd als regeling F; de kandidaat toont de aangepaste waarde en bevat afspeelbare audio. Regeling E (45%, 1 maand) stond al in de aanvullende servergegevens; de site geeft geen herkomst. Kandidaat F is niet live gepubliceerd.
+
+## Lokale HTML-preview opleveren
+
+Gebruik voor een zelfstandige proefanimatie zoals Scheiden dezelfde opleverroute als voor versie 4:
+
+1. Maak één zelfstandig HTML-bestand met alle benodigde CSS, JavaScript en afbeeldingen ingebed. Geef het bestand een versienummer, bijvoorbeeld `scheiden-proefanimatie-v5.html`.
+2. Plaats en test het bestand in de lokale chatwerkmap. Controleer dat de beoogde animatie, afspeelknoppen en het terugspoelen werken.
+3. Sla dezelfde versie duurzaam op in ChatGPT en controleer of het opslaan is gelukt.
+4. Geef in het antwoord één directe bestandslink met het werkelijke absolute pad, bijvoorbeeld `[scheiden-proefanimatie-v5.html](sandbox:/werkelijke/chatwerkmap/scheiden-proefanimatie-v5.html)`. Zo kan Mike het HTML-bestand op dezelfde manier openen als de vorige proef. Een GitHub-bronlink is geen vervanging voor deze opleverroute.
+
+Ontbreekt de lokale chatwerkmap, bewaar de exacte versie dan op de beschikbare duurzame projectlocatie en meld dat de directe preview nog niet beschikbaar is. Zodra er weer een werkmap beschikbaar is, haal dezelfde versie op, controleer het bestand en geef de directe bestandslink. Deze route vereist geen publieke deployment.
