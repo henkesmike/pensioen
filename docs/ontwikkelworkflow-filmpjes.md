@@ -170,3 +170,9 @@ Gebruik voor een zelfstandige proefanimatie zoals Scheiden dezelfde opleverroute
 4. Geef in het antwoord één directe bestandslink met het werkelijke absolute pad, bijvoorbeeld `[scheiden-proefanimatie-v5.html](sandbox:/werkelijke/chatwerkmap/scheiden-proefanimatie-v5.html)`. Zo kan Mike het HTML-bestand op dezelfde manier openen als de vorige proef. Een GitHub-bronlink is geen vervanging voor deze opleverroute.
 
 Ontbreekt de lokale chatwerkmap, bewaar de exacte versie dan op de beschikbare duurzame projectlocatie en meld dat de directe preview nog niet beschikbaar is. Zodra er weer een werkmap beschikbaar is, haal dezelfde versie op, controleer het bestand en geef de directe bestandslink. Deze route vereist geen publieke deployment.
+
+## Voice-over ophalen via ElevenLabs
+
+Gebruik voor Scheiden en nieuwe filmpjes die moeten aansluiten bij de oorspronkelijke Partnerpensioen-proef **Adam**, met voice-ID `pNInz6obpgDQGcFmaJgB` en model `eleven_multilingual_v2`. Gebruik de vaste ID uit de bestaande generator. Een gelijknamige stem, een automatisch gekozen voorleesstem of een vervangende voice-ID geldt niet als Adam. Meld het als de stem voor het account niet beschikbaar is.
+
+Haal de opname met tijdcodes op via de bestaande VPS-bouwroute. Bewaar de API-sleutel op de VPS buiten de webroot en Git. Hergebruik alleen audio waarvan stem-ID, model, tekst en relevante spraakinstellingen overeenkomen. Gebruik de tijdcodes van de opname voor de scèneovergangen en controleer bij Scheiden dat de blokken uit elkaar schuiven bij de zin over de uitbetaling. Behoud het afgesproken rustige spreektempo.
