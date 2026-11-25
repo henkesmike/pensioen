@@ -176,3 +176,18 @@ Ontbreekt de lokale chatwerkmap, bewaar de exacte versie dan op de beschikbare d
 Gebruik voor Scheiden en nieuwe filmpjes die moeten aansluiten bij de oorspronkelijke Partnerpensioen-proef **Adam**, met voice-ID `pNInz6obpgDQGcFmaJgB` en model `eleven_multilingual_v2`. Gebruik de vaste ID uit de bestaande generator. Een gelijknamige stem, een automatisch gekozen voorleesstem of een vervangende voice-ID geldt niet als Adam. Meld het als de stem voor het account niet beschikbaar is.
 
 Haal de opname met tijdcodes op via de bestaande VPS-bouwroute. Bewaar de API-sleutel op de VPS buiten de webroot en Git. Hergebruik alleen audio waarvan stem-ID, model, tekst en relevante spraakinstellingen overeenkomen. Gebruik de tijdcodes van de opname voor de scèneovergangen en controleer bij Scheiden dat de blokken uit elkaar schuiven bij de zin over de uitbetaling. Behoud het afgesproken rustige spreektempo.
+
+### Pilot: voice-over aanmaken via GitHub
+
+De pilot staat op [voiceover-scheiden](https://github.com/henkesmike/pensioen/tree/voiceover-scheiden), installatiecommit `ca500ebb0c094ff979431cc30b26d8a086eeb291`. De VPS-worker verwerkt alleen de goedgekeurde film Scheiden v9. De eerste bouwopdracht staat klaar. De worker gebruikt de bestaande VPS-sleutel en maakt één opname met Adam op snelheid 0,85. De tijdcodes sturen de animatie. De opname wordt gecachet. Na een onzekere API-uitkomst inspecteer je eerst `journalctl -u pensioen-scheiden-voice.service` en de cache voordat je een nieuwe poging vrijgeeft.
+
+Eenmalig als root op de VPS, na controle van de installatiecommit:
+
+```bash
+curl -fsS https://raw.githubusercontent.com/henkesmike/pensioen/ca500ebb0c094ff979431cc30b26d8a086eeb291/deploy/install-scheiden-voice.sh -o /tmp/install-scheiden-voice.sh
+bash /tmp/install-scheiden-voice.sh ca500ebb0c094ff979431cc30b26d8a086eeb291
+```
+
+De timer haalt `deploy/scheiden-request.json` op uit de pilotbranch. Bij `{"action":"build","film":"scheiden-v9"}` verschijnt het resultaat achter de bestaande previewbeveiliging op `/_preview/scheiden-adam/index.html`. De checksum staat op `/_preview/scheiden-adam/status.json`. Controleer de stem, het tempo en het uit elkaar schuiven bij de slotzin. Na akkoord gebruikt de publicatieopdracht `{"action":"publish","film":"scheiden-v9","sha256":"<goedgekeurde checksum>"}`. De worker publiceert exact die kandidaat naar `/scheiden-adam.html`. Koppel daarna **Uit elkaar gaan** via de bestaande homepage-uitrol aan die pagina en controleer de publieke weergave.
+
+De pilot is voorbereid in GitHub. Installatie, de eerste API-aanroep en het afspelen op de VPS moeten nog worden bevestigd.
