@@ -25,7 +25,7 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 
 - De productieopdracht voor de homepage met persoonlijke keuzes is klaargezet voor commit `a91deeb257ca0a6063adfa6f1c7a92f59aca7b96`. De homepage gebruikt drie uitklapbare keuzes, zes originele portretten in twee verticale keuzewielen en ‘Zeg ik liever niet’ als eerste keuze bij de persoonlijke situatie. Regeling F blijft concept. De publieke homepage is gecontroleerd op de uitrolchecksum.
 
-- De volgende homepageversie staat ter beoordeling op commit `d4b955a08b39eb08e241a29178798290b5e91546`. Eén uitklapbaar blok **Mijn instellingen** bevat de drie kolommen. Tot **Bewaren** blijven de filmpjes vergrendeld en wisselen de portretten rechtsboven. Na **Bewaren** klapt het blok dicht, worden de filmpjes vrijgegeven en blijven de gekozen portretten staan.
+- De homepageversie met **Mijn instellingen** staat live vanaf commit `d4b955a08b39eb08e241a29178798290b5e91546`. De publieke homepage komt byte voor byte overeen met de goedgekeurde proef. Eén uitklapbaar blok **Mijn instellingen** bevat de drie kolommen. Tot **Bewaren** blijven de filmpjes vergrendeld en wisselen de portretten rechtsboven. Na **Bewaren** klapt het blok dicht, worden de filmpjes vrijgegeven en blijven de gekozen portretten staan.
 
 ## Open werk
 
