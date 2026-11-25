@@ -4,7 +4,15 @@ Bijgewerkt op 25 november 2026.
 
 ## Doel
 
+### Missie
+
 Pensioen Ontdekt helpt deelnemers begrijpen wat hun pensioenregeling betekent bij gebeurtenissen zoals uitdiensttreding, arbeidsongeschiktheid, overlijden en scheiden. De website geeft interactieve uitleg die aansluit bij de regeling en persoonlijke situatie. Filmpjes, fragmenten en voice-overs zijn herbruikbaar.
+
+### Visie
+
+AI maakt het mogelijk om pensioencommunicatie op maat te maken binnen één omgeving. De uitleg sluit aan bij de persoonlijke situatie, de taal en de specifieke pensioenregeling van de deelnemer.
+
+### Technisch einddoel
 
 Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. De website toont daarna de toepasselijke uitleg zonder codewijziging voor ondersteunde scenario’s. De [technische uitwerking](docs/technisch-ontwerp.md#van-pensioenreglement-naar-website) beschrijft de beoogde keten.
 
