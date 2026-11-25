@@ -23,7 +23,9 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 - [Scheiden v9](https://pensioen.myaiprojects.nl/?onderwerp=scheiden) staat live via **Uit elkaar gaan**. De publieke versie gebruikt de door Mike goedgekeurde ElevenLabs-opname met Adam. De animatie staat op [scheiden-adam.html](https://pensioen.myaiprojects.nl/scheiden-adam.html). De blokken schuiven uit elkaar bij de zin over de uitbetaling. De goedgekeurde versie is gepubliceerd vanuit commit `176e17456656d0c042f6c3a71a28a477bca3dbc2`.
 - De voice-overworker is op de VPS geïnstalleerd. De opname en homepagekoppeling zijn gepubliceerd en gecontroleerd. De publieke opname komt overeen met de goedgekeurde preview (SHA-256 `7dea0e5639135362583fc06185338c839542ab3264c4f16edafb24c1ae2c9090`).
 
-- De productieopdracht voor de homepage met persoonlijke keuzes is klaargezet voor commit `a91deeb257ca0a6063adfa6f1c7a92f59aca7b96`. De homepage gebruikt drie uitklapbare keuzes, zes originele portretten in twee verticale keuzewielen en ‘Zeg ik liever niet’ als eerste keuze bij de persoonlijke situatie. Regeling F blijft concept. Publieke controle van deze uitrol staat nog open.
+- De productieopdracht voor de homepage met persoonlijke keuzes is klaargezet voor commit `a91deeb257ca0a6063adfa6f1c7a92f59aca7b96`. De homepage gebruikt drie uitklapbare keuzes, zes originele portretten in twee verticale keuzewielen en ‘Zeg ik liever niet’ als eerste keuze bij de persoonlijke situatie. Regeling F blijft concept. De publieke homepage is gecontroleerd op de uitrolchecksum.
+
+- De volgende homepageversie staat ter beoordeling op commit `09e6490aaaa342be5db09c302ce31cc0c78d1efb`. De drie keuzevakken vormen één geheel. Filmpjes staan direct zichtbaar en worden vrijgegeven zodra een regeling is gekozen. Persoonlijke situatie en portretten hebben een standaardkeuze.
 
 ## Open werk
 
