@@ -20,12 +20,8 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 
 - De [homepage](https://pensioen.myaiprojects.nl/) en de [Partnerpensioen-demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) staan live. Mike heeft de POC goedgekeurd. De demo heeft herstelde figuurselectie, stille titelkaarten en een losse afspeelroute voor Uitdiensttreding. De rest van de bestaande voice-over blijft hoorbaar.
 - Het publieke formulier voor fictieve regelingen werkt. Regeling E stond al opgeslagen (45%, 1 maand). De live proef met 60% en 3 maanden leverde kandidaat F op. F blijft een concept.
-- [Scheiden v9](https://pensioen.myaiprojects.nl/?onderwerp=scheiden) staat live via **Uit elkaar gaan**. Het filmpje gebruikt de voorleesstem van de browser. De blokken schuiven uit elkaar bij de zin over de uitbetaling. De goedgekeurde versie is gepubliceerd vanuit commit `176e17456656d0c042f6c3a71a28a477bca3dbc2`.
-- De [voice-overpilot](https://github.com/henkesmike/pensioen/tree/voiceover-scheiden) is voorbereid in GitHub. Eerste opdracht, vaste stem Adam en installatie staan klaar. Installatie, de echte API-aanroep, de afgeschermde preview en publicatie van die opname staan open.
-
-## Eerstvolgende stap achter de Mac
-
-Herinner Mike aan de eenmalige VPS-installatie van de voice-overworker. Start met SSH volgens de centrale werkinstructies. Volg de [installatieprocedure](docs/ontwikkelworkflow-filmpjes.md#pilot-voice-over-aanmaken-via-github), controleer de afgeschermde preview en publiceer de opname pas na akkoord.
+- [Scheiden v9](https://pensioen.myaiprojects.nl/?onderwerp=scheiden) staat live via **Uit elkaar gaan**. De publieke versie gebruikt de door Mike goedgekeurde ElevenLabs-opname met Adam. De animatie staat op [scheiden-adam.html](https://pensioen.myaiprojects.nl/scheiden-adam.html). De blokken schuiven uit elkaar bij de zin over de uitbetaling. De goedgekeurde versie is gepubliceerd vanuit commit `176e17456656d0c042f6c3a71a28a477bca3dbc2`.
+- De voice-overworker is op de VPS geïnstalleerd. De opname en homepagekoppeling zijn gepubliceerd en gecontroleerd. De publieke opname komt overeen met de goedgekeurde preview (SHA-256 `7dea0e5639135362583fc06185338c839542ab3264c4f16edafb24c1ae2c9090`).
 
 ## Open werk
 
