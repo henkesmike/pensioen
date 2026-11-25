@@ -1,156 +1,29 @@
-# Pensioen ontdekt — projectstatus
-Bijgewerkt: 2026-11-24
+# Pensioen Ontdekt — projectstatus
+
+Bijgewerkt op 25 november 2026.
 
 ## Doel
-Interactieve, begrijpelijke uitleg van pensioenregelingen. Iteratief ontwikkelen, eerst fictieve regeling, later zeven geparametriseerde regelingen. Gebruiker bepaalt inhoud en creatieve richting.
 
-De [missie en het einddoel](docs/missie-en-einddoel.md) beschrijven hoe een beoordeeld pensioenreglement via regelingparameters, selectieregels en herbruikbare voice-overs leidt tot regelinggerichte uitleg op de website.
+Pensioen Ontdekt helpt deelnemers begrijpen wat hun pensioenregeling betekent bij gebeurtenissen zoals uitdiensttreding, arbeidsongeschiktheid, overlijden en scheiden. De website geeft interactieve uitleg die aansluit bij de regeling en persoonlijke situatie. Filmpjes, fragmenten en voice-overs zijn herbruikbaar.
+
+Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. De website toont daarna de toepasselijke uitleg zonder codewijziging voor ondersteunde scenario’s. De [technische uitwerking](docs/technisch-ontwerp.md#van-pensioenreglement-naar-website) beschrijft de beoogde keten.
 
 ## Huidige stand
-- Homepage v0.1 gepubliceerd op https://pensioen.myaiprojects.nl.
-- Fase 1 (POC) op 2026-11-21 door gebruiker geslaagd verklaard. Script en visuele afwerking nog niet definitief.
-- v1: eenvoudige SVG-personages; v2: verbeterde illustraties, neutrale gezichtsvariant en landschappelijke achtergrond; v3: ook subtiele lichaamsbeweging, ademhaling en knipperen.
-- Laatste lokale testbestand: partnerpensioen-v3.html, inclusief privé-audio. Bewaar lokaal; niet publiceren of in openbare repository opnemen.
-- Generatoren v1 en v2 staan in `poc/`. De reproduceerbare v3 staat in `poc/v3/` op de [fase 2-branch](https://github.com/henkesmike/pensioen/tree/fase-2-partnerpensioen-v3/poc/v3).
-- Stem Adam uitsluitend technische test; definitieve stemkeuze uitgesteld.
-- Ontwerpprincipes toekomstige personages: docs/ontwerpprincipes-personages.md.
-- Lokale ontwikkeling en tests voorafgaand aan deployment; server niet gewijzigd voor v2/v3 lokale tests.
 
-## Verhaallijn
-Salaris werkgever naar gezinsinkomen; deelnemer overlijdt en vervaagt, geldstroom stopt, werkgever verdwijnt. Pensioenfonds verschijnt, partner krijgt levenslang X% van pensioengevend salaris, geldstroom hervat. Reset naar beiden levend en glimlachend. Uitdiensttreding: werkgever en salaris verdwijnen, tijdelijke risicodekking Y maanden, daarna eindigt die dekking; mogelijkheden voor voortzetting. Verdieping later: partnerdefinitie, pensioengevend salaris, aanvragen, uitdiensttreding en aanvullende voorzieningen. Fictieve waarden X=40, Y=3. Regelingafhankelijke uitzonderingen nog valideren.
+- De [homepage](https://pensioen.myaiprojects.nl/) en de [Partnerpensioen-demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) staan live. Mike heeft de POC goedgekeurd. De demo heeft herstelde figuurselectie, stille titelkaarten en een losse afspeelroute voor Uitdiensttreding. De rest van de bestaande voice-over blijft hoorbaar.
+- Het publieke formulier voor fictieve regelingen werkt. Regeling E stond al opgeslagen (45%, 1 maand). De live proef met 60% en 3 maanden leverde kandidaat F op. F blijft een concept.
+- [Scheiden v9](https://pensioen.myaiprojects.nl/?onderwerp=scheiden) staat live via **Uit elkaar gaan**. Het filmpje gebruikt de voorleesstem van de browser. De blokken schuiven uit elkaar bij de zin over de uitbetaling. De goedgekeurde versie is gepubliceerd vanuit commit `176e17456656d0c042f6c3a71a28a477bca3dbc2`.
+- De [voice-overpilot](https://github.com/henkesmike/pensioen/tree/voiceover-scheiden) is voorbereid in GitHub. Eerste opdracht, vaste stem Adam en installatie staan klaar. Installatie, de echte API-aanroep, de afgeschermde preview en publicatie van die opname staan open.
 
-## Ontwerp voor herbruikbare fragmenten
-- Splits de uitleg over partnerpensioen in twee zelfstandig afspeelbare fragmenten: **Tijdens dienstverband** en **Na uitdiensttreding**.
-- De pagina Partnerpensioen speelt beide fragmenten in die volgorde. Het event Uitdiensttreding gebruikt hetzelfde tweede fragment als onderdeel van de uitleg. Het tweede fragment krijgt een zelfstandige openingszin en een vaste beginstand met beide personages en de werkgever zichtbaar.
-- Elk fragment heeft een eigen scenario, voice-over en tijdcodes vanaf nul. De animatie-engine en illustraties zijn gedeeld. De voice-over hoort bij de regelingwaarden die in het fragment worden getoond.
-- Laat bij de overgang alleen het animatiebeeld geleidelijk naar zwart gaan. Wissel bij zwart naar de beginstand van het volgende fragment en laat het beeld terugkomen. Plaats de overgang tussen gesproken zinnen. Eerste testwaarde: circa 0,5 seconde per fade. Bij los afspelen kan het tweede fragment vanaf zwart openen.
-- Toets in fase 3 beide afspeelroutes en controleer of beeld, ondertiteling en voice-over vanaf de juiste beginstand lopen, ook bij terugspoelen.
+## Eerstvolgende stap achter de Mac
 
-## Techniek
-Ubuntu VPS, Nginx, HTTPS. Python generator met ElevenLabs timestamps en lokale audiocache, SVG/HTML animatie op audiotijd. API-sleutel uitsluitend buiten webroot/repository op server. Toekomstig: generieke parameterengine, database en backend; nog niet gebouwd. GSAP is kandidaat, huidige POC gebruikt native JS. Geen vertrouwelijke data.
+Herinner Mike aan de eenmalige VPS-installatie van de voice-overworker. Start met SSH volgens de centrale werkinstructies. Volg de [installatieprocedure](docs/ontwikkelworkflow-filmpjes.md#pilot-voice-over-aanmaken-via-github), controleer de afgeschermde preview en publiceer de opname pas na akkoord.
 
-## Roadmap
-1. Fase 1 — POC afgerond.
-2. Fase 2 — afgerond voor de partnerpensioenpilot. Gebruiker heeft de privétestversie op 2026-11-21 akkoord bevonden voor deze fase.
-3. Fase 3 — dynamische regelingen: verschillende waarden zonder codewijziging; gesproken tekst moet overeenkomen met parameters. Onderzoek hergebruik van audiofragmenten en timestamps.
-4. Fase 4 — tweede onderwerp, bijvoorbeeld wezenpensioen, om herbruikbaarheid te toetsen.
-5. Fase 5 — inhoud valideren, script en beeld verfijnen, integreren in website en publiceren.
+## Open werk
 
-## Vervolg na fase 2
-- De proef voor variërende regelingwaarden en gesproken tekst in fase 3 is geslaagd. Zie de eerste proef hieronder.
-- De goedkeuring geldt voor de privétestversie van fase 2. Definitief script, stemkeuze en publicatie staan nog open.
-
-## Eerstvolgende iteratie
-De OTAP-opzet op één VPS is op 22 november door de gebruiker goedgekeurd.
-
-De [ontwikkelworkflow voor filmpjes](docs/ontwikkelworkflow-filmpjes.md) beschrijft OTAP op de bestaande VPS: één release bouwen en testen, afgeschermd accepteren en dezelfde release na akkoord publiceren. De eerstvolgende proef gebruikt het bestaande filmpje met A, B, C en D. Fragmenthergebruik en database volgen na de deploymentproef.
-
-Op 22 november werkte de privépreview van fase3-v1 op de VPS via een SSH-tunnel. De gebruiker bevestigde de werking op zijn Mac. De gebruiker bevestigde daarna ook de [publieke demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) met echte audio. Het geteste bestand kreeg voor de niet-commerciële publicatie een ElevenLabs-vermelding in de titel. De link ‘Bekijk de demo’ op de Partnerpensioen-pagina staat in GitHub. De koppeling is via de automatische GitHub-uitrol op de VPS gepubliceerd. De prototypekeuzelijst is uit de hoofdpagina verwijderd; de keuze A–D staat in het filmpje.
-
-De [geautomatiseerde uitrol vanaf GitHub](docs/ontwikkelworkflow-filmpjes.md#geautomatiseerde-uitrol-vanaf-github) via branch `uitrol-productie` is getest. De VPS haalt de gewenste `index.html` op aan de hand van commit en checksum, publiceert die automatisch en bewaart de vorige homepage. Deze route is gebruikt en de live homepage is gecontroleerd. De route ondersteunt nu alleen `index.html`; build en uitrol van filmpjes volgen later.
-
-## Homepage aangepast: actieve onderwerpen openen direct het filmpje (23 november 2026)
-
-Na de eerste proef is de oorspronkelijke homepage-indeling teruggezet. De drie onderwerpblokken en de actieve onderwerpen zijn behouden; alleen de regelingkeuze en de aparte animatiepagina zijn verwijderd. De actieve links **Overlijden**, **Partnerpensioen** en **Mijn partner** openen nu rechtstreeks `/partnerpensioen-demo.html`. De regelingkeuze A–D en de animatie blijven in het filmpje zelf.
-
-De definitieve homepage is automatisch gepubliceerd via branch `uitrol-productie`, vanaf commit `7293c961d7116982b38d0b7aaeea1b803ff9f1d3`, met checksum `35dd9816b498207852ccac2659a3b2ca48cdb1170cae8ba5205c9802d1fcb9d2`. De live browsercontrole bevestigde de oorspronkelijke indeling, het ontbreken van de oude regelingkeuze en animatiepagina, en de drie directe filmkoppelingen.
-
-## Eerste proef fase 3
-- De [proef met vier regelingen](https://github.com/henkesmike/pensioen/tree/fase-3-vier-regelingen/poc/v4) combineert A (40%, 3 maanden), B (40%, 6 maanden), C (50%, 3 maanden) en D (50%, 6 maanden).
-- De backend knipt de originele opname op in drie vaste blokken en twee variabele zinnen. De vier combinaties delen twee percentagezinnen en twee duurzinnen. De bestaande audio bevat 40% en 3 maanden.
-- De HTTP-proef verifieerde twee automatische aanroepen, voor 50% en 6 maanden, en nul bij herhaling. Keuzelijst, audiobron, beeldlabels, ondertiteling en herberekende tijdcodes zijn technisch gecontroleerd. De proef gebruikt een lokale test-API met testtonen voor de twee nieuwe zinnen.
-- De echte ElevenLabs-proef slaagde op de VPS nadat de generator een afrondingsverschil van minder dan één milliseconde in de tijdcodes kon verwerken. De gebruiker opende de uitvoer op zijn Mac en bevestigde dat de POC werkt. Dit was een privéproef buiten de live site. De automatische start na regeling-upload blijft onderdeel van het eindontwerp.
-
-## Overdracht 22 november 2026
-
-- De [publieke Partnerpensioen-demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) is bijgewerkt na gebruikersacceptatie. De homepage verwijst naar deze demo. De gebruiker heeft het bestand op de VPS gepubliceerd met een herstelkopie van de vorige versie. De publieke controle gaf dezelfde SHA-256 als het geaccepteerde bestand: `fa80f185429e26d791e5a720269190465f068876658adabef0e3e3a9c99faca8`.
-- De selectie biedt drie huidtinten en vier koppelcombinaties. Bij twee personen van hetzelfde geslacht verschijnt een andere figuur als partner. Regeling A–D wordt afzonderlijk in het filmpje gekozen.
-- Zes vernieuwde personages gebruiken per figuur gemeten oogleden. Alleen het mondgebied wijzigt bij de wissel naar neutraal. Gedeelde beweging: ademen op 70% en knipperen met sluitduur op 270%, met twee enkele knippers en één dubbele per acht seconden.
-- De programmatest controleerde de twaalf combinaties, vier regelingkeuzes en terugknop. De gebruiker accepteerde de testversie. De publieke nacontrole verifieerde de bestandsinhoud via checksum. De aparte wenkbrauw- en hoofdproef dient als voorbereiding voor later.
-- Volgende inhoudelijke stap: maak **Na uitdiensttreding** herbruikbaar als zelfstandig fragment. De automatische uitrol ondersteunt nu alleen de homepage. Voor uitrol van demo-updates zonder Terminal kan die worden uitgebreid naar het specifieke demobestand.
-
-## Documentatie animatietechniek (23 november 2026)
-
-De [technische opzet van animaties en afbeeldingen](docs/technische-opzet-animaties.md) beschrijft per beweging en attribuut welke extra afbeelding of grafische laag nodig is, hoe de beweging werkt, de huidige implementatiestatus en de grenzen van de 2D-opzet. Alleen documentatie toegevoegd; geen code of publieke demo gewijzigd.
-
-## Architectuurafspraak JSON (23 november 2026)
-
-Besloten om regelingparameters, personagegegevens en animatie-instellingen in gestructureerde JSON te beheren, met generieke code, stabiele ID's, validatie en een centrale inleeslaag. Een database is voorlopig niet nodig; de gegevensstructuur moet latere migratie mogelijk maken. Zie [architectuur JSON-configuratie](docs/architectuur-json-configuratie.md).
-
-Een eerste implementatie voor de privéproef met vier regelingen staat op [branch implement-json-config](https://github.com/henkesmike/pensioen/tree/implement-json-config/poc/v4). De technische proef is in de assistentomgeving geslaagd met lokale testaudio. De generator en JSON-configuratie zijn nog niet op de VPS geïnstalleerd en de live demo is niet gewijzigd.
-
-## Werkwijze van idee tot deployment (23 november 2026)
-
-De gebruiker wil vanuit idee naar een complete deployment met zo min mogelijk eigen handelingen en zonder herhaald code- of commandokopiëren. Eerst wordt de volledige, veilige route ontworpen en vastgelegd; daarna volgt de implementatie. Zie [ontwikkelworkflow voor filmpjes](docs/ontwikkelworkflow-filmpjes.md#doel-van-idee-naar-deployment-met-zo-min-mogelijk-handwerk).
-
-De beoogde normale route is: wijziging via chat op een aparte GitHub-branch, automatische build en controles op de VPS, een afgeschermde preview-link, akkoord in de chat, daarna publicatie van exact dezelfde kandidaat met checksum en herstelmogelijkheid. Terminalhandelingen horen alleen nodig te zijn bij de eenmalige inrichting of bij storing/beheer.
-
-De huidige automatische uitrol ondersteunt alleen `index.html`; de generator en Partnerpensioen-demo hebben nog geen volledige build-preview-publicatieroute. Tijdens het uitwerken van die werkwijze zijn geen server- of live wijzigingen uitgevoerd.
-
-## Personages
-De bewegingsproef is goedgekeurd. [De ontwerpprincipes](docs/ontwerpprincipes-personages.md#goedgekeurde-basisbeweging) leggen de gedeelde instellingen vast. De vier aanvullende personages krijgen ieder een glimlachende en neutrale variant.
-
-## Publicatie
-De oorspronkelijke privé-POC en bronopnames blijven privé. De A–D-demo is als afzonderlijke niet-commerciële publicatie beschikbaar met de ElevenLabs-vermelding in de browsertitel. De zichtbare kop is **Partnerpensioen**. De gebruiker heeft deze correctie op de live demo gecontroleerd. De generator staat in GitHub. Sleutels blijven buiten de repository en de webroot.
-
-
-## Beheerrechten deployment (23 november 2026)
-
-Afgesproken is dat de deploymentvoorziening volledige beheerrechten krijgt voor de
-projectomgeving van `pensioen.myaiprojects.nl`: de volledige websiteboom (pagina's,
-mappen en assets), projectbronnen, gegenereerde previews en releases, publicatie en
-rollback. De rechten gelden ook voor nieuwe bestanden en submappen, niet alleen voor
-`index.html`.
-
-De bevoegdheid blijft beperkt tot de afgebakende projectpaden. Andere subdomeinen en
-serverbrede instellingen zoals Nginx, DNS, TLS, firewall en besturingssysteem vallen
-buiten de normale projectservice. De service krijgt hiervoor geen algemene rootrechten.
-Na eenmalige inrichting volgt het normale proces via chat/GitHub, automatische build
-en controles, privépreview, expliciet akkoord en publicatie van exact dezelfde release.
-Op 23 november is de eerste eenmalige serverinrichting uitgevoerd. De bestaande servicegebruiker `pensioen-deploy` mag schrijven in `/var/www/pensioen` en de eigen projectmappen onder `/var/lib/pensioen-deploy`; de timer is actief. De publieke homepage gaf HTTP 200. De projectgebruiker kan de Pensioen-site schrijven, terwijl `/var/www/puzzle` buiten bereik blijft. Deze stap wijzigde geen website-inhoud of Nginx. De site-agent is op 23 november geïnstalleerd vanaf branch
-[`deployment-json-config`](https://github.com/henkesmike/pensioen/tree/deployment-json-config).
-De eenmalige root-installatie voegde een Basic Auth-previewlocatie toe aan alleen de
-Pensioen-vhost; de projectservice heeft geen Nginx-beheer. De timer bouwde de JSON-generator offline en bood de kandidaat beveiligd aan.
-Na expliciet akkoord van Mike is exact die kandidaat gepubliceerd als
-`partnerpensioen-demo.html`. Het publieke statusbestand meldt `published` met
-dezelfde checksum als de goedgekeurde preview:
-`529a752a80b8df06e945eaaaa8fd6fc07ab4e26a6b9fe5d928f656e9e815d591`.
-De vorige demo is als herstelkopie bewaard. De eerste versie publiceert alleen de
-Partnerpensioen-demo; bredere releasebestemmingen kunnen daarna worden toegevoegd.
-De oude homepage-uitrol voor `index.html` blijft daarnaast actief.
-
-
-## Publieke invoer voor testregelingen (23 november 2026)
-
-De publieke beheerfunctie is voorbereid op branch `publieke-regelingbeheer`. Iedere bezoeker kan uitsluitend een percentage partnerpensioen (1–100%) en voorlopige dekkingsduur (1–120 maanden) invoeren. De functie maakt automatisch een regelingcode en naam, past de gesproken tekst aan, vraagt alleen ontbrekende zinsdelen op bij ElevenLabs en bewaart de regeling pas na een geslaagde build.
-
-De invoer is begrensd op maximaal twee nieuwe regelingen per dag, maximaal twee aanvragen per IP-adres per uur en vier nieuwe ElevenLabs-zinsopnamen per dag. Een kandidaatvideo krijgt een unieke link. De aanvraag publiceert niets automatisch; productie blijft achter expliciet akkoord van Mike. API-sleutel, bronopname en audiocache blijven op de server.
-
-De eenmalige VPS-installatie is op 23 november uitgevoerd. De beheer-API draait lokaal achter Nginx en de publieke API-route antwoordt. De homepage is daarna uitgerold via `uitrol-productie` vanaf commit `0f12d31b23ea7a9b35b659c7efd06ed886535261`, checksum `680397f371908bc30c4687c0e8ee6c295af3eeeb202d943d05efd7ed813b657e`. De live browsercontrole toont de twee velden met grenzen 1–120 maanden en 1–100%; de bestaande homepagekaarten en videolinks zijn behouden. De eerste live proefaanvraag met 60% en 3 maanden is succesvol verwerkt als fictieve regeling F; de gegenereerde kandidaat toont de juiste waarde en bevat afspeelbare audio. In de aanvullende servergegevens stond regeling E (45%, 1 maand) al vóór die proef; de herkomst daarvan is niet vast te stellen via de site. Kandidaat F blijft een concept en is niet live gepubliceerd.
-
-## Herstel figuurselectie (24 november 2026)
-
-De eerder goedgekeurde selectie is in de JSON-generator hersteld op [branch `herstel-figuurselectie`](https://github.com/henkesmike/pensioen/tree/herstel-figuurselectie). De bezoeker kiest uit drie huidtinten en vier koppels. Bij man–man en vrouw–vrouw toont de animatie twee verschillende figuren. Via **Wijzig situatie** kan de bezoeker terug naar de keuze en blijft de regeling geselecteerd. De zes bestaande illustraties, oogleden en neutrale mondvarianten zitten in `personages.json`.
-
-De technische bouwproef A–D en de JavaScript-controle van alle twaalf combinaties zijn geslaagd. Via `uitrol-preview` is een afgeschermde VPS-build aangevraagd voor commit `2f524c1be4a07b694d5ac0c99748b56c8ee42325`. De previewroute vraagt om inloggen. De build en weergave op de VPS zijn nog niet bevestigd. De publieke demo geeft dezelfde checksum als de vorige gepubliceerde versie. Er is geen publicatieopdracht gegeven.
-
-## Titelkaarten en Uitdiensttreding (24 november 2026)
-
-Mike heeft twee gesproken titelkaarten goedgekeurd. Partnerpensioen opent met **Wat gebeurt er als je overlijdt terwijl je in dienst bent?** Het tweede deel opent met **Wat gebeurt er als je uit dienst gaat?**. Bij de overgang vervaagt de animatie in circa een halve seconde naar de titelkaart. Na de vraag vervaagt de kaart naar de nieuwe beginstand met beide personages en de werkgever zichtbaar. Uitdiensttreding kan zelfstandig worden geopend via de onderwerpkeuze of `?onderwerp=uitdiensttreding`; daarbij start hetzelfde deel met eigen audio en tijdcodes vanaf nul.
-
-De implementatie staat op [branch `titelkaarten-uitdienst`](https://github.com/henkesmike/pensioen/tree/titelkaarten-uitdienst), met de herstelde figuurselectie als basis. De bouwproef A–D met een lokale spraakfixture en de JavaScript-controle van titelkaarten, fades, terugspoelen, beginstand en figuurselectie zijn geslaagd. De twee echte opnamen moeten nog via de bestaande ElevenLabs-bouwroute worden aangemaakt in de VPS-audiocache. De afgeschermde uitrol bouwt offline en kan die opnamen daarna hergebruiken. Er is nog geen nieuwe VPS-preview met echte voice-over bevestigd.
-
-### Publieke proef met stille titelkaarten (24 november 2026)
-
-Op verzoek van Mike zijn de twee titelkaarten zonder nieuwe voice-over gepubliceerd in de [Partnerpensioen-demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html). De eerste titel staat circa drie seconden in beeld, de tweede circa twee seconden, met de afgesproken fades. De bestaande uitleg blijft hoorbaar. De oorspronkelijke overgangszin met ‘Maar’ is uit deze versie geknipt. Uitdiensttreding kan ook afzonderlijk worden gekozen in de demo. Mike beoordeelt eerst het beeld. Daarna volgt de nieuwe gesproken tekst.
-
-De offline build van commit `ff52b0379e4dd7bafb1cfe8ee6103a3ff81cf6e7` is via de reguliere publicatieroute gepubliceerd. De publieke download had SHA-256 `41333ba6ad5f0efee17b27166ee43445f63da07c1b41d5d0c922a380ea9d6b64`. Beide titelkaarten, de onderwerpkeuze en de figuurselectie zijn in de publieke HTML gecontroleerd.
-
-### POC goedgekeurd (24 november 2026)
-
-Mike heeft de publieke POC van Partnerpensioen geslaagd verklaard. Het doel voor de volgende iteratie is om met meerdere korte filmpjes te onderzoeken welke onderdelen herbruikbaar zijn en welke opbouw voor kijkers herkenbaar blijft.
-
-### Nog op te pakken — dynamische pensioeninformatie
+- Maak korte filmpjes om hergebruik en een herkenbare opbouw te toetsen. Uitdiensttreding en wezenpensioen zijn besproken als mogelijke volgende onderwerpen.
+- Valideer regelingafhankelijke uitzonderingen en verfijn waar nodig inhoud, script en beeld voordat nieuwe filmpjes worden gepubliceerd.
+- Onderzoek dynamische pensioeninformatie per regeling en persoonlijke situatie.
 
 Onderzoek hoe de website bepaalt welke onderwerpen, filmpjes of fragmenten relevant zijn op basis van de pensioenregeling en de persoonlijke situatie.
 
@@ -162,24 +35,8 @@ Onderzoek hoe de website bepaalt welke onderwerpen, filmpjes of fragmenten relev
 
 Deze punten staan open voor een latere uitwerking.
 
-### Eerste proefanimatie Scheiden (24 november 2026)
+## Documentatie
 
-De [proefanimatie Scheiden](https://chatgpt.com/library?file_id=libfile_709922d7e9448191bf739283158f31a7&account_id=personal) hergebruikt het openingsbeeld van Partnerpensioen. De deelnemer begint alleen en zoomt uit. Een tijdsbalk vult zich en verandert van kleur vanaf het moment van trouwen of geregistreerd partnerschap. De animatie stopt tijdens de verdere pensioenopbouw. De proef gebruikt ondertiteling en, indien beschikbaar, een Nederlandse voorleesstem van de browser. Wacht op beoordeling van deze opzet voordat het vervolg over de scheiding wordt uitgewerkt.
-
-De [tweede proefanimatie Scheiden](https://chatgpt.com/library?file_id=libfile_e6b7437d0a5881918f14201f9d0cc34a&account_id=personal) gebruikt hogere, rechthoekige opbouwblokken met haakse hoeken. De kleinere deelnemer volgt de voortgang van de opbouw. Bij trouwen of geregistreerd partnerschap stopt de opbouw tijdelijk voor uitleg. Daarna schuiven beide figuren mee en krijgt de verdere opbouw een andere kleur. Alleen de titel Pensioenopbouw staat bij het blok. Beide proeven zijn beschikbaar voor vergelijking.
-
-De [derde proefanimatie Scheiden](https://chatgpt.com/library?file_id=libfile_46790e77c71881919bb31de9c7dd0a0b&account_id=personal) vergroot de blokhoogte met circa 50%, kadert het opbouwgebied en houdt de verkleinde werkgever linksboven in beeld. Muntjes gaan tijdens de opbouw naar de groeiende blokrand. De tweede periode is lichtgroen. De labels ‘huwelijk’ en ‘scheiden’ verschijnen bij de twee stopmomenten onder het blok.
-
-De [vierde proefanimatie Scheiden](https://chatgpt.com/library?file_id=libfile_2dc38b8bd6e881919e51e690a153de8e&account_id=personal) kadert het opbouwblok zelf en centreert ‘scheiden’ op de rechterrand. De partner schuift opzij. Het tijdens het huwelijk opgebouwde deel splitst horizontaal in twee helften van 50%, met kleine kopieën van de partner boven en de deelnemer onder. De oorspronkelijke figuren blijven in beeld. De ondertiteling en optionele voorleesstem beschrijven de standaardverdeling van ouderdomspensioen.
-
-De [zesde proefanimatie Scheiden](https://chatgpt.com/library?file_id=libfile_31643d18fdc48191a729058eabd40644&account_id=personal) laat het partnerblok rechtstreeks diagonaal naar zijn eindpositie bewegen. Beide opbouwblokken schalen evenredig in hoogte en breedte en eindigen met hun onderranden op dezelfde hoogte.
-
-In [versie 9 van Scheiden](https://chatgpt.com/library?file_id=libfile_9ebe595c44b88191b46de205d05fc141&account_id=personal) stuurt de vertraagde voorleesstem de scèneovergangen. Het uit elkaar schuiven van de pensioenblokken begint bij de zin over de uitbetaling door het pensioenfonds.
-
-### Scheiden gepubliceerd (24 november 2026)
-
-Mike heeft versie 9 goedgekeurd voor publicatie. De [publieke animatie Scheiden](https://pensioen.myaiprojects.nl/?onderwerp=scheiden) is bereikbaar via **Uit elkaar gaan** op de homepage. De goedgekeurde zelfstandige HTML is ongewijzigd ingebed via de bestaande homepage-uitrol. De publieke checksum `0b7f6dc18541e1569b1669cafdee5db2893efd5f425aca287817ec556179dcae` komt overeen met de websitebuild vanaf commit `176e17456656d0c042f6c3a71a28a477bca3dbc2`. Het starten van de animatie is in de browser gecontroleerd.
-
-### Eerstvolgende stap achter de Mac (25 november 2026)
-
-Zodra Mike verdergaat achter zijn Mac, herinner hem aan de eenmalige installatie van de VPS-worker voor de voice-overpilot. Start met inloggen via SSH volgens de centrale werkinstructies. De [installatieprocedure](docs/ontwikkelworkflow-filmpjes.md#pilot-voice-over-aanmaken-via-github) staat klaar, evenals de eerste bouwopdracht voor Scheiden met Adam. Controleer daarna of de afgeschermde preview werkt.
+- [Ontwikkelworkflow](docs/ontwikkelworkflow-filmpjes.md) voor bouwen, testen, voice-over, previews, uitrol en herstel.
+- [Technisch ontwerp](docs/technisch-ontwerp.md) voor configuratie, animaties, personages en de beoogde verwerking van reglementen.
+- [Voorgaande projectstatus en proefhistorie](https://github.com/henkesmike/pensioen/blob/575d5fce80724e7f8fcbf36b3253b0c3901fd54a/PROJECT_STATUS.md) voor eerdere besluiten, proefbestanden en publicatiechecksums.
