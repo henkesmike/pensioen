@@ -1,4 +1,5 @@
 {
-  "action": "build",
-  "film": "scheiden-v9"
+  "action": "publish",
+  "film": "scheiden-v9",
+  "sha256": "7dea0e5639135362583fc06185338c839542ab3264c4f16edafb24c1ae2c9090"
 }
