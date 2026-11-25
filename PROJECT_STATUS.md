@@ -179,3 +179,7 @@ In [versie 9 van Scheiden](https://chatgpt.com/library?file_id=libfile_9ebe595c4
 ### Scheiden gepubliceerd (24 november 2026)
 
 Mike heeft versie 9 goedgekeurd voor publicatie. De [publieke animatie Scheiden](https://pensioen.myaiprojects.nl/?onderwerp=scheiden) is bereikbaar via **Uit elkaar gaan** op de homepage. De goedgekeurde zelfstandige HTML is ongewijzigd ingebed via de bestaande homepage-uitrol. De publieke checksum `0b7f6dc18541e1569b1669cafdee5db2893efd5f425aca287817ec556179dcae` komt overeen met de websitebuild vanaf commit `176e17456656d0c042f6c3a71a28a477bca3dbc2`. Het starten van de animatie is in de browser gecontroleerd.
+
+### Eerstvolgende stap achter de Mac (25 november 2026)
+
+Zodra Mike verdergaat achter zijn Mac, herinner hem aan de eenmalige installatie van de VPS-worker voor de voice-overpilot. Start met inloggen via SSH volgens de centrale werkinstructies. De [installatieprocedure](docs/ontwikkelworkflow-filmpjes.md#pilot-voice-over-aanmaken-via-github) staat klaar, evenals de eerste bouwopdracht voor Scheiden met Adam. Controleer daarna of de afgeschermde preview werkt.
