@@ -140,6 +140,13 @@ Animaties laten aansluiten bij verschillende doelgroepen zonder afzonderlijke fi
 - Combineer personages en bewegingen dynamisch; voorkom aparte animaties per combinatie.
 - Laat eventuele toekomstige personalisatie berusten op vrijwillige keuze van de bezoeker; leid etniciteit of relatievorm niet af uit persoonsgegevens.
 
+### Persoonlijke instellingen op de homepage
+
+- **Mijn instellingen** opent één paneel met drie kolommen: regeling, persoonlijke situatie en personages. De regeling is verplicht. De persoonlijke situatie staat standaard op **Zeg ik liever niet** en de portretten op het eerste deelnemers- en partnerportret. Elk keuzewiel slaat het portret over dat in het andere wiel is geselecteerd.
+- De beschikbare filmpjes blijven zichtbaar met een slotje tot **Bewaren**. De homepage gebruikt daarna de bevestigde keuzes voor de filmpjes. Conceptwijzigingen worden pas actief na opnieuw bewaren. De keuzes worden gedurende het huidige paginabezoek in de browser bijgehouden.
+- De twee portretten rechtsboven wisselen vóór **Bewaren** om de beurt, met een fade-out en fade-in van elk één seconde. Bij een voorkeur voor minder beweging stopt de wisseling. Na **Bewaren** staan de gekozen portretten vast met de labels **Jij** en **Jouw partner**.
+- De homepage haalt de gegevens voor de gepersonaliseerde filmpjes pas op wanneer de bezoeker een filmpje opent. Bij een laadfout opent de standaardversie met een melding. De homepage blijft daardoor binnen de uitrollimiet van 256 KiB.
+
 ### Goedgekeurde basisbeweging
 
 Gebruik voor alle personages dezelfde rustige ademhaling op 70% (cyclus 3,7 seconden) en hetzelfde knipperpatroon met de sluitduur op 270%. De cyclus van 8 seconden bevat twee enkele knippers en één dubbele. Gebruik bij twee personages een faseverschil zodat ze niet synchroon knipperen. De positie en tint van de oogleden worden per illustratie ingesteld. De standaardbeweging bestaat uit ademhalen en knipperen.
