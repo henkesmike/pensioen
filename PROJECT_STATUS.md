@@ -1,6 +1,6 @@
 # Pensioen Ontdekt — projectstatus
 
-Bijgewerkt op 25 november 2026.
+Bijgewerkt op 26 november 2026.
 
 ## Doel
 
@@ -23,13 +23,11 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 - [Scheiden v9](https://pensioen.myaiprojects.nl/?onderwerp=scheiden) staat live via **Uit elkaar gaan**. De publieke versie gebruikt de door Mike goedgekeurde ElevenLabs-opname met Adam. De animatie staat op [scheiden-adam.html](https://pensioen.myaiprojects.nl/scheiden-adam.html). De blokken schuiven uit elkaar bij de zin over de uitbetaling. De goedgekeurde versie is gepubliceerd vanuit commit `176e17456656d0c042f6c3a71a28a477bca3dbc2`.
 - De voice-overworker is op de VPS geïnstalleerd. De opname en homepagekoppeling zijn gepubliceerd en gecontroleerd. De publieke opname komt overeen met de goedgekeurde preview (SHA-256 `7dea0e5639135362583fc06185338c839542ab3264c4f16edafb24c1ae2c9090`).
 
-- De productieopdracht voor de homepage met persoonlijke keuzes is klaargezet voor commit `a91deeb257ca0a6063adfa6f1c7a92f59aca7b96`. De homepage gebruikt drie uitklapbare keuzes, zes originele portretten in twee verticale keuzewielen en ‘Zeg ik liever niet’ als eerste keuze bij de persoonlijke situatie. Regeling F blijft concept. De publieke homepage is gecontroleerd op de uitrolchecksum.
-
-- De homepageversie met **Mijn instellingen** staat live vanaf commit `d4b955a08b39eb08e241a29178798290b5e91546`. De publieke homepage komt byte voor byte overeen met de goedgekeurde proef. Eén uitklapbaar blok **Mijn instellingen** bevat de drie kolommen. Tot **Bewaren** blijven de filmpjes vergrendeld en wisselen de portretten rechtsboven. Na **Bewaren** klapt het blok dicht, worden de filmpjes vrijgegeven en blijven de gekozen portretten staan.
+- De homepageversie met **Mijn instellingen** staat live vanaf commit `d4b955a08b39eb08e241a29178798290b5e91546`. De publieke homepage komt byte voor byte overeen met de goedgekeurde proef (SHA-256 `e0f0115990f2eb69b2fdda8895d5def48b41d4152a237134d990b9c83a75c4f8`). Eén uitklapbaar blok **Mijn instellingen** bevat de drie kolommen. Tot **Bewaren** blijven de filmpjes vergrendeld en wisselen de portretten rechtsboven. Na **Bewaren** klapt het blok dicht, worden de filmpjes vrijgegeven en blijven de gekozen portretten staan.
 
 ## Open werk
 
-- Maak korte filmpjes om hergebruik en een herkenbare opbouw te toetsen. Uitdiensttreding en wezenpensioen zijn besproken als mogelijke volgende onderwerpen.
+- Voorgestelde eerstvolgende proef: maak **Uit dienst gaan** bereikbaar via de homepage. Hergebruik het bestaande losse fragment voor uitdiensttreding en onderzoek hoe de gekozen regeling en personages kunnen worden doorgegeven. Begin met een geteste preview. Wezenpensioen blijft een mogelijk volgend onderwerp.
 - Valideer regelingafhankelijke uitzonderingen en verfijn waar nodig inhoud, script en beeld voordat nieuwe filmpjes worden gepubliceerd.
 - Onderzoek dynamische pensioeninformatie per regeling en persoonlijke situatie.
 
