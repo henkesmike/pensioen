@@ -110,7 +110,7 @@ Gebruik GitHub als bedieningspunt en laat de VPS uitgaand ophalen. De assistent 
 - Gebruik een aparte servicegebruiker voor Pensioen Ontdekt, met schrijfbevoegdheid voor de eigen releasepaden. De andere websites en de Nginx-configuratie vallen buiten die bevoegdheid. Is de repository privé, gebruik dan een alleen-lezen deploy key voor deze repository. De privésleutel blijft op de VPS.
 - Werk met één aangewezen uitrolbranch en een klein declaratief bestand. De eerste versie accepteert alleen een bestaande kandidaatversie en verwachte checksum, of de afgesproken statische homepage als beperkte test. Het bestand levert geen shellcommando's aan. Een normale commit op main start geen productie-uitrol.
 - Een productieopdracht wijst naar een goedgekeurde kandidaat. De VPS controleert de bron en checksum, zet bestanden eerst klaar buiten de live versie en wisselt daarna de actieve versie in één stap. Dezelfde opdracht kan veilig opnieuw worden gelezen. Log resultaat en versie op de VPS. Gebruik terugzetten naar een eerdere versie als rollback.
-- De homepageproef is op 23 november 2026 bijgesteld na feedback. De definitieve versie behoudt de oorspronkelijke indeling en drie onderwerpblokken, maar verwijdert de regelingkeuze en de aparte animatiepagina. De actieve links **Overlijden**, **Partnerpensioen** en **Mijn partner** gaan rechtstreeks naar het filmpje. De VPS publiceerde de exacte commit en checksum uit `uitrol-productie`; live controle bevestigde de drie bestemmingen en dat de oude onderdelen weg zijn. Dit verliep zonder Terminal-commando's van Mike. Zie [de actuele projectstatus](../PROJECT_STATUS.md).
+- De eerste homepage-uitrol is op 23 november 2026 getest met een exacte commit en SHA-256. De actuele productieversie en het gedrag van de homepage staan in de [projectstatus](../PROJECT_STATUS.md).
 - De automatische homepage-uitrol ondersteunt alleen `index.html`. Voor generator- en demo-updates zijn de privépreview en releasebestemming nog uit te breiden. De publieke en private audio blijven voldoen aan de bestaande publicatieafspraken.
 - Eenmalige inrichting vereist toegang op de VPS. Bundel die in één installatiecommando. Normale publicaties verlopen daarna vanuit GitHub, na akkoord op de release. Directe SSH blijft beschikbaar voor beheer en probleemoplossing.
 
@@ -124,7 +124,7 @@ Voor de huidige demo is de zichtbare kop **Partnerpensioen**. De vermelding voor
 
 ### Smoke test vóór acceptatie
 
-Bij stap 2 controleert de maker het exacte bestand of de URL die de gebruiker krijgt. Open de versie in een echte browser via dezelfde route als de gebruiker. Probeer de belangrijkste knoppen en selecties en controleer steeds het zichtbare resultaat. Bij de partnerpensioendemo omvat dit persoonlijke keuzes wijzigen, **Naar het filmpje**, een andere regeling kiezen, afspelen starten en teruggaan met **Wijzig situatie**. Controleer ook op JavaScript-fouten. Herhaal de getroffen route na elke reparatie.
+Bij stap 2 controleert de maker het exacte bestand of de URL die de gebruiker krijgt. Open de versie in een echte browser via dezelfde route als de gebruiker. Probeer de belangrijkste knoppen en selecties en controleer steeds het zichtbare resultaat. Bij de partnerpensioendemo omvat dit persoonlijke keuzes wijzigen, **Naar het filmpje**, een andere regeling kiezen, afspelen starten en teruggaan met **Wijzig situatie**. Voor de homepage controleer je dat de filmknoppen zichtbaar en vergrendeld zijn, dat **Mijn instellingen** de drie kolommen tegelijk opent en dat **Bewaren** pas na een regelingkeuze de filmpjes vrijgeeft. Controleer de wisselende portretten vóór het bewaren en de gekozen portretten erna. Open een beschikbaar filmpje en test de terugknop. Controleer ook op JavaScript-fouten. Herhaal de getroffen route na elke reparatie.
 
 Noteer in de oplevering wat is gecontroleerd. Als de browserproef blokkeert, meld dan expliciet welke browsercontrole openstaat en presenteer een programmatest als zodanig. De inhoudelijke en functionele acceptatie doet de gebruiker zelf.
 
@@ -190,11 +190,11 @@ bash /tmp/install-scheiden-voice.sh ca500ebb0c094ff979431cc30b26d8a086eeb291
 
 De timer haalt `deploy/scheiden-request.json` op uit de pilotbranch. Bij `{"action":"build","film":"scheiden-v9"}` verschijnt het resultaat achter de bestaande previewbeveiliging op `/_preview/scheiden-adam/index.html`. De checksum staat op `/_preview/scheiden-adam/status.json`. Controleer de stem, het tempo en het uit elkaar schuiven bij de slotzin. Na akkoord gebruikt de publicatieopdracht `{"action":"publish","film":"scheiden-v9","sha256":"<goedgekeurde checksum>"}`. De worker publiceert exact die kandidaat naar `/scheiden-adam.html`. Koppel daarna **Uit elkaar gaan** via de bestaande homepage-uitrol aan die pagina en controleer de publieke weergave.
 
-De pilot is voorbereid in GitHub. Installatie, de eerste API-aanroep en het afspelen op de VPS moeten nog worden bevestigd.
+De worker is op de VPS geïnstalleerd. De goedgekeurde opname met Adam en de koppeling vanaf **Uit elkaar gaan** zijn gepubliceerd en gecontroleerd. De actuele release staat in de [projectstatus](../PROJECT_STATUS.md).
 
 ## Homepage installeren en herstellen
 
-De bestaande timer leest `deploy/productie.json` op `uitrol-productie` en controleert ongeveer elke minuut. Een commit op `main` activeert geen release. De productieopdracht bevat de volledige commit-ID en SHA-256 van de exacte bytes van `index.html`.
+De bestaande timer leest `deploy/productie.json` op `uitrol-productie` en controleert ongeveer elke minuut. Een commit op `main` activeert geen release. De productieopdracht bevat de volledige commit-ID en SHA-256 van de exacte bytes van `index.html`. Houd het bestand onder de uitrollimiet van 256 KiB. Vergelijk na publicatie de SHA-256 van de publieke homepage met die van de goedgekeurde proef.
 
 Voer de eenmalige installatie als root uit met `bash install.sh VOLLEDIGE_COMMIT_ID`. Gebruik de commit waaruit je [het installatiescript](../deploy/install.sh) hebt opgehaald. Het script bewaart de eerdere homepage in `/var/lib/pensioen-deploy/index.voor-automatisering.html` en koppelt de publieke homepage aan de beheerde kopie. De homepage-uitrol gebruikt HTTPS en vereist geen GitHub- of ElevenLabs-sleutel.
 
