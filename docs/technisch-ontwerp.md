@@ -127,8 +127,8 @@ Status: bewegingsproef goedgekeurd op 22 november 2026.
 Animaties laten aansluiten bij verschillende doelgroepen zonder afzonderlijke films of programmacode per doelgroep te onderhouden.
 
 ### Beoogde varianten
-- Drie leeftijdscategorieën: jong, middelbare leeftijd, ouder. Exacte grenzen nog te bepalen.
-- Twee of drie uiterlijkvarianten; bij drie varianten en twee geslachten zijn er 18 basispersonages.
+- In deze fase worden vier aanvullende personageopties ontwikkeld: een moslimman, een moslimvrouw met hoofddoek, een Aziatische man en een Aziatische vrouw. De Aziatische ontwerpen krijgen een neutrale, niet landspecifieke uitstraling en vermijden karikaturen en nationale kleding.
+- Leeftijdscategorieën worden nu niet toegevoegd om de keuze overzichtelijk te houden.
 - Vier relatiecombinaties, in volgorde deelnemer/partner: man/vrouw, vrouw/man, man/man, vrouw/vrouw.
 - Rollen zijn onafhankelijk van het gekozen personage.
 
@@ -154,6 +154,17 @@ Gebruik voor alle personages dezelfde rustige ademhaling op 70% (cyclus 3,7 seco
 ### Uitdrukkingen
 
 Elk personage krijgt een glimlachende en een neutrale variant. Geef beide afbeeldingen dezelfde uitsnede, schaal en ankerpunten. Wissel van uitdrukking wanneer het scenario daarom vraagt. Controleer bij de eerste integratie visueel of een wissel zonder verspringing oogt.
+
+### Nieuwe personages tekenen in bestaande stijl
+
+Gebruik bij nieuwe personages altijd een goedgekeurde afbeelding uit de bestaande personagebibliotheek als directe beeldreferentie. Alleen een tekstuele omschrijving zoals “dezelfde stijl” is onvoldoende; de generator kan dan een andere lijnvoering, verhoudingen, belichting of pose verzinnen.
+
+1. Kies een bestaand personage met dezelfde kijkrichting, uitsnede en houding als stijl- en poseanker. Geef de afbeelding zelf mee aan de beeldgenerator.
+2. Vraag om een nieuw personage binnen die bestaande illustratiestijl. Behoud de hoofd- en lichaamsverhoudingen, pose, armstand, schaal, uitsnede, lijnbreedte, kleurvlakken, oogvorm en ooghoogte, mondstijl, nek- en schouderaansluiting en de bestaande ankerpunten. Laat de referentiefiguur ongewijzigd als een bestaande afbeelding wordt uitgebreid.
+3. Gebruik voor alle nieuwe varianten dezelfde goedgekeurde referentie. Gebruik een nieuw gegenereerde figuur niet als enige referentie voor de volgende; zo stapelt stijlverschil zich niet op.
+4. Maak bij een nieuwe stijl eerst een proefpersoon en vergelijk die op dezelfde schaal naast de referentie. Wanneer een complete set voor beoordeling is gevraagd, maak de figuren vanuit dezelfde vaste referentie en controleer ieder figuur afzonderlijk tegen het stijlanker.
+5. Toon een vergelijkingsblad met de bestaande en nieuwe figuren naast elkaar, op dezelfde schaal en uitsnede. Dit blad is voor visuele beoordeling en vervangt geen losse productie-assets.
+6. Maak de goedgekeurde figuren pas daarna klaar voor gebruik: afzonderlijke transparante bestanden met schone randen, dezelfde canvas- en ankerconventies, en de vereiste glimlachende en neutrale variant. Controleer ogen, oogleden/maskers, mond en nek visueel op de bestaande animatievoorwaarden. Voeg geen achtergrond, gloed, schaduw of wit randje toe.
 
 ## Technische opzet van animaties
 
