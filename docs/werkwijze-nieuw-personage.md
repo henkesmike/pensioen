@@ -59,6 +59,24 @@ Deze toleranties zijn voorgestelde kwaliteitsgrenzen. Bij een goedgekeurde refer
 - De neutrale variant is een kleine mondpatch die exact op dezelfde coördinaten en schaal past. De patch bevat geen neus, kin of grote delen van de wangen. Hij bedekt de tanden en glimlach volledig zonder zichtbare rechthoek, rand, smeer, kleurverschil of achtergebleven glimlachlijn.
 - Maak glimlach- en neutrale toestand vanuit dezelfde afbeelding en transformeer ze met dezelfde ankers. Controleer beide overgangen heen en terug.
 
+#### Nabevinding van personageproef v1 (27 november 2026)
+
+De eerste proef met de vrouw en man gebruikte oog- en mondankers die visueel waren geschat, niet gemeten op de definitieve bronafbeelding. De HTML tekende voor beide ogen van de vrouw dezelfde soort ellips (straal 31 × 23 bronpixels) en zette het linkeroogmiddelpunt op x=459 en het rechteroog op x=558. De ogen zijn niet symmetrisch: de vorm, wimpers en kanteling verschillen. Daardoor sloot het linkermasker niet aan op de werkelijke oogrand en bleef aan de buitenzijde wit zichtbaar.
+
+De mondoverlay was eveneens geschat (middelpunt x=512, y=285). De vervanging bestond uit een egale, radiale huidskleurvlek met daarover een lijn van 3,1 bronpixels. Bij een figuurbreedte van 500 pixels wordt die lijn ongeveer 1,5 schermpixels dik. De tint en vage patch sloten niet aantoonbaar aan op de huidtextuur en de mondlijn was op die weergaveschaal te weinig zichtbaar. De JavaScript-knoppen koppelden wel aan de neutrale stand; het probleem zat in de plaatsing en vormgeving van de overlay, niet in de knopactie.
+
+Deze proef laat zien dat getallen uit een verkleinde chatweergave geen betrouwbare ankers zijn. Een overlay mag pas worden beoordeeld nadat de ankers uit de definitieve bron zijn gemeten en de echte HTML-weergave is gecontroleerd.
+
+#### Aangescherpte werkwijze voor oog- en mondlagen
+
+1. Meet uitsluitend op het definitieve bronbestand op volledige resolutie. Noteer canvasbreedte en -hoogte en bewaar elk anker als genormaliseerde positie (x/canvasbreedte, y/canvashoogte), plus de omgerekende bronpixels.
+2. Meet linker- en rechteroog apart: begrenzingsvak van het volledige oog inclusief wimpers, middelpunt, breedte, hoogte en kanteling. Gebruik geen overgenomen, gespiegeld of op het oog geschat centrum of masker.
+3. Teken of bewerk elk gesloten ooglid passend op de gemeten contour en hoek. Controleer in de echte HTML-preview op de uiteindelijke afbeeldingsschaal dat het oogwit, de iris, pupil en wimpers volledig verdwijnen, zonder grote huidvlekken of witte rand. Controleer beide ogen afzonderlijk én samen.
+4. Meet ook het mondvak op de bron: glimlachlijn, tanden indien aanwezig, mondhoeken en middelpunt. Maak een huidgematchte zachte patch uit hetzelfde gezicht; gebruik geen uniforme kleurvlek die alleen op een gemiddelde huidskleur is gebaseerd.
+5. Plaats de neutrale mondlijn binnen het gemeten mondvak. Kies de lijndikte op de uiteindelijke weergaveschaal zodat de neutrale vorm zichtbaar is, terwijl de hele glimlach en eventuele tanden verborgen blijven. Controleer dat geen smile-pixels, patchrand of kleurverschil zichtbaar blijven.
+6. Open de HTML-preview in een browser en bedien afzonderlijk: glimlach/open ogen, knipperen, neutrale mond en neutrale mond met gesloten ogen. Controleer ook automatisch meerdere cycli en de overgang terug naar de glimlach. Een stand telt pas als geslaagd wanneer hij in de browser echt zichtbaar is op de beoogde grootte.
+7. Sla na de controle de exacte bronmaat, ankers, masker- en patchmaten en controle-uitkomst per personage op. Bij een mislukking corrigeer eerst het gemeten anker of de overlayvorm; maskeer de fout niet met willekeurig verschuiven.
+
 ### Nek en eventuele hoofdbeweging
 
 - De huidige standaardanimatie gebruikt knipperen en ademen; een hoofdbeweging hoort niet stilzwijgend bij de standaardset.
