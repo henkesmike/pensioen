@@ -9,6 +9,12 @@ Een nieuw personage moet passen in de bestaande Pensioen Ontdekt-stijl én betro
 
 Deze werkwijze geldt zodra een chat vraagt om een nieuw personage, avatar, portret of een nieuwe variant van een bestaande figuur. De assistent leest eerst `PROJECT_STATUS.md` en dit document, haalt de daar genoemde beeldreferenties op en volgt de stappen in volgorde.
 
+## Vaste beeldreferentie uit de eerste geslaagde ronde
+
+De projecthistorie wijst naar [Vier personages in transparante sprite sheet.webp](https://chatgpt.com/library?file_id=libfile_7c1d877c434c8191b3d387b367ed1f0c&account_id=personal) als de bestaande sprite sheet die bij de eerste geslaagde generatie als directe referentie is gebruikt. Haal deze afbeelding bij een nieuwe personageopdracht op uit de Library en voeg haar rechtstreeks toe als beeldcontext. Controleer daarnaast de actuele productie-assets in het project; gebruik een bestaande productiefiguur als aanvullende maat- en animatiereferentie.
+
+Gebruik de sprite sheet als stijl- en houdingstemplate, niet als bewijs dat elk figuur daarin productiegeschikt is. Gebruik geen conceptvellen, mislukte animatieproeven of niet-goedgekeurde nieuwe figuren als gouden referentie. Als deze Library-afbeelding niet toegankelijk is, of niet te rijmen is met de actuele productie-assets, stop en meld welke referentie ontbreekt voordat generatie begint.
+
 ## Wat bekend is over de eerste geslaagde generatie
 
 In de beschikbare projectnotities staat dat de eerste geslaagde ronde een bestaande, goedgekeurde sprite sheet als directe beeldreferentie gebruikte. De nieuwe figuren zijn daarbij naast bestaande figuren beoordeeld op illustratiestijl, houding en proporties. Een tekstbeschrijving alleen bleek minder betrouwbaar voor stijlconsistentie.
