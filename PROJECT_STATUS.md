@@ -135,3 +135,8 @@ De websitekeuze wordt uitgebreid van zes naar tien figuren. De vier aanvullingen
 De homepage haalt de bestaande partnerpensioenbron en scheidingssprites uit een vaste broncommit en voegt `assets/personage-overrides.json` toe. Portretten en volledige figuren worden via vaste commit-URL’s geladen; de homepage-uitrol blijft daarmee ruim onder de bestaande limiet van 256 KiB.
 
 Status van deze wijziging: afbeeldingen staan vast op assetcommit `1949814869ad288707214a4d9977a66bfab8f710`; de filmoverrides staan op `46a0f182226d986d61232eb6254d959dcc34fed6`. De homepage verwijst naar die overrides. Productiepublicatie en live controle lopen via de bestaande branch `uitrol-productie`.
+
+
+## Beheer fictieve regelingen — publicatie voorbereid
+
+De aparte beheerpagina `regelingen.html` vervangt het uitklapformulier op de homepage. **beheer regelingen** staat rechts naast de titel in de header en opent een wachtwoorddialoog. De twee huidige parameters blijven voorlopige dekking in maanden en partnerpensioenpercentage. **Bewaren** start direct de bestaande regeling- en voice-overbouw, geeft na succes een conceptvideolink op de homepage en publiceert de regeling niet automatisch. **Annuleren** keert terug naar de homepage. Productiepublicatie wordt aangevraagd via de bestaande checksum-uitrol.
