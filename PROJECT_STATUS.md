@@ -27,19 +27,17 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 
 ## Open werk
 
-- Voorgestelde eerstvolgende proef: maak **Uit dienst gaan** bereikbaar via de homepage. Hergebruik het bestaande losse fragment voor uitdiensttreding en onderzoek hoe de gekozen regeling en personages kunnen worden doorgegeven. Begin met een geteste preview. Wezenpensioen blijft een mogelijk volgend onderwerp.
-- Valideer regelingafhankelijke uitzonderingen en verfijn waar nodig inhoud, script en beeld voordat nieuwe filmpjes worden gepubliceerd.
-- Onderzoek dynamische pensioeninformatie per regeling en persoonlijke situatie.
+### Afspraak voor de volgende filmpjes
 
-Onderzoek hoe de website bepaalt welke onderwerpen, filmpjes of fragmenten relevant zijn op basis van de pensioenregeling en de persoonlijke situatie.
+Voorlopig bouwen we ieder onderwerp als een zelfstandig filmpje. Het hergebruik van losse inhoudelijke filmfragmenten als aparte filmpjes of onderdelen van andere filmpjes staat op pauze. Algemene animatiefuncties, personages, instellingen en passende losse assets kunnen wel opnieuw worden gebruikt.
 
-1. **Pensioensoorten in de regeling.** Bepaal welke pensioensoorten de regeling wel en niet bevat en stem het getoonde aanbod daarop af.
-2. **Partner.** Geef de gebruiker een plek om aan te geven of die een partner heeft. Onderzoek welke uitleg per situatie relevant is.
-3. **Kinderen.** Onderzoek hoe de gebruiker kan aangeven of die kinderen heeft en hoe dat de getoonde uitleg beïnvloedt.
-4. **Afstand tot de pensioenleeftijd.** Onderzoek wanneer iemand dicht bij de pensioenleeftijd is en welke informatie dan relevant wordt.
-5. **Andere factoren.** Onderzoek samen welke aanvullende kenmerken van de regeling of persoonlijke situatie de uitleg relevanter maken.
+### Voorgestelde volgorde
 
-Deze punten staan open voor een latere uitwerking.
+1. **Uit dienst gaan als zelfstandig filmpje.** Maak het onderwerp bereikbaar vanaf de homepage, geef de bewaarde regeling en gekozen personages door en lever eerst een testbare preview op.
+2. **Inhoud en regelingsverschillen valideren.** Controleer het scenario op relevante uitzonderingen per regeling en pas tekst, animatie en voice-over aan voordat het filmpje wordt gepubliceerd.
+3. **Persoonlijke relevantie bepalen.** Werk uit hoe partner, kinderen en afstand tot de pensioenleeftijd invloed hebben op welke onderwerpen worden aangeboden. Houd **Zeg ik liever niet** als geldige keuze.
+4. **Een volgend onderwerp volledig uitwerken.** Kies na de uitdienstproef één onderwerp, bijvoorbeeld partner- en wezenpensioen, arbeidsongeschiktheid of scheiden, en maak daarvoor een zelfstandig filmpje.
+5. **Selectie en regelinggegevens stapsgewijs parametriseren.** Leg vast welke onderwerpen per regeling en persoonlijke situatie beschikbaar zijn. Begin met versieerbare configuratie en automatische validatie; bouw pas verder uit als de eerste filmpjes die structuur nodig hebben.
 
 ## Documentatie
 
