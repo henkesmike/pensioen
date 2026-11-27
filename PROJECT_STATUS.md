@@ -18,7 +18,7 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 
 ## Huidige stand
 
-- De personageproef v1 van 27 november is nog niet goedgekeurd: het linkeroogmasker van de vrouw laat wit zichtbaar en de neutrale mond is niet te zien. De oorzaak en aangescherpte meet- en controleprocedure staan in [Werkwijze voor nieuwe geanimeerde personages](docs/werkwijze-nieuw-personage.md). Herziening van de preview staat open; er is niets gepubliceerd.
+- De personageproef v1 blijft ongewijzigd en niet goedgekeurd. Een zelfstandige v2-preview gebruikt dezelfde bronfiguren met afzonderlijk gemeten oog- en mondankers; de details staan in [Werkwijze voor nieuwe geanimeerde personages](docs/werkwijze-nieuw-personage.md#meetresultaat-personageproef-v2--27-november-2026). De browsercontrole van glimlach, knipperen, neutrale mond, combinatie en automatische beweging is niet uitgevoerd: de cloudbrowser weigerde de lokale `file://`-URL en stond alleen `http:` en `https:` toe. De v2-preview is daarom onbeoordeeld en niet gepubliceerd.
 
 - De [homepage](https://pensioen.myaiprojects.nl/) en de [Partnerpensioen-demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) staan live. Mike heeft de POC goedgekeurd. De demo heeft herstelde figuurselectie, stille titelkaarten en een losse afspeelroute voor Uitdiensttreding. De rest van de bestaande voice-over blijft hoorbaar.
 - Het publieke formulier voor fictieve regelingen werkt. Regeling E stond al opgeslagen (45%, 1 maand). De live proef met 60% en 3 maanden leverde kandidaat F op. F blijft een concept.
