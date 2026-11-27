@@ -18,6 +18,8 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 
 ## Huidige stand
 
+- De personageproef v1 van 27 november is nog niet goedgekeurd: het linkeroogmasker van de vrouw laat wit zichtbaar en de neutrale mond is niet te zien. De oorzaak en aangescherpte meet- en controleprocedure staan in [Werkwijze voor nieuwe geanimeerde personages](docs/werkwijze-nieuw-personage.md). Herziening van de preview staat open; er is niets gepubliceerd.
+
 - De [homepage](https://pensioen.myaiprojects.nl/) en de [Partnerpensioen-demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) staan live. Mike heeft de POC goedgekeurd. De demo heeft herstelde figuurselectie, stille titelkaarten en een losse afspeelroute voor Uitdiensttreding. De rest van de bestaande voice-over blijft hoorbaar.
 - Het publieke formulier voor fictieve regelingen werkt. Regeling E stond al opgeslagen (45%, 1 maand). De live proef met 60% en 3 maanden leverde kandidaat F op. F blijft een concept.
 - [Scheiden v9](https://pensioen.myaiprojects.nl/?onderwerp=scheiden) staat live via **Uit elkaar gaan**. De publieke versie gebruikt de door Mike goedgekeurde ElevenLabs-opname met Adam. De animatie staat op [scheiden-adam.html](https://pensioen.myaiprojects.nl/scheiden-adam.html). De blokken schuiven uit elkaar bij de zin over de uitbetaling. De goedgekeurde versie is gepubliceerd vanuit commit `176e17456656d0c042f6c3a71a28a477bca3dbc2`.
