@@ -11,7 +11,7 @@ Deze werkwijze geldt zodra een chat vraagt om een nieuw personage, avatar, portr
 
 ## Vaste beeldreferentie uit de eerste geslaagde ronde
 
-De projecthistorie wijst naar [Vier personages in transparante sprite sheet.webp](https://chatgpt.com/library?file_id=libfile_7c1d877c434c8191b3d387b367ed1f0c&account_id=personal) als de bestaande sprite sheet die bij de eerste geslaagde generatie als directe referentie is gebruikt. Haal deze afbeelding bij een nieuwe personageopdracht op uit de Library en voeg haar rechtstreeks toe als beeldcontext. Controleer daarnaast de actuele productie-assets in het project; gebruik een bestaande productiefiguur als aanvullende maat- en animatiereferentie.
+De projecthistorie wijst naar [Vier personages in transparante sprite sheet.webp](https://chatgpt.com/library?file_id=libfile_7c1d877c434c8191b3d387b367ed1f0c&account_id=personal) als de oorspronkelijke stijlreferentie. Een hash-gecontroleerde kopie van exact dezelfde bron staat nu in de openbare projectrepository: [assets/characters/reference/vier-personages-sprite-sheet-20261127.webp](../assets/characters/reference/vier-personages-sprite-sheet-20261127.webp) (SHA-256 `b3370eb60d4cea7c2b6ae601a2b5824715d7082eed6339ebc79a9bbebf7cef1a`). Gebruik die vaste projectkopie rechtstreeks als beeldcontext. Controleer daarnaast de actuele productie-assets in het project; gebruik een bestaande productiefiguur als aanvullende maat- en animatiereferentie.
 
 Gebruik de sprite sheet als stijl- en houdingstemplate, niet als bewijs dat elk figuur daarin productiegeschikt is. Gebruik geen conceptvellen, mislukte animatieproeven of niet-goedgekeurde nieuwe figuren als gouden referentie. Als deze Library-afbeelding niet toegankelijk is, of niet te rijmen is met de actuele productie-assets, stop en meld welke referentie ontbreekt voordat generatie begint.
 
@@ -169,3 +169,12 @@ Mike meldde dat in v2 de neutrale mond niet zichtbaar was en dat de hele figuur 
 V3 zet de basisafbeelding expliciet onderaan. De huidpatch is nu een los, bijgesneden HTML-afbeeldingslaagje; de neutrale mondlijn en gesloten ooglijnen zijn afzonderlijke SVG-paden erboven. De knop verandert alleen de zichtbaarheid van die overlaylagen. De oogmaskercontouren zijn 2% verkleind rond elk gemeten ooganker; de gesloten ooglijnen zijn ook korter gemaakt. De bronfiguren blijven ongewijzigd. V3 bevat patchuitsneden van 179 × 54 pixels voor de twee ogen en 87 × 27 pixels voor de vrouwenmond, en 157 × 44 en 117 × 25 pixels voor de mannenogen en mond.
 
 **Controle-uitkomst v3:** HTML-structuur en laagindeling zijn statisch gecontroleerd: twee losse mondpatches, twee losse oogpatches, vectorlijnen zonder rasterafbeeldingen in de SVG en ongewijzigde bronafbeeldingen. Browsercontrole van de zichtbare neutrale stand en alle overige standen is nog niet mogelijk via de lokale file-URL: de browser staat alleen http: en https: toe. De exacte eerdere foutmelding is vastgelegd in het v2-meetresultaat hierboven. V3 is dus een structureel gecorrigeerde maar nog niet browsermatig goedgekeurde preview. Er is niets gepubliceerd.
+
+
+## Uitvoeromgeving en previewgrenzen
+
+- Als de projectomgeving `starting` meldt, wacht dan op diezelfde omgeving tot zij `ready` is. Stop niet na een tijdelijke niet-beschikbare status; vraag de gebruiker ook niet opnieuw om een bestand dat al in de werkruimte staat.
+- Een werkruimte kan bestanden bevatten zonder een lokale Git-checkout. Controleer eerst het uploadpad en de repositorytoegang; gebruik de GitHub-connector om wijzigingen in de projectbranch vast te leggen wanneer er geen checkout is.
+- Maak onderscheid tussen een statische afbeeldingcontrole en een browsercontrole van animaties. Een screenshot of annotatie bewijst niet dat knipperen of mondwissel werkt.
+- Als de browserpolicy `file://` of toegang tot de lokale previewserver blokkeert, volg geen alternatieve browserroute om dezelfde pagina toch te openen. Leg de exacte blokkade vast en laat de preview onbeoordeeld totdat een toegestane previewomgeving beschikbaar is.
+- Publiceer geen preview naar de live site om een lokale browserbeperking te omzeilen. Voor een browserbeoordeling is een expliciet toegestane previewroute nodig; daarna blijft Mike's expliciete acceptatie vereist.
