@@ -137,8 +137,8 @@ De homepage haalt de bestaande partnerpensioenbron en scheidingssprites uit een 
 Status van deze wijziging: afbeeldingen staan vast op assetcommit `1949814869ad288707214a4d9977a66bfab8f710`; de filmoverrides staan op `46a0f182226d986d61232eb6254d959dcc34fed6`. De homepage verwijst naar die overrides. Productiepublicatie en live controle lopen via de bestaande branch `uitrol-productie`.
 
 
-## Beheer fictieve regelingen — publicatie voorbereid
+## Beheer fictieve regelingen — live
 
 De beheerweergave op `/?beheer=regelingen` vervangt het uitklapformulier en staat in `index.html`, zodat de bestaande checksum-uitrol de volledige wijziging publiceert. **beheer regelingen** staat rechts naast de titel in de header en opent een wachtwoorddialoog. De twee huidige parameters blijven voorlopige dekking in maanden en partnerpensioenpercentage. **Bewaren** start direct de bestaande regeling- en voice-overbouw, geeft na succes een conceptvideolink op de homepage en publiceert de regeling niet automatisch. **Annuleren** keert terug naar de homepage. Productiepublicatie wordt aangevraagd via de bestaande checksum-uitrol.
 
-De release is gereed voor uitrol via `uitrol-productie`. De productiehomepage bevat de beheerweergave als `/?beheer=regelingen`; de bestaande homepage-uitrol verwerkt die volledige wijziging als één bestand.
+De beheerpagina is op 27 november 2026 gepubliceerd via `uitrol-productie`, vanaf commit `0e871e6add31d4bc132707d7d03644b8f4b0a3f9`. De gepubliceerde `index.html` heeft SHA-256 `87b7cbf5e9f329c8867d9b8515c7e81cc988ef8d0632e7975f8c6f85c30c696b`. De browsercontrole bevestigde de homepageknop, het wachtwoordvenster, de aparte beheerweergave op `/?beheer=regelingen`, beide invoerwaarden en de terugkeer via **Annuleren**. **Bewaren** is niet ingestuurd tijdens de controle; die actie roept de regeling- en voice-overbouw direct aan.
