@@ -134,4 +134,4 @@ De websitekeuze wordt uitgebreid van zes naar tien figuren. De vier aanvullingen
 
 De homepage haalt de bestaande partnerpensioenbron en scheidingssprites uit een vaste broncommit en voegt `assets/personage-overrides.json` toe. Portretten en volledige figuren worden via vaste commit-URL’s geladen; de homepage-uitrol blijft daarmee ruim onder de bestaande limiet van 256 KiB.
 
-Status van deze wijziging: afbeeldingen staan vast op assetcommit `e5fa7328968f02547263064f2aa9bfabd1fbdd5d`; de filmoverrides staan op `354889760508496bbde05d119909565d3ee4874a`. De homepage verwijst naar die overrides. Productiepublicatie en live controle lopen via de bestaande branch `uitrol-productie`.
+Status van deze wijziging: afbeeldingen staan vast op assetcommit `1949814869ad288707214a4d9977a66bfab8f710`; de filmoverrides staan op `46a0f182226d986d61232eb6254d959dcc34fed6`. De homepage verwijst naar die overrides. Productiepublicatie en live controle lopen via de bestaande branch `uitrol-productie`.
