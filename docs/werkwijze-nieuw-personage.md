@@ -196,3 +196,10 @@ V3 zet de basisafbeelding expliciet onderaan. De huidpatch is nu een los, bijges
 De interactieve, zelfvoorzienende HTML-proef staat in de [Library](https://chatgpt.com/library?file_id=libfile_39438e7528888191851f2faed85ff62e&account_id=personal). Zij gebruikt alleen figuur 2 uit de bestaande sprite sheet en heeft bediening voor knipperen, ogen dicht houden, glimlach/neutrale mond en ademen. De per-afbeelding ankers zijn de voorlopige waarden uit de meetreview, genormaliseerd op de uitsnede.
 
 Dit is een beoordelingsproef, geen goedgekeurde asset. De HTML is niet in een browser gecontroleerd: de beschikbare browser blokkeert lokale projectbestanden en de huidige omgeving biedt geen toegestane previewroute. De proef is daarom niet gevalideerd of gepubliceerd. Er zijn geen nieuwe personages gegenereerd.
+
+
+## Mondpatch gecorrigeerd na beoordeling — 27 november 2026
+
+Mike zag in de eerste interactieve proef dat de neus gedeeltelijk wegviel en vroeg of een lagere mondpatch de glimlach nog volledig zou bedekken. De meting op de bronuitsnede laat zien dat alleen de hoogte kleiner maken niet volstaat: de eerdere patch begon op y=204 en eindigde op y=234, terwijl de glimlach lager doorloopt. De neus blijft vrij door de bovengrens naar y=216 te verplaatsen; de patchhoogte wordt tegelijk 34 pixels, zodat de ondergrens op y=250 blijft.
+
+De proef gebruikt daarom voor figuur 2 voorlopig `{x:118/300, y:216/1024, w:67/300, h:34/1024}`. Dit is een kandidaatcorrectie, nog geen goedgekeurd anker. Bij de beoordeling moet worden vastgesteld dat de neus volledig zichtbaar blijft én dat geen roze liprand of tanden buiten de huidpatch zichtbaar blijven. De proef is bijgewerkt in de bestaande Library-versie. Browsermatige controle ontbreekt nog; de wijziging is dus niet als werkend gevalideerd of gepubliceerd.
