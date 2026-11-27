@@ -41,6 +41,7 @@ Voorlopig bouwen we ieder onderwerp als een zelfstandig filmpje. Het hergebruik 
 
 ## Documentatie
 
+- [Werkwijze voor nieuwe geanimeerde personages](docs/werkwijze-nieuw-personage.md) is verplicht vóór iedere nieuwe personagegeneratie. Lees dit bestand en laad de daarin aangewezen goedgekeurde beeldreferenties; maak eerst één proef en test de echte animaties vóór verdere generatie of publicatie.
 - [Ontwikkelworkflow](docs/ontwikkelworkflow-filmpjes.md) voor bouwen, testen, voice-over, previews, uitrol en herstel.
 - [Technisch ontwerp](docs/technisch-ontwerp.md) voor configuratie, animaties, personages en de beoogde verwerking van reglementen.
 - [Voorgaande projectstatus en proefhistorie](https://github.com/henkesmike/pensioen/blob/575d5fce80724e7f8fcbf36b3253b0c3901fd54a/PROJECT_STATUS.md) voor eerdere besluiten, proefbestanden en publicatiechecksums.
