@@ -203,3 +203,14 @@ Dit is een beoordelingsproef, geen goedgekeurde asset. De HTML is niet in een br
 Mike zag in de eerste interactieve proef dat de neus gedeeltelijk wegviel en vroeg of een lagere mondpatch de glimlach nog volledig zou bedekken. De meting op de bronuitsnede laat zien dat alleen de hoogte kleiner maken niet volstaat: de eerdere patch begon op y=204 en eindigde op y=234, terwijl de glimlach lager doorloopt. De neus blijft vrij door de bovengrens naar y=216 te verplaatsen; de patchhoogte wordt tegelijk 34 pixels, zodat de ondergrens op y=250 blijft.
 
 De proef gebruikt daarom voor figuur 2 voorlopig `{x:118/300, y:216/1024, w:67/300, h:34/1024}`. Dit is een kandidaatcorrectie, nog geen goedgekeurd anker. Bij de beoordeling moet worden vastgesteld dat de neus volledig zichtbaar blijft én dat geen roze liprand of tanden buiten de huidpatch zichtbaar blijven. De proef is bijgewerkt in de bestaande Library-versie. Browsermatige controle ontbreekt nog; de wijziging is dus niet als werkend gevalideerd of gepubliceerd.
+
+
+## Vast mondvak door Mike visueel te kalibreren — 27 november 2026
+
+Mike heeft vastgesteld dat breedte, hoogte en plaats van het glimlach-/mondvak voor alle figuren gelijk moeten zijn. De neutrale weergave mag binnen dit vaste vak verschillen, bijvoorbeeld wel of geen zichtbare tanden. Per figuur mag de bron-glimlach dus eigen details hebben, maar die details moeten binnen dezelfde standaardmaat passen.
+
+De actuele HTML-proef heeft daarom een visuele kalibratiestand met schuifregelaars voor x, y, breedte en hoogte op de vaste figuuruitsnede van 300 × 1024 bronpixels. Het meetvak en de genormaliseerde waarden worden direct getoond. Mike kiest de definitieve maat door de glimlach volledig binnen het vak te plaatsen, zonder de neus te raken; daarna wordt de neutrale mondlaag met dezelfde maat beoordeeld. De waarden zijn pas vastgesteld na Mike's terugkoppeling.
+
+Vervolgens worden alle figuren op dezelfde uitsnedeverhouding en schaal uitgelijnd en krijgt ieder figuur hetzelfde genormaliseerde mondvak. Beeldgeneratie moet de mond vanaf het begin binnen dat vak houden. Als een bestaande figuur daar niet in past, wordt het brongezicht aangepast of opnieuw gemaakt; de mondpatch wordt niet per figuur verschoven of vergroot. Oogankers blijven afzonderlijk per afbeelding omdat de oogvormen kunnen verschillen.
+
+De HTML bevat de huidige besturing, maar is niet browsermatig gevalideerd door de geldende previewbeperking. De waarden moeten daarom door Mike in de interactieve proef visueel worden gekozen voordat ze als norm worden opgeslagen.
