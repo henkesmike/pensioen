@@ -163,3 +163,10 @@ De publieke route is begrensd tot maximaal twee nieuwe regelingen per dag, twee 
 Een inzending is een concept, geen automatische productiepublicatie. Mike bekijkt de video en keurt de exacte checksum in de bestaande releaseflow goed voordat de demo live wijzigt. De API-sleutel staat alleen in een root-beheerd systemd environment-bestand; de service luistert uitsluitend op localhost. De eenmalige serverinstallatie beperkt Nginx-aanpassingen tot de Pensioen-vhost.
 
 De implementatie staat op branch `publieke-regelingbeheer` en is nog niet live. Daarvoor is de eenmalige root-installatie nodig; de assistent kan via de huidige tools de VPS niet rechtstreeks benaderen. Daarna volgt een browserproef en pas na akkoord de homepage-uitrol.
+
+
+## Regelingen beheren — 27 november 2026
+
+De homepageknop **beheer regelingen** opent eerst een wachtwoorddialoog. Na invoer van de afgesproken vaste code opent de aparte witte pagina `regelingen.html`, die de huidige parameters voor voorlopige dekking (1–120 maanden) en partnerpensioen (1–100%) toont. De eenvoudige client-side code is alleen een low-profile drempel en geen beveiliging.
+
+**Bewaren** roept direct de bestaande `/api/regelingen`-route aan; er is geen aparte goedkeuringsstap voor het genereren van script, video en voice-over. Na `preview-ready` keert de bezoeker terug naar de homepage en krijgt daar een link naar de conceptvideo. **Annuleren** keert direct terug. Een concept wordt niet automatisch live gepubliceerd; de bestaande controle- en productiepublicatieafspraak blijft gelden.
