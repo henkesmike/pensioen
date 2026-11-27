@@ -214,3 +214,6 @@ De actuele HTML-proef heeft daarom een visuele kalibratiestand met schuifregelaa
 Vervolgens worden alle figuren op dezelfde uitsnedeverhouding en schaal uitgelijnd en krijgt ieder figuur hetzelfde genormaliseerde mondvak. Beeldgeneratie moet de mond vanaf het begin binnen dat vak houden. Als een bestaande figuur daar niet in past, wordt het brongezicht aangepast of opnieuw gemaakt; de mondpatch wordt niet per figuur verschoven of vergroot. Oogankers blijven afzonderlijk per afbeelding omdat de oogvormen kunnen verschillen.
 
 De HTML bevat de huidige besturing, maar is niet browsermatig gevalideerd door de geldende previewbeperking. De waarden moeten daarom door Mike in de interactieve proef visueel worden gekozen voordat ze als norm worden opgeslagen.
+
+
+**Door Mike geselecteerd mondanker (27 november 2026):** op de vaste uitsnede van 300 × 1024 bronpixels is het gezamenlijke vak `x=118, y=211, breedte=66, hoogte=25 px`. Genormaliseerd: `x=0.393333, y=0.206055, w=0.220000, h=0.024414`. Deze waarden gelden voor alle figuren. Toekomstige figuren moeten dezelfde uitsnedeverhouding en schaal gebruiken en de glimlach binnen dit vak houden. Tandweergave en overige glimlachdetails mogen binnen het vak verschillen. De basismaat is door Mike visueel gekozen; controle van de daadwerkelijke neutrale mondbedekking in de HTML blijft nodig.
