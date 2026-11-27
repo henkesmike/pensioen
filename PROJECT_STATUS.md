@@ -18,6 +18,8 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 
 ## Huidige stand
 
+- **Eerste interactieve personageproef:** [open/download de HTML-proef]( https://chatgpt.com/library?file_id=libfile_39438e7528888191851f2faed85ff62e&account_id=personal ). Zij gebruikt één bestaand figuur en alleen knipperen, glimlach/neutrale mond en ademen. De proef is bedoeld voor beoordeling van de kandidaat-ankers, nog niet browsergevalideerd of gepubliceerd.
+
 - **Huidige animatiescope:** Mike bevestigde op 27 november 2026 uitsluitend knipperen, glimlach ↔ neutrale mond en ademen. De kandidaatvakken uit de meetreview zijn startpunten voor kalibratie, niet definitieve normen. Hoofd- en armbewegingen en spraaklip-sync vallen buiten scope.
 - De exacte, door Mike aangeleverde sprite sheet is gecontroleerd (1536 × 1024; SHA-256 `b3370eb60d4cea7c2b6ae601a2b5824715d7082eed6339ebc79a9bbebf7cef1a`) en ongewijzigd opgeslagen op deze projectbranch. De voorlopige meetreview staat in [docs/characters/anchor-review-20261127.md](docs/characters/anchor-review-20261127.md) met visuele markeringen in [anchor-review-20261127.png](docs/characters/anchor-review-20261127.png). De vakken zijn kandidaatmetingen op een samengestelde sprite sheet, geen goedgekeurde ankers voor losse productiefiguren. Er is geen nieuw personage gegenereerd en niets gepubliceerd.
 

@@ -189,3 +189,10 @@ V3 zet de basisafbeelding expliciet onderaan. De huidpatch is nu een los, bijges
 - Maak onderscheid tussen een statische afbeeldingcontrole en een browsercontrole van animaties. Een screenshot of annotatie bewijst niet dat knipperen of mondwissel werkt.
 - Als de browserpolicy `file://` of toegang tot de lokale previewserver blokkeert, volg geen alternatieve browserroute om dezelfde pagina toch te openen. Leg de exacte blokkade vast en laat de preview onbeoordeeld totdat een toegestane previewomgeving beschikbaar is.
 - Publiceer geen preview naar de live site om een lokale browserbeperking te omzeilen. Voor een browserbeoordeling is een expliciet toegestane previewroute nodig; daarna blijft Mike's expliciete acceptatie vereist.
+
+
+## Personage-animatieproef 1 — 27 november 2026
+
+De interactieve, zelfvoorzienende HTML-proef staat in de [Library](https://chatgpt.com/library?file_id=libfile_39438e7528888191851f2faed85ff62e&account_id=personal). Zij gebruikt alleen figuur 2 uit de bestaande sprite sheet en heeft bediening voor knipperen, ogen dicht houden, glimlach/neutrale mond en ademen. De per-afbeelding ankers zijn de voorlopige waarden uit de meetreview, genormaliseerd op de uitsnede.
+
+Dit is een beoordelingsproef, geen goedgekeurde asset. De HTML is niet in een browser gecontroleerd: de beschikbare browser blokkeert lokale projectbestanden en de huidige omgeving biedt geen toegestane previewroute. De proef is daarom niet gevalideerd of gepubliceerd. Er zijn geen nieuwe personages gegenereerd.
