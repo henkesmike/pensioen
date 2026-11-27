@@ -1,6 +1,6 @@
 # Pensioen Ontdekt — projectstatus
 
-Bijgewerkt op 26 november 2026.
+Bijgewerkt op 27 november 2026.
 
 ## Doel
 
