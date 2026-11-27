@@ -31,6 +31,30 @@ De oorspronkelijke exacte prompt, referentiebestanden en numerieke gezichtsmaten
 - Vermijd karikaturen, nationale klederdracht en overdreven etnische kenmerken. Een identiteit wordt herkenbaar gemaakt met beperkte, natuurlijke verschillen; verander de bestaande tekenstijl niet.
 - Als de goedgekeurde referentie niet beschikbaar is in de chat of via de projectbestanden, stop dan en vraag om die referentie. Genereer niet op basis van alleen tekst.
 
+## Generieke animatie: vaste code, ankers per afbeelding
+
+Knipperen en mondwissel gebruiken voor alle personages dezelfde JavaScript- en CSS-functies. Er komen geen aparte varianten op basis van geslacht, gender, naam, kleding of bestandsnaam. Een personage heeft alleen eigen meetgegevens nodig, zodat dezelfde functie de ogen en mond op de juiste plek van die afbeelding tekent. Die ankers zijn kalibratiegegevens, geen aparte gedragslogica.
+
+Leg ankers per afbeelding vast als fracties van de gezichtskaderbreedte en -hoogte, naast de bronpixels. Zo blijven ze bruikbaar als het personage op een andere schermgrootte wordt getoond. Minimaal bevat het ankerbestand:
+
+- gezichtskader en broncanvas;
+- voor het linker- en rechteroog elk: middelpunt, breedte, hoogte, kanteling en begrenzingsvak;
+- oogafstand en afstand tot de wenkbrauw;
+- voor de mond: middelpunt, glimlachvak, mondhoeken en hoogte;
+- het toegestane overlayvak voor de neutrale mond, plus de begrenzing van neus en kin waarmee wordt gecontroleerd dat de patch daar niet overheen valt.
+
+De generieke functie krijgt de ankers van het gekozen personage mee. Ontbreken ankers of past een overlay niet binnen de veilige zone, dan wordt de asset niet geaccepteerd; de code verzint geen positie of maat op basis van gender of een ander personage.
+
+### Gezichtsvoorwaarden bij het genereren
+
+Meet de goedgekeurde gouden referentie vóór de prompt wordt opgesteld. Noteer de relatieve ooghoogte, oogbreedte en -hoogte, afstand tussen beide ogen, wenkbrauwafstand en de positie en maat van het mondvak. Gebruik die verhoudingen in de beeldprompt en controleer ze na generatie. De generator levert één frontaal gezicht met beide ogen volledig zichtbaar, zonder haar of accessoires over de ogen, zonder scheve camerahoek en zonder dichtgeknepen of knipogend oog. De oogvorm mag per figuur natuurlijk verschillen; de positie en verhoudingen blijven binnen de op de referentie gebaseerde stijlgrenzen.
+
+De mond is gesloten of heeft een zeer kleine gesloten glimlach. Geen tanden, brede grijns of mondhoeken buiten het mondvak. De bron moet een schoon huidgebied rond de mond hebben waarop de neutrale overlay kan aansluiten. Het volledige glimlach- en tandgebied moet binnen het gemeten overlayvak vallen. Dat vak blijft onder de neus en boven de kin; de patch mag neus, neusgaten, kincontour of grote delen van de wangen niet bedekken. Als de glimlach niet volledig kan worden verborgen zonder die gebieden te raken, keur de afbeelding af en genereer of bewerk de basis opnieuw.
+
+De overlay volgt de lokale huidkleur en textuur van dezelfde afbeelding. De neutrale mondlijn moet op de uiteindelijke schermgrootte duidelijk zichtbaar zijn. Beide toestanden gebruiken hetzelfde mondanker; alleen de mondlaag wisselt. Voor de ogen geldt dezelfde aanpak: de gedeelde knipperfunctie gebruikt twee afzonderlijk gemeten oogankers en past per oog een passend masker toe.
+
+De absolute bronpixelmaten zijn geen universele instellingen: ze veranderen met canvasmaat en figuur. Gebruik genormaliseerde maten en de gemeten gouden referentie. De oude maten uit de v1/v2-proef zijn alleen meetgegevens van die twee proefafbeeldingen; ze zijn geen goedgekeurde norm voor nieuwe figuren. Een vaste numerieke doelmaat wordt pas normatief nadat die op een goedgekeurde referentie is gemeten en in de echte scène is gevalideerd.
+
 ## Technische maatvoering
 
 ### Canvas, schaal en uitlijning
