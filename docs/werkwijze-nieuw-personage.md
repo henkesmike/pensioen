@@ -119,3 +119,21 @@ Bewaar samen met het goedgekeurde bronbestand:
 - resultaat van de scènecontrole en goedkeuringsdatum.
 
 Zo kan de volgende chat de juiste bestanden en metingen ophalen in plaats van de generatie opnieuw uit alleen een beschrijving af te leiden.
+
+## Meetresultaat personageproef v2 — 27 november 2026
+
+De v2-proef gebruikt exact dezelfde twee bronafbeeldingen als v1. De bronbestanden zijn 1024 × 1536 pixels; de SHA-256 van elk bestand is gelijk aan de afbeelding die in v1 is ingebed. De oog- en mondankers hieronder zijn afzonderlijk op die bronpixels gemeten. Bounding boxes zijn inclusief de genoemde grenspixel; de genormaliseerde centra zijn berekend als (x/1024, y/1536).
+
+| Figuur | Kenmerk | Gemeten bronvak (x₁,y₁–x₂,y₂) | Midden in bronpixels | Genormaliseerd midden |
+|---|---|---:|---:|---:|
+| Vrouw | Linkeroog | (427,189)–(497,234) | (462,211.5) | (0.451172, 0.137695) |
+| Vrouw | Rechteroog | (529,189)–(600,235) | (564.5,212) | (0.551270, 0.138021) |
+| Vrouw | Mond | (473,278)–(555,299) | (514,288.5) | (0.501953, 0.187826) |
+| Man | Linkeroog | (433,192)–(495,229) | (464,210.5) | (0.453125, 0.137044) |
+| Man | Rechteroog | (529,192)–(585,229) | (557,210.5) | (0.543945, 0.137044) |
+| Man | Mond | (459,277)–(576,296) | (517.5,286.5) | (0.504883, 0.186523) |
+
+De neutrale oog- en mondtoestanden gebruiken huidkleurpatches die uit de plaatselijke kleurgradiënt van dezelfde bronfiguur zijn berekend. De oogpatches volgen de afzonderlijke oogcontouren en hebben een kleine veiligheidsmarge. De neutrale mondlijn is 5.4 bronpixels breed bij de vrouw en 5.6 bij de man; op 500 pixels figuurbreedte is dat circa 2.6–2.7 schermpixels.
+
+**Controle-uitkomst:** de lokale HTML is bijgewerkt als v2; de figuren, scène, bediening en automatische animatiecode uit v1 zijn behouden. De gevraagde browsercontrole van glimlach, knipperen, neutrale mond, combinatie en automatische beweging kon niet worden uitgevoerd. De browser weigerde de lokale bestands-URL met deze melding: “Browser Use rejected this action due to browser security policy. Reason: The browser URL policy blocks this action. Cloud browser could not acquire authority to trigger network egress. The URL policy gate did not grant access. The requested URL protocol is not allowed. Allowed protocols: \"http:\", \"https:\".” Er is daarom geen browsermatige visuele goedkeuring; v2 blijft een onbeoordeelde preview en is niet gepubliceerd.
+\n
