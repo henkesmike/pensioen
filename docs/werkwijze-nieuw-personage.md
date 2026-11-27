@@ -35,6 +35,17 @@ De oorspronkelijke exacte prompt, referentiebestanden en numerieke gezichtsmaten
 
 Knipperen en mondwissel gebruiken voor alle personages dezelfde JavaScript- en CSS-functies. Er komen geen aparte varianten op basis van geslacht, gender, naam, kleding of bestandsnaam. Een personage heeft alleen eigen meetgegevens nodig, zodat dezelfde functie de ogen en mond op de juiste plek van die afbeelding tekent. Die ankers zijn kalibratiegegevens, geen aparte gedragslogica.
 
+### Huidige animatiescope — bevestigd door Mike op 27 november 2026
+
+Voorlopig bevat een personageproef uitsluitend:
+
+1. **Knipperen:** ogen open → dicht → open, met afzonderlijke oogankers per afbeelding.
+2. **Neutrale mond:** wisselen tussen de kleine gesloten glimlach en de neutrale mond; geen spraak- of fonemenlip-sync.
+3. **Ademen:** de bestaande subtiele, generieke ademanimatie.
+
+De gedeelde animatiefuncties blijven voor alle personages gelijk. Alleen de gemeten ankers verschillen per afbeelding. De voorlopige oog- en mondvakken in de meetreview zijn bevestigd als startpunt voor deze beperkte scope, maar zijn nog geen definitieve maatnorm. Hoofdbewegingen, armbewegingen en andere gebaren vallen buiten de huidige scope.
+
+
 Leg ankers per afbeelding vast als fracties van de gezichtskaderbreedte en -hoogte, naast de bronpixels. Zo blijven ze bruikbaar als het personage op een andere schermgrootte wordt getoond. Minimaal bevat het ankerbestand:
 
 - gezichtskader en broncanvas;
