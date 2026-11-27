@@ -79,6 +79,10 @@ als releasebestemming alleen `partnerpensioen-demo.html`.
 De preview en productie gebruiken hetzelfde gebouwde bestand. De bron-HTML,
 cache en API-sleutel blijven op de server en buiten de publieke webroot.
 
+### Personagekeuze en filmbron
+
+De homepage laadt portretten en de vier aanvullende volledige figuren via vaste Git-commit-URL's. De bestaande partnerfilm-HTML en scheidingssprites worden uit hun bestaande vaste broncommit gehaald; `assets/personage-overrides.json` voegt daar de vier goedgekeurde personages aan toe. De browser voegt de gegevens samen voordat de film wordt geopend. Wijzig bij nieuwe assets eerst de asset-commit in de URLs in de overrides, daarna de commit met overrides in `index.html`. Houd de homepage onder de limiet van 256 KiB van `deploy/publish.py`. Controleer na publicatie een personagekeuze, een gepersonaliseerde film en de scheidingsroute.
+
 ### Huidige beperking
 
 De bestaande GitHub-timer leest een declaratief verzoek en publiceert uitsluitend

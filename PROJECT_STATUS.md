@@ -13,7 +13,7 @@ De [missie en het einddoel](docs/missie-en-einddoel.md) beschrijven hoe een beoo
 - Laatste lokale testbestand: partnerpensioen-v3.html, inclusief privé-audio. Bewaar lokaal; niet publiceren of in openbare repository opnemen.
 - Generatoren v1 en v2 staan in `poc/`. De reproduceerbare v3 staat in `poc/v3/` op de [fase 2-branch](https://github.com/henkesmike/pensioen/tree/fase-2-partnerpensioen-v3/poc/v3).
 - Stem Adam uitsluitend technische test; definitieve stemkeuze uitgesteld.
-- Ontwerpprincipes toekomstige personages: docs/ontwerpprincipes-personages.md.
+- Ontwerp- en generatieafspraken voor personages: docs/ontwerpprincipes-personages.md. De bibliotheek telt nu zes bestaande en vier aanvullend goedgekeurde personages.
 - Lokale ontwikkeling en tests voorafgaand aan deployment; server niet gewijzigd voor v2/v3 lokale tests.
 
 ## Verhaallijn
@@ -127,3 +127,11 @@ De publieke beheerfunctie is voorbereid op branch `publieke-regelingbeheer`. Ied
 De invoer is begrensd op maximaal twee nieuwe regelingen per dag, maximaal twee aanvragen per IP-adres per uur en vier nieuwe ElevenLabs-zinsopnamen per dag. Een kandidaatvideo krijgt een unieke link. De aanvraag publiceert niets automatisch; productie blijft achter expliciet akkoord van Mike. API-sleutel, bronopname en audiocache blijven op de server.
 
 De code en eenmalige root-installatie zijn voorbereid, maar nog niet live. Activering vereist één gebundelde installatie op de VPS om de lokale API-service, de Pensioen-only Nginx-routes en de ElevenLabs-sleutel aan te sluiten. Daarna kan de homepage na acceptatie worden uitgerold via de bestaande geautomatiseerde route.
+
+## Personagekeuze uitgebreid (27 november 2026)
+
+De websitekeuze wordt uitgebreid van zes naar tien figuren. De vier aanvullingen zijn een man met kufi, een vrouw met hijab, een Aziatische man en een Aziatische vrouw. De gebruiker heeft deze ontwerpen visueel goedgekeurd. De volledige afbeeldingen en bijbehorende portretten staan onder `assets/personages/`; de selectie gebruikt stabiele ID's `mMuslim`, `vHijab`, `mAsian` en `vAsian`. De werkwijze voor stijlreferentie, beoordeling en animatie-ankers staat in `docs/ontwerpprincipes-personages.md`.
+
+De homepage haalt de bestaande partnerpensioenbron en scheidingssprites uit een vaste broncommit en voegt `assets/personage-overrides.json` toe. Portretten en volledige figuren worden via vaste commit-URL’s geladen; de homepage-uitrol blijft daarmee ruim onder de bestaande limiet van 256 KiB.
+
+Status van deze wijziging: afbeeldingen staan vast op assetcommit `e5fa7328968f02547263064f2aa9bfabd1fbdd5d`; de filmoverrides staan op `354889760508496bbde05d119909565d3ee4874a`. De homepage verwijst naar die overrides. Productiepublicatie en live controle lopen via de bestaande branch `uitrol-productie`.
