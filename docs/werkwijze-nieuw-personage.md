@@ -217,3 +217,8 @@ De HTML bevat de huidige besturing, maar is niet browsermatig gevalideerd door d
 
 
 **Door Mike geselecteerd mondanker (27 november 2026):** op de vaste uitsnede van 300 × 1024 bronpixels is het gezamenlijke vak `x=118, y=211, breedte=66, hoogte=25 px`. Genormaliseerd: `x=0.393333, y=0.206055, w=0.220000, h=0.024414`. Deze waarden gelden voor alle figuren. Toekomstige figuren moeten dezelfde uitsnedeverhouding en schaal gebruiken en de glimlach binnen dit vak houden. Tandweergave en overige glimlachdetails mogen binnen het vak verschillen. De basismaat is door Mike visueel gekozen; controle van de daadwerkelijke neutrale mondbedekking in de HTML blijft nodig.
+
+
+## Statische maatcontrole van het gekozen mondvak — 27 november 2026
+
+De bronuitsnede van figuur 2 is statisch gecontroleerd met het door Mike gekozen vak (`x=118, y=211, w=66, h=25`). De zichtbare mondhoeken, lippen en tanden vallen binnen de rechthoek; de neus valt erbuiten. Deze maatcontrole ondersteunt het gekozen anker, maar bewijst nog niet dat de huidpatch in de interactieve HTML de glimlach naadloos bedekt of dat de neutrale stand goed wisselt. Die browsercontrole is niet afgerond: de Library-preview vroeg in de beschikbare browser om aanmelding en de beveiligde aanmeldstap is niet voltooid. Er zijn geen credentials ingevoerd.
