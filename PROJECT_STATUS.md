@@ -18,6 +18,8 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 
 ## Huidige stand
 
+- **Ontwerpafspraak personages:** knipperen en mondwissel blijven gedeelde functies voor alle figuren; alleen genormaliseerde oog- en mondankers verschillen per afbeelding. De generatievoorwaarden en meetgegevens staan in [Werkwijze voor nieuwe geanimeerde personages](docs/werkwijze-nieuw-personage.md). Numerieke doelverhoudingen moeten nog op de goedgekeurde gouden referentie worden gemeten. V3 blijft onbeoordeeld totdat de echte browseranimaties zijn gecontroleerd.
+
 - De personageproef v1 blijft ongewijzigd en niet goedgekeurd. Mike meldde dat in v2 de neutrale mond niet zichtbaar was en dat de hele figuur verdween bij die stand. V3 scheidt huidpatch, mondlijn en basisfiguur; de oogmaskers zijn iets verkleind. De afzonderlijke lagen en ongewijzigde bronfiguren zijn statisch gecontroleerd, maar de browsercontrole is nog geblokkeerd voor file:// (alleen http: en https: toegestaan). V3 is daarom nog onbeoordeeld en niet gepubliceerd: [preview v3](https://chatgpt.com/library?file_id=libfile_61fa1a81445081919a0b577c611a330a&account_id=personal). De technische bevinding en controle-uitkomst staan in [Werkwijze voor nieuwe geanimeerde personages](docs/werkwijze-nieuw-personage.md#follow-up-correctie-naar-personageproef-v3--27-november-2026).
 
 - De [homepage](https://pensioen.myaiprojects.nl/) en de [Partnerpensioen-demo](https://pensioen.myaiprojects.nl/partnerpensioen-demo.html) staan live. Mike heeft de POC goedgekeurd. De demo heeft herstelde figuurselectie, stille titelkaarten en een losse afspeelroute voor Uitdiensttreding. De rest van de bestaande voice-over blijft hoorbaar.
