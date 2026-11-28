@@ -1,4 +1,9 @@
 {
-  "commit": "0e871e6add31d4bc132707d7d03644b8f4b0a3f9",
-  "sha256": "87b7cbf5e9f329c8867d9b8515c7e81cc988ef8d0632e7975f8c6f85c30c696b"
+  "commit": "c07850b6c6cdfbb21219ba0cddee1cf1f47ff7d6",
+  "files": [
+    {
+      "path": "personageproef-nieuwe-figuren-v3.html",
+      "sha256": "301ae0ce355dd95f314ebea4fc7f74dcf4e155d00cbf4848aed12feadf9574d2"
+    }
+  ]
 }
