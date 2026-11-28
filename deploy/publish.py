@@ -156,7 +156,7 @@ def publish(public=PUBLIC, webroot=WEBROOT, request_url=REQUEST):
 
     commit, records = parse_request(raw_request)
     created_dirs = []
-    previous = {}
+    total = 0
     operations = []
     try:
         for relative, path, expected in records:
@@ -194,11 +194,11 @@ def publish(public=PUBLIC, webroot=WEBROOT, request_url=REQUEST):
         deployment_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + uuid4().hex[:8]
         history_dir = HISTORY / deployment_id
         history_dir.mkdir(parents=True, exist_ok=False)
-        previous_manifest = {"commit": commit, "files": []}
+        previous_manifest = {"previous_files": []}
         for relative, _, data, old in changes:
-            previous_manifest["files"].append({
+            previous_manifest["previous_files"].append({
                 "path": relative,
-                "sha256": hashlib.sha256(data).hexdigest() if data is not None else None,
+                "sha256": hashlib.sha256(old).hexdigest() if old is not None else None,
             })
             if old is not None:
                 backup = history_dir / "previous" / PurePosixPath(relative)
