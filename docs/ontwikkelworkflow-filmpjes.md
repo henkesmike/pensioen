@@ -81,12 +81,33 @@ de publieke webroot.
 
 ### Huidige beperking
 
-De beschreven homepage-timer publiceert uitsluitend `index.html`. Voor een
-ander bestand of een gegenereerde demo moet de toegestane bestemming expliciet
-door de serverdeployment worden ondersteund. Richt voor die bestemming ook
-terugzetten naar een eerdere GitHub-commit in. Voer pas daarna de test uit op
-de gewone site-URL. Een aparte previewroute geldt niet als vervanging van die
-deployment.
+De worker kan de oude opdrachtvorm voor `index.html` blijven verwerken
+en ondersteunt daarnaast opdrachten met `commit` plus een lijst van
+`path`/SHA-256-paren voor meerdere statische websitebestanden. De lijst kan
+ook `sha256: null` bevatten om een eerder geplaatst bestand te verwijderen.
+De worker staat alleen vaste bestandstypen en veilige relatieve paden toe;
+shellopdrachten worden niet uitgevoerd. De wijziging is in GitHub voorbereid,
+maar wordt pas actief na eenmalige root-installatie op de VPS. Tot die
+installatie is afgerond, blijft de bestaande homepageworker actief.
+
+Een deploymentopdracht op de branch `uitrol-productie` heeft bijvoorbeeld
+de vorm:
+
+```json
+{
+  "commit": "<40 tekens tellende commit-ID>",
+  "files": [
+    {"path": "voorbeeld.html", "sha256": "<64 tekens tellende SHA-256>"},
+    {"path": "assets/voorbeeld.svg", "sha256": "<64 tekens tellende SHA-256>"}
+  ]
+}
+```
+
+Gebruik voor een bestand dat bij een oudere commit niet bestond
+`"sha256": null` om het van de website te verwijderen. De bestaande vorm met
+alleen `commit` en `sha256` blijft werken voor `index.html`. De worker bewaart
+de vorige inhoud onder `/var/lib/pensioen-deploy/history`; voor rollback zet je
+in GitHub de vorige commit en bijbehorende bestandshashes als nieuwe opdracht.
 
 
 ## Testdeployment en rollback op één server
