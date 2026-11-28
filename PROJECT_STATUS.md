@@ -18,11 +18,12 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 
 ## Huidige stand
 
-- **Algemene bestandsdeployment:** de worker en installer zijn uitgebreid
-  in GitHub voor meerdere statische bestanden met padvalidatie, checksumcontrole
-  en herstelinformatie. De VPS is nog niet bijgewerkt; daarvoor is eenmalige
-  root-installatie nodig. De huidige worker op de VPS ondersteunt nog alleen
-  `index.html`; de codewijziging is nog niet op de server geïnstalleerd.
+- **Algemene bestandsdeployment:** op 28 november is de worker op de VPS
+  bijgewerkt vanaf commit `e90a3e367f775711567379f521e731700aff2def`. De
+  installatie meldde dat de deploymenttimer actief is. De worker ondersteunt
+  meerdere statische bestanden met pad- en checksumcontrole en bewaart vorige
+  inhoud voor herstel. Een deployment van een niet-indexbestand is nog niet
+  uitgevoerd.
 - **Test- en deploymentafspraak (28 november 2026):** iedere proefversie wordt
   op de bestaande Pensioen Ontdekt-server getest via de gewone site-URL. Er
   komt geen aparte testomgeving en een lokale ChatGPT-preview geldt niet als
