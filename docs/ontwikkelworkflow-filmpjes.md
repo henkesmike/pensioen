@@ -48,14 +48,12 @@ beveiligde preview mag de eenmalige root-installatie alleen een previewlocatie
 toevoegen aan de bestaande Nginx-vhost voor `pensioen.myaiprojects.nl`; die
 wijziging geeft de projectservice zelf geen beheer over Nginx.
 
-Na de eenmalige inrichting loopt het normale proces via chat en GitHub. De
-site-agent haalt een expliciet previewverzoek op, bouwt offline op de VPS en biedt
-de kandidaat beveiligd aan. Pas na akkoord publiceert de agent exact die kandidaat.
-De eerste beveiligde preview is op 23 november aan Mike getoond en na zijn
-expliciete akkoord gepubliceerd. Het publieke statusbestand bevestigde dat de
-gepubliceerde checksum gelijk is aan die van de goedgekeurde preview. De vorige demo
-is bewaard voor herstel. De bestaande homepage-uitrol voor `index.html` blijft actief;
-de nieuwe route publiceert in deze eerste versie alleen de Partnerpensioen-demo.
+De beveiligde preview- en publicatieroute is op 23 november 2026 gebruikt voor
+de eerste demo. Dat was de toenmalige proefroute. Vanaf 28 november geldt de
+serverdeployment naar de gewone site-URL als test- en acceptatieroute; een aparte
+preview accepteren en daarna nogmaals publiceren is niet meer de normale flow.
+De eerdere demo en de checksum zijn bewaard als herstelpunt. Houd de bestaande
+afbakening van projectrechten en toegestane bestemmingen aan.
 
 ### Eerste VPS-inrichting uitgevoerd (23 november 2026)
 
@@ -73,24 +71,22 @@ Basic Auth-previewlocatie. De productieversie is niet gewijzigd. Publicatie na a
 en automatische rollback zijn onderdeel van de agent; de eerste versie ondersteunt
 als releasebestemming alleen `partnerpensioen-demo.html`.
 
-### Twee soorten deployment
+### Generator en serverdeployment
 
-- **Generator en configuratie:** Python-code en JSON worden op de server gezet
-  in een privé werkmap. Dit wijzigt op zichzelf de publieke website niet.
-- **Gegenereerde demo:** de server bouwt een statisch HTML-bestand met audio en
-  animaties. Dat bestand krijgt een privépreview en wordt na akkoord als
-  afzonderlijke release gepubliceerd.
-
-De preview en productie gebruiken hetzelfde gebouwde bestand. De bron-HTML,
-cache en API-sleutel blijven op de server en buiten de publieke webroot.
+Python-code, JSON en bronmedia kunnen eerst in een privé werkmap op de VPS
+worden opgebouwd. Dit is alleen voorbereiding en telt nog niet als test. De
+testversie wordt daarna als release naar de gewone site-URL uitgerold. Dezelfde
+release blijft na akkoord actief. Bewaar bron-HTML, cache en API-sleutel buiten
+de publieke webroot.
 
 ### Huidige beperking
 
-De bestaande GitHub-timer leest een declaratief verzoek en publiceert uitsluitend
-`index.html`. Hij bouwt nog geen filmpjes en ondersteunt geen
-`partnerpensioen-demo.html`-release. De volgende infrastructuurstap is daarom
-een aparte, afgebakende route voor generatorbuilds, beveiligde previews en de
-toegestane demo-bestemming. De bestaande homepage-uitrol blijft ongewijzigd.
+De beschreven homepage-timer publiceert uitsluitend `index.html`. Voor een
+ander bestand of een gegenereerde demo moet de toegestane bestemming expliciet
+door de serverdeployment worden ondersteund. Richt voor die bestemming ook
+terugzetten naar een eerdere GitHub-commit in. Voer pas daarna de test uit op
+de gewone site-URL. Een aparte previewroute geldt niet als vervanging van die
+deployment.
 
 
 ## Testdeployment en rollback op één server
@@ -123,20 +119,32 @@ naar een eerdere GitHub-versie voor die bestemming werkt.
 
 ## Geautomatiseerde uitrol vanaf GitHub
 
-Gebruik GitHub als bedieningspunt en laat de VPS uitgaand ophalen. De assistent kan via GitHub wijzigingen klaarzetten en na akkoord de opdracht voor een specifieke release vastleggen. Een systemd-timer op de VPS leest die opdracht en voert een vast lokaal publicatiescript uit. Directe SSH-toegang vanuit de assistent of het delen van het rootwachtwoord is hiervoor overbodig.
+Gebruik GitHub als bedieningspunt en laat de VPS uitgaand ophalen. De assistent
+zet wijzigingen klaar op een branch. Na het committen wordt vanaf de exacte
+commit-ID een testdeployment gestart naar de gewone site-URL. Een systemd-timer
+op de VPS kan een declaratieve opdracht lezen en een vast lokaal deployscript
+uitvoeren. Een normale commit op main start op zichzelf geen deployment. Directe
+SSH-toegang vanuit de assistent of het delen van het rootwachtwoord is hiervoor
+overbodig.
 
 - Gebruik een aparte servicegebruiker voor Pensioen Ontdekt, met schrijfbevoegdheid voor de eigen releasepaden. De andere websites en de Nginx-configuratie vallen buiten die bevoegdheid. Is de repository privé, gebruik dan een alleen-lezen deploy key voor deze repository. De privésleutel blijft op de VPS.
-- Werk met één aangewezen uitrolbranch en een klein declaratief bestand. De eerste versie accepteert alleen een bestaande kandidaatversie en verwachte checksum, of de afgesproken statische homepage als beperkte test. Het bestand levert geen shellcommando's aan. Een normale commit op main start geen productie-uitrol.
-- Een productieopdracht wijst naar een goedgekeurde kandidaat. De VPS controleert de bron en checksum, zet bestanden eerst klaar buiten de live versie en wisselt daarna de actieve versie in één stap. Dezelfde opdracht kan veilig opnieuw worden gelezen. Log resultaat en versie op de VPS. Gebruik terugzetten naar een eerdere versie als rollback.
+- Gebruik de afgesproken uitrolbranch en een klein declaratief bestand. De deploymentopdracht noemt de volledige commit-ID en verwachte checksum; het bestand levert geen shellcommando's aan.
+- De VPS controleert bron en checksum, bouwt de release klaar en wisselt de actieve versie in één stap. Bewaar de vorige versie. Log commit, checksum en resultaat op de VPS.
+- Bij afkeuring of een fout maakt de deploymentopdracht de vorige werkende GitHub-commit opnieuw actief. Dit is een nieuwe deployment van die versie; wijzig de Git-geschiedenis niet.
 - De eerste homepage-uitrol is op 23 november 2026 getest met een exacte commit en SHA-256. De actuele productieversie en het gedrag van de homepage staan in de [projectstatus](../PROJECT_STATUS.md).
-- De automatische homepage-uitrol ondersteunt alleen `index.html`. Voor generator- en demo-updates zijn de privépreview en releasebestemming nog uit te breiden. De publieke en private audio blijven voldoen aan de bestaande publicatieafspraken.
-- Eenmalige inrichting vereist toegang op de VPS. Bundel die in één installatiecommando. Normale publicaties verlopen daarna vanuit GitHub, na akkoord op de release. Directe SSH blijft beschikbaar voor beheer en probleemoplossing.
+- De automatische homepage-uitrol die hier is beschreven ondersteunt alleen `index.html`. Voor andere bestemmingen moet de uitrolroute worden uitgebreid met deployment en herstel vanaf een eerdere commit voordat je die bestemming test. De publieke en private audio blijven voldoen aan de bestaande publicatieafspraken.
+- Eenmalige inrichting vereist toegang op de VPS. Bundel die in één installatiecommando. Normale testdeployments verlopen daarna vanuit GitHub. Directe SSH blijft beschikbaar voor beheer en probleemoplossing.
 
 ### Voortgang tijdens elke uitrol
 
-Geef vooraf aan welke stappen deze uitrol heeft en hoeveel het er zijn. Meld na elke stap het nummer, het resultaat, wat nog openstaat en de eerstvolgende stap. Bijvoorbeeld: “Stap 3 van 5 afgerond. De privépreview is akkoord. Volgende stap: de goedgekeurde versie publiceren.” Meld een blokkade bij de betreffende stap. Zet een stap pas op afgerond nadat het resultaat is gecontroleerd.
+Geef vooraf aan hoeveel stappen deze uitrol heeft. Meld na iedere stap het
+nummer, het resultaat en de eerstvolgende stap. Meld blokkades bij de stap waar
+ze optreden en vink een stap pas af nadat het resultaat is gecontroleerd.
 
-Gebruik als standaard: 1. wijziging klaarzetten, 2. bouwen en testen, 3. acceptatie, 4. publiceren, 5. publiek controleren. Vermeld per stap of de assistent die uitvoert of dat de gebruiker iets moet doen en waar. Kleine wijzigingen kunnen dezelfde stappen kort doorlopen.
+Gebruik als standaard: 1. wijziging committen, 2. bouwen en automatisch
+controleren, 3. deployen naar de gewone site-URL en daar testen, 4. accepteren
+of de vorige GitHub-versie herstellen. Vermeld per stap wie iets uitvoert en
+waar. Kleine wijzigingen kunnen dezelfde vier stappen kort doorlopen.
 
 Voor de huidige demo is de zichtbare kop **Partnerpensioen**. De vermelding voor de bestaande ElevenLabs-opname blijft in de browsertitel.
 
@@ -163,9 +171,12 @@ De upload van een **filmpje** voegt scenario's en media toe. De upload van **reg
 
 ## Eerste iteratie
 
-Gebruik het bestaande partnerpensioenfilmpje met A, B, C en D. De HTML met echte audio is al op de VPS gebouwd. Registreer die als eerste kandidaat-release met een klein manifest en checksum, open hem via de privépreview en controleer alle vier varianten. Publiceer daarna dezelfde release onder een eigen URL, zodra de audio voor publiek gebruik is vrijgegeven. Controleer de URL en leg vast hoe de vorige versie kan worden teruggezet of hoe de route bij de eerste publicatie weer kan worden uitgezet.
-
-Daarna doorlopen we de route opnieuw met een kleine wijziging vanuit Git. Dan toetsen we ook de automatische bouw en testen. Het opsplitsen van het filmpje en de database volgen na deze eerste deploymentproef.
+De eerdere eerste iteratie gebruikte een beveiligde preview en daarna een
+afzonderlijke publicatie. Die route is historisch. Bij een volgende test wordt
+de kandidaat vanaf een vastgelegde GitHub-commit op de gewone site-URL
+gedeployed. Controleer daar de vier partnerpensioenvarianten A, B, C en D.
+Bij een fout of afkeuring deploy je de vorige werkende commit opnieuw. Bouw
+daarna verder op de bestaande route voor uitrol en checksumcontrole.
 
 
 ## Publieke invoer voor een testregeling
@@ -209,7 +220,14 @@ curl -fsS https://raw.githubusercontent.com/henkesmike/pensioen/ca500ebb0c094ff9
 bash /tmp/install-scheiden-voice.sh ca500ebb0c094ff979431cc30b26d8a086eeb291
 ```
 
-De timer haalt `deploy/scheiden-request.json` op uit de pilotbranch. Bij `{"action":"build","film":"scheiden-v9"}` verschijnt het resultaat achter de bestaande previewbeveiliging op `/_preview/scheiden-adam/index.html`. De checksum staat op `/_preview/scheiden-adam/status.json`. Controleer de stem, het tempo en het uit elkaar schuiven bij de slotzin. Na akkoord gebruikt de publicatieopdracht `{"action":"publish","film":"scheiden-v9","sha256":"<goedgekeurde checksum>"}`. De worker publiceert exact die kandidaat naar `/scheiden-adam.html`. Koppel daarna **Uit elkaar gaan** via de bestaande homepage-uitrol aan die pagina en controleer de publieke weergave.
+De timer haalt `deploy/scheiden-request.json` op uit de pilotbranch. De
+bestaande opdracht kan een kandidaat achter de previewbeveiliging bouwen en
+daar een checksum bij opslaan. Dit was de eerdere proefroute. Voor een nieuwe
+test wordt de gekozen versie vanaf haar GitHub-commit naar de gewone
+sitebestemming uitgerold. Controleer daar de stem, het tempo en het uit elkaar
+schuiven bij de slotzin. Koppel **Uit elkaar gaan** via de homepage-uitrol en
+controleer de volledige publieke route. Bij afkeuring deploy je de vorige
+werkende homepage- en filmpjesversie opnieuw.
 
 De worker is op de VPS geïnstalleerd. De goedgekeurde opname met Adam en de koppeling vanaf **Uit elkaar gaan** zijn gepubliceerd en gecontroleerd. De actuele release staat in de [projectstatus](../PROJECT_STATUS.md).
 
