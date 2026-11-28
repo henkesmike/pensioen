@@ -162,7 +162,6 @@ def publish(public=PUBLIC, webroot=WEBROOT, request_url=REQUEST):
         for relative, path, expected in records:
             target = destination(relative, create_parents=expected is not None, created_dirs=created_dirs)
             old = target.read_bytes() if target.is_file() else None
-            previous[relative] = old
             if expected is None:
                 operations.append((relative, target, None, old))
                 continue
