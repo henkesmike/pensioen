@@ -1,6 +1,6 @@
 # Pensioen Ontdekt — projectstatus
 
-Bijgewerkt op 27 november 2026.
+Bijgewerkt op 28 november 2026.
 
 ## Doel
 
@@ -17,6 +17,14 @@ AI maakt het mogelijk om pensioencommunicatie op maat te maken binnen één omge
 Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. De website toont daarna de toepasselijke uitleg zonder codewijziging voor ondersteunde scenario’s. De [technische uitwerking](docs/technisch-ontwerp.md#van-pensioenreglement-naar-website) beschrijft de beoogde keten.
 
 ## Huidige stand
+
+- **Test- en deploymentafspraak (28 november 2026):** iedere proefversie wordt
+  op de bestaande Pensioen Ontdekt-server getest via de gewone site-URL. Er
+  komt geen aparte testomgeving en een lokale ChatGPT-preview geldt niet als
+  eindtest. De testdeployment is meteen de actieve siteversie; bij afkeuring
+  wordt de vorige werkende GitHub-commit opnieuw uitgerold. Deployments worden
+  aan commit-ID en checksum gekoppeld, zodat herstel controleerbaar is.
+
 
 - De personageproef v1 blijft ongewijzigd en niet goedgekeurd. Mike meldde dat in v2 de neutrale mond niet zichtbaar was en dat de hele figuur verdween bij die stand. V3 scheidt huidpatch, mondlijn en basisfiguur; de oogmaskers zijn iets verkleind. De afzonderlijke lagen en ongewijzigde bronfiguren zijn statisch gecontroleerd, maar de browsercontrole is nog geblokkeerd voor file:// (alleen http: en https: toegestaan). V3 is daarom nog onbeoordeeld en niet gepubliceerd: [preview v3](https://chatgpt.com/library?file_id=libfile_61fa1a81445081919a0b577c611a330a&account_id=personal). De technische bevinding en controle-uitkomst staan in [Werkwijze voor nieuwe geanimeerde personages](docs/werkwijze-nieuw-personage.md#follow-up-correctie-naar-personageproef-v3--27-november-2026).
 
