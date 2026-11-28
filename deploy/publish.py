@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import shutil
 import tempfile
 from datetime import datetime, timezone
 from urllib.error import HTTPError
@@ -210,6 +211,7 @@ def publish(public=PUBLIC, webroot=WEBROOT, request_url=REQUEST):
         )
 
         applied = []
+        deployed_manifest = history_dir / "deployed.json"
         try:
             for relative, target, data, old in changes:
                 if data is None:
@@ -217,27 +219,36 @@ def publish(public=PUBLIC, webroot=WEBROOT, request_url=REQUEST):
                 else:
                     write_atomic(target, data)
                 applied.append((target, old))
+
+            current_manifest = {
+                "commit": commit,
+                "deployment_id": deployment_id,
+                "files": [
+                    {"path": relative, "sha256": hashlib.sha256(data).hexdigest() if data is not None else None}
+                    for relative, _, data, _ in changes
+                ],
+            }
+            deployed_manifest.write_text(
+                json.dumps(current_manifest, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
         except Exception:
             for target, old in reversed(applied):
                 if old is None:
                     target.unlink(missing_ok=True)
                 else:
                     write_atomic(target, old)
+            deployed_manifest.unlink(missing_ok=True)
             raise
 
-        current_manifest = {
-            "commit": commit,
-            "deployment_id": deployment_id,
-            "files": [
-                {"path": relative, "sha256": hashlib.sha256(data).hexdigest() if data is not None else None}
-                for relative, _, data, _ in changes
-            ],
-        }
-        (history_dir / "deployed.json").write_text(
-            json.dumps(current_manifest, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
         print(f"Deployment toegepast: {commit} ({len(changes)} bestanden, {deployment_id})")
+        old_history = sorted(
+            (path for path in HISTORY.iterdir() if path.is_dir()),
+            key=lambda path: path.name,
+            reverse=True,
+        )[20:]
+        for path in old_history:
+            shutil.rmtree(path)
     finally:
         for directory in sorted(created_dirs, key=lambda item: len(item.parts), reverse=True):
             try:
