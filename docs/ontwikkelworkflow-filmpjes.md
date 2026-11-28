@@ -90,6 +90,25 @@ shellopdrachten worden niet uitgevoerd. De wijziging is in GitHub voorbereid,
 maar wordt pas actief na eenmalige root-installatie op de VPS. Tot die
 installatie is afgerond, blijft de bestaande homepageworker actief.
 
+Een deploymentopdracht op de branch `uitrol-productie` heeft bijvoorbeeld
+de vorm:
+
+```json
+{
+  "commit": "<40 tekens tellende commit-ID>",
+  "files": [
+    {"path": "voorbeeld.html", "sha256": "<64 tekens tellende SHA-256>"},
+    {"path": "assets/voorbeeld.svg", "sha256": "<64 tekens tellende SHA-256>"}
+  ]
+}
+```
+
+Gebruik voor een bestand dat bij een oudere commit niet bestond
+`"sha256": null` om het van de website te verwijderen. De bestaande vorm met
+alleen `commit` en `sha256` blijft werken voor `index.html`. De worker bewaart
+de vorige inhoud onder `/var/lib/pensioen-deploy/history`; voor rollback zet je
+in GitHub de vorige commit en bijbehorende bestandshashes als nieuwe opdracht.
+
 
 ## Testdeployment en rollback op één server
 
