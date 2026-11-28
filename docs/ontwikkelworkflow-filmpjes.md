@@ -1,32 +1,37 @@
 # Ontwikkelworkflow voor filmpjes
 
-## Doel: van idee naar deployment met zo min mogelijk handwerk
+## Doel: van wijziging naar test op de server
 
-De normale bediening loopt via ChatGPT en GitHub. Mike beschrijft het gewenste
-resultaat in de chat; de assistent werkt op een GitHub-branch en voert de
-beschikbare controles uit. Na eenmalige inrichting hoeft Mike geen code of
-herhaalde Terminal-commando's te kopiëren.
+De test verloopt op de bestaande Pensioen Ontdekt-server. Er komt geen aparte
+testomgeving. Een testversie wordt op de site zelf geplaatst en in een echte
+browser via de gewone HTTPS-route bekeken. Ook HTML-voorbeelden en animaties
+worden op deze manier getest; een lokale ChatGPT-preview is geen eindtest.
 
-1. **Idee en wijziging:** de assistent maakt of wijzigt code, JSON en documentatie
-   op een aparte branch. Privé-audio, API-sleutels en andere geheimen blijven
-   buiten de repository.
-2. **Automatische controle:** de server bouwt vanaf de exacte commit, hergebruikt
-   de audiocache en controleert de preview. Bij ontbrekende betaalde audio stopt
-   de bouw voordat nieuwe API-kosten ontstaan; Mike beslist dan of die opname
-   gemaakt mag worden.
-3. **Privépreview:** een geslaagde build wordt een kandidaat-release met commit,
-   versie en SHA-256. De server biedt die afgeschermd aan via een HTTPS-link.
-   Mike hoeft de preview alleen in de browser te bekijken.
-4. **Publicatie:** na akkoord in de chat publiceert de server precies die
-   kandidaat. Publicatie gebruikt een beperkte, declaratieve opdracht met een
-   toegestane bestemming en checksum; er worden geen shellcommando's uit GitHub
-   uitgevoerd.
-5. **Controle en herstel:** de server controleert de publieke URL en bewaart de
-   vorige release voor terugzetten.
+1. **Wijziging vastleggen:** werk op een GitHub-branch en commit de wijziging.
+   Koppel iedere testdeployment aan de volledige commit-ID. Privé-audio,
+   API-sleutels en andere geheimen blijven buiten de repository.
+2. **Bouwen en controleren:** de server bouwt vanaf die exacte commit en voert
+   de beschikbare automatische controles uit. Bij een bouw- of smoke-testfout
+   blijft de huidige versie actief.
+3. **Testdeployment:** plaats de kandidaat op de bestaande server en open de
+   normale site-URL. Dit is dezelfde omgeving die na acceptatie actief blijft;
+   er is geen aparte testpublicatie of tweede server.
+4. **Beoordelen:** Mike controleert de versie in de browser. Bij akkoord blijft
+   deze versie staan. Er is geen tweede publicatiestap nodig.
+5. **Herstellen:** bij afkeuring of een fout wordt de laatst werkende versie
+   opnieuw uitgerold vanaf de bijbehorende GitHub-commit. Bewaar per deployment
+   commit-ID, versie en checksum. Herschrijf of force-push de Git-geschiedenis
+   niet; herstel door de gekozen eerdere versie opnieuw te deployen.
 
-De eenmalige serverinrichting mag één gebundelde handeling vereisen. Daarna
-zijn Terminal, handmatig installeren van hulpmiddelen en herhaald kopiëren van
-commando's uitzonderingen voor storingen of beheer.
+Testen gebeurt op de website zelf. Plan daarom vóór de deployment een
+terugzetbare versie en houd de vorige deployment beschikbaar. Als een
+bestemming nog geen deployment- en rollbackroute heeft, richt die route eerst
+in voordat die bestemming op de server wordt getest.
+
+Daarna loopt de normale bediening via ChatGPT en GitHub. Mike hoeft geen code
+of herhaalde Terminal-commando's te kopiëren. Eenmalige serverinrichting mag
+één gebundelde handeling vereisen; Terminal blijft beschikbaar voor beheer en
+probleemoplossing.
 
 ### Afgesproken beheergrens voor de deployment
 
@@ -88,20 +93,33 @@ een aparte, afgebakende route voor generatorbuilds, beveiligde previews en de
 toegestane demo-bestemming. De bestaande homepage-uitrol blijft ongewijzigd.
 
 
-## OTAP op één VPS
+## Testdeployment en rollback op één server
 
-Gebruik GitHub voor scenario's, regelingconfiguratie en code. Gebruik de bestaande VPS om releases te bouwen, privé te bekijken en te publiceren. De Mac is je werkplek en browser. Lokaal bouwen blijft mogelijk voor snelle experimenten. De gebruikelijke route loopt via een build op de VPS.
+Gebruik GitHub als versiebeheer en de bestaande VPS als enige test- en
+productieomgeving. Er is geen aparte testserver of aparte acceptatieomgeving.
+De testdeployment vervangt tijdelijk de versie op de normale site-URL. Omdat
+de site alleen voor Mike is bedoeld, kan de functionele beoordeling daar
+plaatsvinden.
 
 | Stap | Waar | Wat gebeurt er? |
 |---|---|---|
-| Ontwikkeling | GitHub-branch | Pas scenario's, fragmenten en regelingwaarden aan. Koppel elke bouw aan een concrete Git-commit. |
-| Test | VPS, vóór de preview | Eén opdracht bouwt een release. Controleer het manifest, media, tijdcodes en de vier regelingvarianten. Bij een fout stopt de bouw en blijft de publieke versie beschikbaar. |
-| Acceptatie | Privépreview op dezelfde VPS | Bekijk en beluister de geteste release via een afgeschermde URL. Gebruik in de eerste proef een preview op localhost met SSH-tunnel. De normale acceptatie is het bekijken van de gerenderde release. |
-| Productie | Bestaande website | Na akkoord maakt één publicatieopdracht exact die release beschikbaar. Wijs de publieke route in één stap naar de nieuwe release en bewaar de vorige voor terugzetten. Controleer de publieke URL na publicatie. |
+| Wijziging | GitHub-branch | Leg code, configuratie en benodigde assets vast. Maak een commit die later afzonderlijk opnieuw kan worden uitgerold. |
+| Bouwen | VPS | Bouw vanaf de volledige commit-ID. Voer de beschikbare automatische controles uit. Bij een fout blijft de huidige versie actief. |
+| Test | Bestaande site-URL | Deploy de kandidaat naar de bestaande website en controleer hem in een echte browser via HTTPS. Gebruik deze serverdeployment ook voor animaties en losse HTML-voorbeelden. |
+| Beoordeling | Chat en browser | Mike beoordeelt de draaiende versie. Bij akkoord blijft de deployment actief. |
+| Herstel | GitHub en VPS | Bij afkeuring deploy je de laatst werkende GitHub-commit opnieuw. Controleer daarna de site-URL en noteer de herstelde commit en checksum. |
 
-Bouw één keer en gebruik dezelfde bestanden voor acceptatie en productie. Een release krijgt een vaste versie en een checksum. Bewaar kandidaat-releases en bronmedia buiten de publieke webroot. De publicatieopdracht kopieert uitsluitend de geteste, te publiceren webbestanden naar een eigen release-directory. Tag of registreer de versie die actief is. De sleutel voor de spraakservice blijft op de VPS. De generator gebruikt bestaande audioblokken uit de cache en vraagt ontbrekende opnames op als de bouw ze nodig heeft.
+Elke deployment is herleidbaar tot één commit en checksum. Bewaar de vorige
+werkende release voordat de actieve versie wordt vervangen. Herstel door de
+eerdere commit of release opnieuw te deployen; verwijder of herschrijf geen
+Git-geschiedenis. Zo blijft de nieuwe versie beschikbaar voor later herstel of
+aanpassing.
 
-Start met twee opdrachten: één voor bouwen en privé bekijken, één voor publiceren. Houd de publicatiestap expliciet. Als beide stappen betrouwbaar werken, kunnen ze achter een knop of een handmatig gestarte workflow komen. Test en Acceptatie delen in deze eerste opzet dezelfde VPS met gescheiden releasepaden.
+Lokale previews mogen worden gebruikt als snelle tussencontrole, maar gelden
+niet als test of oplevering. De eindtest vindt altijd plaats op de server. Een
+releasebestemming mag pas worden getest nadat zowel deployment als terugzetten
+naar een eerdere GitHub-versie voor die bestemming werkt.
+
 
 ## Geautomatiseerde uitrol vanaf GitHub
 
@@ -160,16 +178,19 @@ Een inzending is een concept, geen automatische productiepublicatie. Mike bekijk
 
 De implementatie staat op branch `publieke-regelingbeheer` en is live. De root-installatie voegde de lokale API-service en routes toe aan uitsluitend de Pensioen-vhost; de API-sleutel staat root-beheerd op de server. De homepage is via de bestaande uitrolbranch gepubliceerd vanaf commit `0f12d31b23ea7a9b35b659c7efd06ed886535261` met checksum `680397f371908bc30c4687c0e8ee6c295af3eeeb202d943d05efd7ed813b657e`. De browsercontrole bevestigde het formulier, de twee numerieke invoervelden en hun grenzen. De eerste live proefaanvraag (60%, 3 maanden) is geslaagd als regeling F; de kandidaat toont de aangepaste waarde en bevat afspeelbare audio. Regeling E (45%, 1 maand) stond al in de aanvullende servergegevens; de site geeft geen herkomst. Kandidaat F is niet live gepubliceerd.
 
-## Lokale HTML-preview opleveren
+## HTML-voorbeelden testen
 
-Gebruik voor een zelfstandige proefanimatie zoals Scheiden dezelfde opleverroute als voor versie 4:
+Een zelfstandig proefbestand, bijvoorbeeld een animatie, wordt ook als
+serverdeployment getest. Commit het bestand in GitHub, deploy de bijbehorende
+versie naar de bestaande Pensioen Ontdekt-server en open de echte HTTPS-route
+in de browser. De gebruiker beoordeelt die versie op de server.
 
-1. Maak één zelfstandig HTML-bestand met alle benodigde CSS, JavaScript en afbeeldingen ingebed. Geef het bestand een versienummer, bijvoorbeeld `scheiden-proefanimatie-v5.html`.
-2. Plaats en test het bestand in de lokale chatwerkmap. Controleer dat de beoogde animatie, afspeelknoppen en het terugspoelen werken.
-3. Sla dezelfde versie duurzaam op in ChatGPT en controleer of het opslaan is gelukt.
-4. Geef in het antwoord één directe bestandslink met het werkelijke absolute pad, bijvoorbeeld `[scheiden-proefanimatie-v5.html](sandbox:/werkelijke/chatwerkmap/scheiden-proefanimatie-v5.html)`. Zo kan Mike het HTML-bestand op dezelfde manier openen als de vorige proef. Een GitHub-bronlink is geen vervanging voor deze opleverroute.
+Een lokaal bestand of een preview in de ChatGPT-omgeving is hooguit een
+tussentijdse controle en vervangt de servertest niet. Bewaar de laatst werkende
+GitHub-versie en de deploymentgegevens. Als de proef niet bevalt, deploy dan
+de commit van de vorige werkende versie opnieuw en controleer dat de site weer
+die versie toont.
 
-Ontbreekt de lokale chatwerkmap, bewaar de exacte versie dan op de beschikbare duurzame projectlocatie en meld dat de directe preview nog niet beschikbaar is. Zodra er weer een werkmap beschikbaar is, haal dezelfde versie op, controleer het bestand en geef de directe bestandslink. Deze route vereist geen publieke deployment.
 
 ## Voice-over ophalen via ElevenLabs
 
