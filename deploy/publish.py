@@ -155,7 +155,6 @@ def publish(public=PUBLIC, webroot=WEBROOT, request_url=REQUEST):
         raise
 
     commit, records = parse_request(raw_request)
-    staged = []
     created_dirs = []
     previous = {}
     operations = []
@@ -175,17 +174,19 @@ def publish(public=PUBLIC, webroot=WEBROOT, request_url=REQUEST):
                 raise ValueError(f"Verwacht een HTML-document met doctype: {relative}.")
             if len(data) > MAX_TOTAL:
                 raise ValueError("De deployment overschrijdt de totale bestandsgrootte.")
-            staged.append((relative, target, data, old))
-        if sum(len(data) for _, _, data, _ in staged) > MAX_TOTAL:
-            raise ValueError("De deployment overschrijdt de totale bestandsgrootte.")
+            total += len(data)
+            if total > MAX_TOTAL:
+                raise ValueError("De deployment overschrijdt de totale bestandsgrootte.")
+            operations.append((relative, target, data, old))
 
-        changes = [
-            operation for operation in operations
-            if (operation[2] is None and operation[3] is not None)
-            or (operation[2] is not None and hashlib.sha256(operation[2]).digest()
-                != hashlib.sha256(operation[3]).digest() if operation[3] is not None
-                else operation[2] is not None)
-        ]
+        changes = []
+        for operation in operations:
+            data, old = operation[2], operation[3]
+            if data is None:
+                if old is not None:
+                    changes.append(operation)
+            elif old != data:
+                changes.append(operation)
         if not changes:
             print(f"Bestanden staan al op de gevraagde versie: {commit}")
             return
