@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-commit="$\{1:?Vaste GitHub-commit vereist}"
+commit="${1:?Vaste GitHub-commit vereist}"
 [[ $commit =~ ^[0-9a-f]{40}$ ]]
 [[ $(id -u) == 0 ]]
 
