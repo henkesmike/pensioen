@@ -81,14 +81,16 @@ de publieke webroot.
 
 ### Huidige beperking
 
-De worker kan de oude opdrachtvorm voor `index.html` blijven verwerken
-en ondersteunt daarnaast opdrachten met `commit` plus een lijst van
-`path`/SHA-256-paren voor meerdere statische websitebestanden. De lijst kan
-ook `sha256: null` bevatten om een eerder geplaatst bestand te verwijderen.
-De worker staat alleen vaste bestandstypen en veilige relatieve paden toe;
-shellopdrachten worden niet uitgevoerd. De wijziging is in GitHub voorbereid,
-maar wordt pas actief na eenmalige root-installatie op de VPS. Tot die
-installatie is afgerond, blijft de bestaande homepageworker actief.
+De worker behoudt de oude opdrachtvorm voor `index.html` en ondersteunt
+ook opdrachten met `commit` plus een lijst van `path`/SHA-256-paren voor
+meerdere statische websitebestanden. De lijst kan ook `sha256: null` bevatten
+om een eerder geplaatst bestand te verwijderen. Alleen vaste bestandstypen en
+veilige relatieve paden zijn toegestaan; de worker voert geen shellopdrachten
+uit.
+
+De bijgewerkte worker is op 28 november 2026 op de VPS geïnstalleerd; de
+installatie meldde dat de timer actief is. Een deployment van een niet-indexbestand
+is nog niet uitgevoerd.
 
 Een deploymentopdracht op de branch `uitrol-productie` heeft bijvoorbeeld
 de vorm:
