@@ -41,7 +41,23 @@ Het einddoel is dat een beheerder beoordeelde regelingparameters kan uploaden. D
 
 - De homepageversie met **Mijn instellingen** staat live vanaf commit `d4b955a08b39eb08e241a29178798290b5e91546`. De publieke homepage komt byte voor byte overeen met de goedgekeurde proef (SHA-256 `e0f0115990f2eb69b2fdda8895d5def48b41d4152a237134d990b9c83a75c4f8`). Eén uitklapbaar blok **Mijn instellingen** bevat de drie kolommen. Tot **Bewaren** blijven de filmpjes vergrendeld en wisselen de portretten rechtsboven. Na **Bewaren** klapt het blok dicht, worden de filmpjes vrijgegeven en blijven de gekozen portretten staan.
 
-## Open werk
+## Technische verbeterfase — prioriteit vanaf 28 november 2026
+
+Besluit: inhoudelijke uitbreiding en nieuwe filmpjes tijdelijk pauzeren totdat de technische fundering voldoende volwassen is. Indicatieve beoordeling: ontwerp 8/10, implementatie 6/10; streefwaarde 8,5/10 na herbeoordeling. Dit is nog geen volledige code-audit.
+
+1. Volledige technische broncode-audit: inventariseer bestanden, afhankelijkheden, duplicatie, hardcoded waarden, parametersturing, componentgrenzen en tests. Geen broncode wijzigen; lever bevindingen met bestandspaden en prioriteiten.
+2. Definitieve modulaire architectuur vaststellen: scheid HTML, JavaScript, configuratie, scenario's en media; voorkom onnodige frameworks.
+3. Betrouwbare ontwikkel- en deploymentomgeving realiseren, inclusief overdracht van grote binaire bestanden, servercontrole en rollback.
+4. Centrale animatie-engine realiseren met herbruikbare functies en tijdgestuurde toestand.
+5. Personages, afbeeldingen en bewegingen standaardiseren; nieuwe personages vereisen alleen assets en ankerparameters.
+6. Parameterstructuur en automatische validatie verbeteren; nieuwe ondersteunde regelingen vereisen geen codewijziging.
+7. Geautomatiseerde regressietests realiseren, inclusief combinaties van personages, regelingen en bewegingen.
+8. Technische herbeoordeling op onderhoudbaarheid, begrijpelijkheid, generieke opzet en parametersturing; streefwaarde minimaal 8,5/10. Ruim tegenstrijdige documentatie op.
+9. Inhoudelijke uitbreiding hervatten na beoordeling en akkoord.
+
+De bestaande inhoudelijke werkvoorraad hieronder blijft behouden maar is gepauzeerd. Eerstvolgende opdracht: stap 1, uitsluitend inventariseren en beoordelen. Bestaande liveversie ongemoeid laten.
+
+## Open werk (inhoudelijk — gepauzeerd)
 
 ### Afspraak voor de volgende filmpjes
 
