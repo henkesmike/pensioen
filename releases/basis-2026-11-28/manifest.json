@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "index.html",
+      "size": 50286,
+      "sha256": "87b7cbf5e9f329c8867d9b8515c7e81cc988ef8d0632e7975f8c6f85c30c696b"
+    },
+    {
+      "path": "partnerpensioen-demo.html",
+      "size": 2187187,
+      "sha256": "41333ba6ad5f0efee17b27166ee43445f63da07c1b41d5d0c922a380ea9d6b64"
+    },
+    {
+      "path": "scheiden-adam.html",
+      "size": 755381,
+      "sha256": "7dea0e5639135362583fc06185338c839542ab3264c4f16edafb24c1ae2c9090"
+    },
+    {
+      "path": "personageproef-nieuwe-figuren-v3.html",
+      "size": 3626281,
+      "sha256": "301ae0ce355dd95f314ebea4fc7f74dcf4e155d00cbf4848aed12feadf9574d2"
+    }
+  ]
+}
