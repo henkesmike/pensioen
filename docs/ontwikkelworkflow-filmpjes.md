@@ -310,3 +310,5 @@ De mondblend is volledig dekkend tot 74% van de straal en vervaagt daarna. De ge
 - GitHub create_blob met encoding base64 accepteerde een kleine PNG (blob e89c57f02d9dc4d55e364bc7de9f73355d325d99).
 - fetch_blob probeert UTF-8 te decoderen en faalt bij PNG. Gebruik voor verificatie na opname in een commit fetch_file met encoding base64 en vergelijk de originele bytes/checksum.
 - De overdracht van grote lokale afbeeldingen naar de connector, opname in een commit en deployment zijn nog niet gevalideerd. Beschouw deze route nog niet als bewezen end-to-end werkwijze. Splits HTML en afbeeldingen alleen met behoud van de oorspronkelijke bytes en werking.
+
+- Vervolgproef geslaagd: create_tree met blob-SHA, create_commit, daarna fetch_file met ref=commit-SHA en encoding=base64. De teruggelezen Base64 (zonder witruimte) en blob-SHA waren exact gelijk aan het origineel. Geïsoleerde testcommit 3d0213ca8f1bab2c0249811380d5d2f5028ae040; geen branch of deployment aangepast. Voor productie de bestaande volledige tree als basis behouden. Grote lokale bestanden blijven nog te valideren.
